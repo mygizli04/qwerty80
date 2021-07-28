@@ -1,0 +1,4 @@
+*.jar
+.vscode/
+target/
+.DS_Store
