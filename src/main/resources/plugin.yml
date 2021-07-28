@@ -1,0 +1,12 @@
+name: Qwerty80
+main: me.qwerty80.Qwerty80
+version: 1.0
+api-version: 1.17
+author: sbeve#4701 and JusteyCrustey#1293
+commands:
+  escape:
+    description: Manage and join escape games.
+    usage: /escape <list|join>
+  lobby:
+    description: Go back to the lobby cause ur a chicken
+    usage: /lobby
