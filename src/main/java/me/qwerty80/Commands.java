@@ -32,7 +32,7 @@ public class Commands implements CommandExecutor {
                             break;
                         case "join": // /escape join
                             if (sender instanceof Player) { // Making sure a player sent the command.
-                                Location world = main.getServer().getWorld("test").getSpawnLocation(); // Getting the world
+                                Location world = main.getServer().getWorld("escape").getSpawnLocation(); // Getting the world
                                 Player player = (Player) sender; // If the sender isn't a player this will error! This allows us to use teleport and stuff..
                                 player.teleport(world); // I wonder what this does..
                             }
@@ -54,9 +54,9 @@ public class Commands implements CommandExecutor {
                     player.teleport(world);
                 }
                 return true;
-            // If the command isn't defined
+           // If the command isn't defined
             default:
-                return false;
+                return false;     
         }
     }
 }
