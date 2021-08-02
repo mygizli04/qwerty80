@@ -2,7 +2,8 @@ name: Qwerty80
 main: me.qwerty80.Qwerty80
 version: 1.0
 api-version: 1.17
-author: sbeve#4701 and JusteyCrustey#1293
+author: sbeve#4701, JusteyCrustey#1293 and LeverClient#1634
+depend: ['Multiverse-Core']
 commands:
   escape:
     description: Manage and join escape games.

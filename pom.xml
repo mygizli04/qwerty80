@@ -23,12 +23,24 @@
       <version>1.17.1-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.onarandombox.multiversecore</groupId>
+      <artifactId>Multiverse-Core</artifactId>
+      <version>4.3.0</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <repositories>
     <repository>
       <id>papermc</id>
       <url>https://papermc.io/repo/repository/maven-public/</url>
+    </repository>
+
+    <repository>
+      <id>OnARandomBox</id>
+      <url>http://repo.onarandombox.com/content/groups/public/</url>
     </repository>
   </repositories>
 

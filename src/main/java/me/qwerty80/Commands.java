@@ -16,6 +16,21 @@ public class Commands implements CommandExecutor {
         main = that;
     }
 
+    // Unused for now
+    void invalidCommand(String[] subcommands, CommandSender sender) {
+        if (subcommands.length == 0) {
+            sender.sendMessage("Invalid subcommand. You cannot use any subcommands of this command.");
+        }
+        else {
+            String ret = "Invalid subcommand. Available subcommands are: ";
+            for (int i = 0; i < subcommands.length; i++) {
+                ret += subcommands[0];
+                if (i != subcommands.length - 1) ret += ", ";
+            }
+            sender.sendMessage(ret);
+        }
+    }
+
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
