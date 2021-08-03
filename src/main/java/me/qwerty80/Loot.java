@@ -23,7 +23,7 @@ public class Loot {
         int random = new Random().nextInt(sum);
 
         for (Lootable item : loot) {
-            if (item.weight < random) {
+            if (item.weight > random) {
                 return item.item;
             }
             else {
@@ -32,19 +32,5 @@ public class Loot {
         }
 
         return null; // Should never happen.
-    }
-}
-
-class Lootable {
-    public int weight = 50; // % chance of generating
-    public ItemStack item;
-
-    public Lootable(ItemStack _item, int _weight) {
-        item = _item;
-        weight = _weight;
-    }
-
-    public Lootable(ItemStack _item) {
-        item = _item;
     }
 }

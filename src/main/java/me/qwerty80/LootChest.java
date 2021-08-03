@@ -12,9 +12,14 @@ public class LootChest {
     public Loot loot;
     public Location block;
 
+    public LootChest(Loot _loot, Location _block) {
+        loot = _loot;
+        block = _block;
+    }
+
     public void generate() {
         // Decide which items to put in the chest
-        ItemStack[] newItems = new ItemStack[3];
+        ItemStack[] newItems = new ItemStack[4];
 
         for (int i = 0; i <= 3; i++) {
             newItems[i] = loot.generate();
@@ -23,9 +28,8 @@ public class LootChest {
         // Replace whatever's there with a chest
         block.getBlock().setType(Material.CHEST);
 
-
         // Add the items to the chest
-        Inventory inventory = ((Chest) block.getBlock()).getInventory();
+        Inventory inventory = ((Chest) block.getBlock().getState()).getInventory();
         for (int i = 0; i < newItems.length; i++) {
             inventory.setItem(new Random().nextInt(inventory.getSize()), newItems[i]);
         }
