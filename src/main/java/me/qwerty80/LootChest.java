@@ -20,7 +20,7 @@ public class LootChest {
     }
 
 
-    public void generate(Material item) {
+    public void generate() {
         // Decide which items to put in the chest
         ItemStack[] newItems = new ItemStack[itemCount];
 
@@ -29,7 +29,7 @@ public class LootChest {
         }
 
         // Replace whatever's there with a chest
-        block.getBlock().setType(item);
+        block.getBlock().setType(Material.CHEST);
 
         // Add the items to the chest
         Inventory inventory = ((Chest) block.getBlock().getState()).getInventory();
