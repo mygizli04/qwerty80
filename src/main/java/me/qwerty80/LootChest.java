@@ -20,21 +20,28 @@ public class LootChest {
     }
 
 
-    public void generate() {
+    public void generate(Material item) {
         // Decide which items to put in the chest
-        ItemStack[] newItems = new ItemStack[itemCount + 1];
+        ItemStack[] newItems = new ItemStack[itemCount];
 
         for (int i = 0; i < newItems.length; i++) {
             newItems[i] = loot.generate();
         }
 
         // Replace whatever's there with a chest
-        block.getBlock().setType(Material.CHEST);
+        block.getBlock().setType(item);
 
         // Add the items to the chest
         Inventory inventory = ((Chest) block.getBlock().getState()).getInventory();
+        Integer[] chosenSlots = new Integer[newItems.length];
         for (int i = 0; i < newItems.length; i++) {
-            inventory.setItem(new Random().nextInt(inventory.getSize()), newItems[i]);
+            Random random = new Random();
+            Integer chosenSlot = random.nextInt(inventory.getSize());
+            while (Utils.arrayIncludes(chosenSlots, chosenSlot)) {
+                chosenSlot = random.nextInt(inventory.getSize());
+            }
+            chosenSlots[i] = chosenSlot;
+            inventory.setItem(chosenSlot, newItems[i]);
         }
     }
 }

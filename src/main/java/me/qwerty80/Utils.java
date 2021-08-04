@@ -40,4 +40,13 @@ public interface Utils {
         To[] finalArray = (To[]) ret.toArray();
         return finalArray;
     }
+
+    static <T> boolean arrayIncludes(T[] array, T includes) {
+        for (T item : array) {
+            if (item == includes) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

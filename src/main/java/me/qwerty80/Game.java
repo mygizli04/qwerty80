@@ -37,8 +37,6 @@ public class Game {
             int y = Utils.random(77, 78);
             int z = Utils.random(-69, 447);
 
-            Bukkit.getLogger().info("CHEST LOCATION: " + x + " " + y + " " + z);
-
             if (y == 78 && getMaterial(x, 77, z) == Material.AIR) {
                 y = 77;
             }

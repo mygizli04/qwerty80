@@ -135,15 +135,13 @@ public class LootTable {
 
 class Item {
     public ItemStack item;
-    int amount = 1;
 
     public Item(Material _item) {
         item = new ItemStack(_item);
     }
 
     public Item(Material _item, int _amount) {
-        item = new ItemStack(_item);
-        amount = _amount;
+        item = new ItemStack(_item, _amount);
     }
 }
 
