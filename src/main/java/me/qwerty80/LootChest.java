@@ -11,17 +11,20 @@ import org.bukkit.inventory.ItemStack;
 public class LootChest {
     public Loot loot;
     public Location block;
+    int itemCount;
 
-    public LootChest(Loot _loot, Location _block) {
+    public LootChest(Loot _loot, Location _block, int _itemCount) {
         loot = _loot;
         block = _block;
+        itemCount = _itemCount;
     }
+
 
     public void generate() {
         // Decide which items to put in the chest
-        ItemStack[] newItems = new ItemStack[4];
+        ItemStack[] newItems = new ItemStack[itemCount + 1];
 
-        for (int i = 0; i <= 3; i++) {
+        for (int i = 0; i < newItems.length; i++) {
             newItems[i] = loot.generate();
         }
 

@@ -12,10 +12,6 @@ import org.bukkit.block.Block;
 // This class will handle everything regarding a single game
 public class Game {
 
-    int random(double min, double max) {
-        return (int) Math.floor(Math.random() * (max - min) + min);
-    }
-
     World world;
 
     Material getMaterial(int x, int y, int z) {
@@ -37,9 +33,9 @@ public class Game {
         world = Bukkit.getServer().getWorld(id + "_GAME_escape_new");
 
         for (int i = 0; i != chestCount; i++) {
-            int x = random(-69, 447);
-            int y = random(77, 78);
-            int z = random(-69, 447);
+            int x = Utils.random(-69, 447);
+            int y = Utils.random(77, 78);
+            int z = Utils.random(-69, 447);
 
             Bukkit.getLogger().info("CHEST LOCATION: " + x + " " + y + " " + z);
 
@@ -50,7 +46,8 @@ public class Game {
             if (getMaterial(x, y, z) == Material.AIR) {
                 getBlock(x, y, z).setType(Material.CHEST);
                 LootTable table = new LootTable();
-                LootChest chest = new LootChest(table.regular, new Location(world, x, y, z));
+                Loot loot = table.generate();
+                LootChest chest = new LootChest(loot, new Location(world, x, y, z), loot.loot.length);
                 chest.generate();
             }
         }
