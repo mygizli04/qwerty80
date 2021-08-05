@@ -9,24 +9,18 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class LootChest {
-    public Loot loot;
+    public LootTable loot;
     public Location block;
-    int itemCount;
 
-    public LootChest(Loot _loot, Location _block, int _itemCount) {
+    public LootChest(LootTable _loot, Location _block) {
         loot = _loot;
         block = _block;
-        itemCount = _itemCount;
     }
 
 
     public void generate() {
         // Decide which items to put in the chest
-        ItemStack[] newItems = new ItemStack[itemCount];
-
-        for (int i = 0; i < newItems.length; i++) {
-            newItems[i] = loot.generate();
-        }
+        ItemStack[] newItems = loot.getItemStack();
 
         // Replace whatever's there with a chest
         block.getBlock().setType(Material.CHEST);

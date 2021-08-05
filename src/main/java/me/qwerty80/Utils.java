@@ -49,4 +49,17 @@ public interface Utils {
         }
         return false;
     }
+
+    static <T> T choosePercentage(T[] array, int[] percentages) { // choosepercentage([1,2,7,3]) then it'll return int. || choosepercentage["6","9","6","9"] then it'll return string.
+        int chance = random(0, 100);
+        int currentChance = 0;
+
+        for (int uwu = 0; uwu < array.length; uwu++) { // if uwu >= 1: && ++ == 
+            if (range(chance, currentChance, percentages[uwu])) { // (uwu - 1)st/nd/rd/th argument of percentages hi :D
+                return array[uwu];
+            }
+        }
+
+        return null; // Should never happen (pls). :L
+    }
 }

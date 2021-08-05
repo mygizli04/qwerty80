@@ -44,8 +44,7 @@ public class Game {
             if (getMaterial(x, y, z) == Material.AIR) {
                 getBlock(x, y, z).setType(Material.CHEST);
                 LootTable table = new LootTable();
-                Loot loot = table.generate();
-                LootChest chest = new LootChest(loot, new Location(world, x, y, z), loot.loot.length);
+                LootChest chest = new LootChest(table, new Location(world, x, y, z));
                 chest.generate();
             }
         }

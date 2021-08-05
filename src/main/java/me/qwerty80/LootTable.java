@@ -12,7 +12,7 @@ public class LootTable {
     LootType healing = new LootType(30, rare);
     LootType ammo = new LootType(20, rare);
     LootType building = new LootType(100, rare);
-    LootType armor = new LootType(100, rare); // not going to use for now.
+    LootType armor = new LootType(50, rare); // not going to use for now.
 
     ItemStack[] chooseItems(Items[] items) {
         Items chosen = Utils.choose(items);
@@ -23,113 +23,258 @@ public class LootTable {
         return ret;
     }
 
-    Lootable[] getLootable() {
-        ArrayList<Lootable> list = new ArrayList<Lootable>();
-        if (weapons.win) {
+    ItemStack[] getItemStack() {
+        ArrayList<ItemStack> list = new ArrayList<ItemStack>();
+        if (weapons.selected) { // select
             switch (weapons.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Weapon.common)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Weapon.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Weapon.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Weapon.legendary)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
             }
         }
 
-        if (healing.win) {
+        if (healing.selected) {
             switch (healing.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Healing.common)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Healing.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Healing.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Healing.legendary)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
             }
         }
 
-        if (ammo.win) {
+        if (ammo.selected) {
             switch (ammo.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Ammo.common)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Ammo.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Ammo.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Ammo.legendary)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
             }
         }
 
-        if (building.win) {
+        if (building.selected) {
             switch (building.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Building.common)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Building.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Building.rare)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Building.legendary)){
-                        list.add(new Lootable(item));
+                        list.add(new ItemStack(item));
                     }
                     break;
             }
         }
-        
-        return list.toArray(new Lootable[0]);
-    }
 
-    Loot generate() {
-        return new Loot(getLootable());
+        if (weapons.selected) {
+            int rng = Utils.random(1, 4);
+            ArmorItem[] items;
+            switch (rng) {
+                case 1:
+                    items = Table.Armor.one;
+                    break; // brak
+                case 2:
+                    items = Table.Armor.two;
+                    break;
+                case 3:
+                    items = Table.Armor.three;
+                    break;
+                case 4:
+                    items = Table.Armor.four;
+                    break;
+                default:
+                    items = null; // Once again, this should (hopefully) never happen. mhm.healing. 
+                    break;
+            }
+
+            for (ArmorItem item : items) {
+                Rarity rarity = LootType.determineRarity(rare);
+                if (Utils.percentage(item.chance)) { // If the item is selected
+                    for (ArmorType type : item.items) {
+                        list.add(new ItemStack(ArmorMaterial.combine(rarity, type)));
+                    }
+                }
+            }
+        }
+        
+        return list.toArray(new ItemStack[0]);
+    }
+}
+
+enum LCG {
+    LEATHER,
+    CHAINMAIL,
+    GOLD
+}
+
+interface ArmorMaterial {
+    static Material combine(Rarity rarity, ArmorType type) {
+        switch (rarity) {
+            case COMMON: // LCG
+                LCG material;
+                switch (Utils.random(0, 2)) {
+                    case 0:
+                        material = LCG.LEATHER;
+                        break;
+                    case 1:
+                        material = LCG.CHAINMAIL;
+                        break;
+                    case 2:
+                        material = LCG.GOLD;
+                        break;
+                    default:
+                        material = null; // Should happen. Just kidding!
+                        break;
+                }
+
+                switch (type) {
+                    case HELMET:
+                        switch (material) {
+                            case LEATHER:
+                                return Material.LEATHER_HELMET;
+                            case CHAINMAIL:
+                                return Material.CHAINMAIL_HELMET;
+                            case GOLD:
+                                return Material.GOLDEN_HELMET;
+                        }
+                        break;
+                    case CHESTPLATE:
+                        switch (material) {
+                            case LEATHER:
+                                return Material.LEATHER_CHESTPLATE;
+                            case CHAINMAIL:
+                                return Material.CHAINMAIL_CHESTPLATE;
+                            case GOLD:
+                                return Material.GOLDEN_CHESTPLATE;
+                        }
+                        break;
+                    case LEGGINGS:
+                        switch (material) {
+                            case LEATHER:
+                                return Material.LEATHER_LEGGINGS;
+                            case CHAINMAIL:
+                                return Material.CHAINMAIL_LEGGINGS;
+                            case GOLD:
+                                return Material.GOLDEN_LEGGINGS;
+                        }
+                        break;
+                    case BOOTS:
+                        switch (material) {
+                            case LEATHER:
+                                return Material.LEATHER_BOOTS;
+                            case CHAINMAIL:
+                                return Material.CHAINMAIL_BOOTS;
+                            case GOLD:
+                                return Material.GOLDEN_BOOTS;
+                        }
+                        break;
+                    default:
+                        return null; // Should never happen.
+                }
+                break;
+            case RARE: // Iron
+                switch (type) {
+                    case HELMET:
+                        return Material.IRON_HELMET;
+                    case CHESTPLATE:
+                        return Material.IRON_CHESTPLATE;
+                    case LEGGINGS:
+                        return Material.IRON_LEGGINGS;
+                    case BOOTS:
+                        return Material.IRON_BOOTS;
+                    default:
+                        return null;
+                }
+            case EPIC: // Diamond
+                switch (type) {
+                    case HELMET:
+                        return Material.DIAMOND_HELMET;
+                    case CHESTPLATE:
+                        return Material.DIAMOND_CHESTPLATE;
+                    case LEGGINGS:
+                        return Material.DIAMOND_LEGGINGS;
+                    case BOOTS:
+                        return Material.DIAMOND_BOOTS;
+                    default:
+                        return null;
+                }
+            case LEGENDARY: // Netherite
+                switch (type) {
+                    case HELMET:
+                        return Material.NETHERITE_HELMET;
+                    case CHESTPLATE:
+                        return Material.NETHERITE_CHESTPLATE;
+                    case LEGGINGS:
+                        return Material.NETHERITE_LEGGINGS;
+                    case BOOTS:
+                        return Material.NETHERITE_BOOTS;
+                    default:
+                        return null;
+                }
+            default:
+                return null;
+                
+        }
+        return null; // I shouldn't need this, something's wrong up there but I'm not going there again.
     }
 }
 
@@ -169,6 +314,7 @@ class Items {
         }
     }
 }
+
 
 interface Table {
 
@@ -273,6 +419,102 @@ interface Table {
             new Items(Material.ANCIENT_DEBRIS, 5)
         };
     }
+
+    static interface Armor {
+        static ArmorItem[] one = {
+            new ArmorItem(ArmorType.HELMET, 10),
+            new ArmorItem(ArmorType.CHESTPLATE, 40),
+            new ArmorItem(ArmorType.LEGGINGS, 40),
+            new ArmorItem(ArmorType.BOOTS, 10)
+        };
+
+        static ArmorItem[] two = {
+            new ArmorItem(new ArmorType[]{ // Helmet + boots
+                ArmorType.HELMET,
+                ArmorType.BOOTS
+            }, 45),
+            
+            new ArmorItem(new ArmorType[]{
+                ArmorType.HELMET,
+                ArmorType.CHESTPLATE
+            }, 10),
+            
+            new ArmorItem(new ArmorType[]{
+                ArmorType.HELMET,
+                ArmorType.LEGGINGS
+            }, 15),
+            
+            new ArmorItem(new ArmorType[]{
+                ArmorType.CHESTPLATE,
+                ArmorType.BOOTS
+            }, 10),
+            
+            new ArmorItem(new ArmorType[]{
+                ArmorType.CHESTPLATE,
+                ArmorType.LEGGINGS
+            }, 5),
+
+            new ArmorItem(new ArmorType[]{
+                ArmorType.LEGGINGS,
+                ArmorType.BOOTS
+            }, 15),
+        };
+
+        static ArmorItem[] three = {
+            new ArmorItem(new ArmorType[]{
+                ArmorType.HELMET,
+                ArmorType.CHESTPLATE,
+                ArmorType.LEGGINGS
+            }, 15),
+            new ArmorItem(new ArmorType[]{
+                ArmorType.HELMET,
+                ArmorType.CHESTPLATE,
+                ArmorType.BOOTS
+            }, 35),
+            new ArmorItem(new ArmorType[]{
+                ArmorType.HELMET,
+                ArmorType.LEGGINGS,
+                ArmorType.BOOTS
+            }, 35),
+            new ArmorItem(new ArmorType[]{
+                ArmorType.CHESTPLATE,
+                ArmorType.LEGGINGS,
+                ArmorType.BOOTS
+            }, 15),
+        };
+
+        static ArmorItem[] four = {
+            new ArmorItem(new ArmorType[]{
+                ArmorType.HELMET,
+                ArmorType.CHESTPLATE,
+                ArmorType.LEGGINGS, // i did something :D
+                ArmorType.BOOTS
+            }, 100)
+        };
+    }
+}
+
+class ArmorItem {
+    ArmorType[] items;
+    int chance;
+
+    public ArmorItem(ArmorType[] _items, int _chance) { // with array (list) ie multiple piece
+        items = _items;
+        chance = _chance;
+    }
+
+    public ArmorItem(ArmorType _item, int _chance) { // without array ie 1 SINGLE PIECE ;-;
+        items = new ArmorType[1];
+        items[0] = _item;
+        chance = _chance;
+    }
+}
+
+enum ArmorType {
+    HELMET, // lever was here :D
+    CHESTPLATE, // yeah, he was!
+    LEGGINGS,
+    BOOTS
 }
 
 enum Rarity {
@@ -284,15 +526,15 @@ enum Rarity {
 
 class LootType {
 
-    boolean win;
+    boolean selected;
     Rarity rarity;
 
     public LootType(int percentage, boolean endChest) {
-        win = Utils.percentage(percentage);
+        selected = Utils.percentage(percentage);
         rarity = determineRarity(endChest);
     }
 
-    Rarity determineRarity(boolean rare) {
+    static Rarity determineRarity(boolean rare) {
         int chance = Utils.random(0, 100);
 
         if (rare) {
