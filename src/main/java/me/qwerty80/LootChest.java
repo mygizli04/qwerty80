@@ -2,31 +2,38 @@ package me.qwerty80;
 
 import java.util.Random;
 
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.block.Chest;
+import org.bukkit.Bukkit;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+
+
 public class LootChest {
     public LootTable loot;
-    public Location block;
+    boolean rare;
 
-    public LootChest(LootTable _loot, Location _block) {
+    public LootChest(LootTable _loot, boolean _rare) {
         loot = _loot;
-        block = _block;
+        rare = _rare;
     }
 
 
-    public void generate() {
+    public Inventory generate() {
         // Decide which items to put in the chest
         ItemStack[] newItems = loot.getItemStack();
+        Component name;
 
-        // Replace whatever's there with a chest
-        block.getBlock().setType(Material.CHEST);
+        if (rare) {
+            name = Component.text("Rare Chest");
+        }
+        else {
+            name = Component.text("Regular Chest");
+        }
 
         // Add the items to the chest
-        Inventory inventory = ((Chest) block.getBlock().getState()).getInventory();
+        Inventory inventory = Bukkit.getServer().createInventory(null, 27, name);
+
         Integer[] chosenSlots = new Integer[newItems.length];
         for (int i = 0; i < newItems.length; i++) {
             Random random = new Random();
@@ -37,5 +44,7 @@ public class LootChest {
             chosenSlots[i] = chosenSlot;
             inventory.setItem(chosenSlot, newItems[i]);
         }
+
+        return inventory;
     }
 }

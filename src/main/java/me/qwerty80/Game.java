@@ -22,7 +22,7 @@ public class Game {
         return new Location(world, x, y, z).getBlock();
     }
 
-    int chestCount = 50; // how many chests will be generated
+    int chestCount = 1000; // how many chests will be generated
     
     public Game(int id) {
         // Initilize multiverse
@@ -42,9 +42,14 @@ public class Game {
             }
 
             if (getMaterial(x, y, z) == Material.AIR) {
-                getBlock(x, y, z).setType(Material.CHEST);
                 LootTable table = new LootTable();
-                LootChest chest = new LootChest(table, new Location(world, x, y, z));
+                if (table.rare) {
+                    getBlock(x, y, z).setType(Material.ENDER_CHEST);
+                }
+                else {
+                    getBlock(x, y, z).setType(Material.CHEST);
+                }
+                LootChest chest = new LootChest(table, table.rare);
                 chest.generate();
             }
         }

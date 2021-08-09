@@ -1,10 +1,17 @@
 package me.qwerty80;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 
 // Handle everything command related.
 // on command:
@@ -55,6 +62,11 @@ public class Commands implements CommandExecutor {
                                 sender.sendMessage("Only players can join games.");
                             }
 
+                            break;
+                        case "guitest":
+                            Inventory inventory = Bukkit.getServer().createInventory(null, 27, Component.text("Normal Chest").color(NamedTextColor.AQUA));
+                            inventory.addItem(new ItemStack(Material.STONE));
+                            ((Player) sender).openInventory(inventory);
                             break;
                         default: // everything else
                             sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");

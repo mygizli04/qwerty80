@@ -5,20 +5,15 @@ import java.util.ArrayList;
 import org.bukkit.Bukkit;
 
 public interface Utils {
-    static int random(int min, int max) {
+    static int random(double min, double max) {
         return (int) Math.round(Math.random() * (max - min) + min);
     }
 
-    static boolean percentage(int percent) {
-        if (Math.random() < (percent / 100)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    static boolean percentage(double percent) {
+        return Math.random() < (percent / 100);
     }
 
-    static boolean range(int num, int min, int max) {
+    static boolean range(double num, double min, double max) {
         return (min <= num) && (num <= max);
     }
 

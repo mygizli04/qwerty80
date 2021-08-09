@@ -23,6 +23,8 @@ public class Qwerty80 extends JavaPlugin {
 
         getCommand("Lobby").setExecutor(commandHandler);
 
+        getServer().getPluginManager().registerEvents(new ChestGUI(), this);
+
         // Ready multiverse
         MultiverseCore multiverse = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core"); // <relevant line for help on discord>
         MVWorldManager worldManager = multiverse.getMVWorldManager();

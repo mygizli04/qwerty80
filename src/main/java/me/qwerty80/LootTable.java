@@ -9,10 +9,10 @@ public class LootTable {
 
     boolean rare = Utils.percentage(10);
     LootType weapons = new LootType(100, rare);
-    LootType healing = new LootType(30, rare);
-    LootType ammo = new LootType(20, rare);
+    LootType healing = new LootType(60, rare);
+    LootType ammo = new LootType(50 , rare);
     LootType building = new LootType(100, rare);
-    LootType armor = new LootType(50, rare); // not going to use for now.
+    LootType armor = new LootType(40, rare);
 
     ItemStack[] chooseItems(Items[] items) {
         Items chosen = Utils.choose(items);
@@ -125,7 +125,7 @@ public class LootTable {
             }
         }
 
-        if (weapons.selected) {
+        if (armor.selected) {
             int rng = Utils.random(1, 4);
             ArmorItem[] items;
             switch (rng) {
@@ -170,67 +170,60 @@ interface ArmorMaterial {
     static Material combine(Rarity rarity, ArmorType type) {
         switch (rarity) {
             case COMMON: // LCG
-                LCG material;
-                switch (Utils.random(0, 2)) {
-                    case 0:
-                        material = LCG.LEATHER;
-                        break;
-                    case 1:
-                        material = LCG.CHAINMAIL;
-                        break;
-                    case 2:
-                        material = LCG.GOLD;
-                        break;
-                    default:
-                        material = null; // Should happen. Just kidding!
-                        break;
-                }
+                LCG lcg = Utils.choose(new LCG[]{
+                    LCG.LEATHER,
+                    LCG.CHAINMAIL,
+                    LCG.GOLD
+                });
 
                 switch (type) {
                     case HELMET:
-                        switch (material) {
+                        switch (lcg) {
                             case LEATHER:
                                 return Material.LEATHER_HELMET;
                             case CHAINMAIL:
                                 return Material.CHAINMAIL_HELMET;
                             case GOLD:
                                 return Material.GOLDEN_HELMET;
+                            default:
+                                return null;
                         }
-                        break;
                     case CHESTPLATE:
-                        switch (material) {
+                        switch (lcg) {
                             case LEATHER:
                                 return Material.LEATHER_CHESTPLATE;
                             case CHAINMAIL:
                                 return Material.CHAINMAIL_CHESTPLATE;
                             case GOLD:
                                 return Material.GOLDEN_CHESTPLATE;
+                            default:
+                                return null;
                         }
-                        break;
                     case LEGGINGS:
-                        switch (material) {
+                        switch (lcg) {
                             case LEATHER:
                                 return Material.LEATHER_LEGGINGS;
                             case CHAINMAIL:
                                 return Material.CHAINMAIL_LEGGINGS;
                             case GOLD:
                                 return Material.GOLDEN_LEGGINGS;
+                            default:
+                                return null;
                         }
-                        break;
                     case BOOTS:
-                        switch (material) {
+                        switch (lcg) {
                             case LEATHER:
                                 return Material.LEATHER_BOOTS;
                             case CHAINMAIL:
                                 return Material.CHAINMAIL_BOOTS;
                             case GOLD:
                                 return Material.GOLDEN_BOOTS;
+                            default:
+                                return null;
                         }
-                        break;
                     default:
-                        return null; // Should never happen.
+                        return null;
                 }
-                break;
             case RARE: // Iron
                 switch (type) {
                     case HELMET:
@@ -272,9 +265,7 @@ interface ArmorMaterial {
                 }
             default:
                 return null;
-                
         }
-        return null; // I shouldn't need this, something's wrong up there but I'm not going there again.
     }
 }
 
@@ -408,11 +399,12 @@ interface Table {
         };
 
         static Items[] rare = {
-            new Items(Material.STONE, 20)
+            new Items(Material.COAL_BLOCK, 5),
+            new Items(Material.STONE, 15)
         };
 
         static Items[] epic = {
-            new Items(Material.COAL, 10)
+            new Items(Material.COAL_BLOCK, 10)
         };
 
         static Items[] legendary = {
@@ -549,16 +541,16 @@ class LootType {
             }
         }
         else {
-            if (Utils.range(chance, 0, 5)) {
+            if (Utils.range(chance, 0, 5)) { // 5%
                 return Rarity.LEGENDARY;
             }
-            else if (Utils.range(chance, 5, 20)) {
+            else if (Utils.range(chance, 5, 20)) { // 15%
                 return Rarity.EPIC;
             }
-            else if (Utils.range(chance, 20, 55)) {
+            else if (Utils.range(chance, 20, 55)) { // 35%
                 return Rarity.RARE;
             }
-            else if (Utils.range(chance, 55, 100)) {
+            else if (Utils.range(chance, 55, 100)) { // 45%
                 return Rarity.COMMON;
             }
             else {
