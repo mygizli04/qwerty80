@@ -1,17 +1,10 @@
 package me.qwerty80;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 
 // Handle everything command related.
 // on command:
@@ -53,21 +46,49 @@ public class Commands implements CommandExecutor {
                             sender.sendMessage("There are currently " + main.games.size() + " games active.");
                             break;
                         case "join": // /escape join
-                            if (sender instanceof Player) { // Making sure a player sent the command.
-                                Location world = main.getServer().getWorld("escape").getSpawnLocation(); // Getting the world
-                                Player player = (Player) sender; // If the sender isn't a player this will error! This allows us to use teleport and stuff..
-                                player.teleport(world); // I wonder what this does..
+                            int destination = 0;
+
+                            if (args.length >= 2) {
+                                int target;
+                                try {
+                                    target = Integer.parseInt(args[1]);
+                                }
+                                catch (NumberFormatException err) {
+                                    sender.sendMessage("The argument provided is not a valid number.");
+                                    return true;
+                                }
+
+                                if (!Utils.range(target, 1, main.games.size())) {
+                                    sender.sendMessage("That is not a valid game.");
+                                    return true;
+                                }
+
+                                destination = target - 1;
+                            }
+
+                            if (sender instanceof Player) {
+                                Utils.teleportPlayerToWorld(sender, destination + "_GAME_escape_new");
                             }
                             else {
-                                sender.sendMessage("Only players can join games.");
+                                sender.sendMessage("I can't teleport the console you know...");
                             }
 
                             break;
-                        case "guitest":
-                            Inventory inventory = Bukkit.getServer().createInventory(null, 27, Component.text("Normal Chest").color(NamedTextColor.AQUA));
-                            inventory.addItem(new ItemStack(Material.STONE));
-                            ((Player) sender).openInventory(inventory);
-                            break;
+                        case "debug":
+                            if (sender instanceof Player) {
+                                Player player = (Player) sender;
+                                if (Utils.checkPermission(player, "escape.debug")) {
+                                    sender.sendMessage("oops, not implemented");
+                                    return true;
+                                }
+                                else {
+                                    return false;
+                                }
+                            }
+                            else {
+                                sender.sendMessage("debugging here does not seem like a great idea, captain.");
+                                return true;
+                            }
                         default: // everything else
                             sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");
                     }
@@ -79,6 +100,9 @@ public class Commands implements CommandExecutor {
                     Location world = main.getServer().getWorld("empty").getSpawnLocation();
                     Player player = (Player) sender;
                     player.teleport(world);
+                }
+                else {
+                    sender.sendMessage("Bruh I can't teleport the console anywhere...");
                 }
                 return true;
            // If the command isn't defined

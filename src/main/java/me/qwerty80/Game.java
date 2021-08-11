@@ -22,7 +22,7 @@ public class Game {
         return new Location(world, x, y, z).getBlock();
     }
 
-    int chestCount = 1000; // how many chests will be generated
+    int chestCount = 10000; // how many chests will be generated
     
     public Game(int id) {
         // Initilize multiverse

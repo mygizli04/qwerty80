@@ -3,7 +3,7 @@ main: me.qwerty80.Qwerty80
 version: 1.0
 api-version: 1.17
 author: sbeve#4701, JusteyCrustey#1293 and LeverClient#1634
-depend: ['Multiverse-Core']
+depend: ['Multiverse-Core', 'LuckPerms']
 commands:
   escape:
     description: Manage and join escape games.
@@ -11,3 +11,7 @@ commands:
   lobby:
     description: Go back to the lobby cause ur a chicken
     usage: /lobby
+permissions:
+  escape.debug:
+    description: Debug the escape plugin.
+    default: false

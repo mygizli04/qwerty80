@@ -6,8 +6,16 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 public class TabComplete implements TabCompleter {
+
+    Qwerty80 plugin;
+
+    public TabComplete(Qwerty80 _plugin) {
+        plugin = _plugin;
+    }
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         switch (command.getName().toLowerCase()) {
@@ -17,9 +25,19 @@ public class TabComplete implements TabCompleter {
                     case "list": // If first argument is list we don't have any more suggestions.
                         // So if the player types /escape list, we don't have anything else to suggest.
                         return ret;
+                    case "join":
+                        for (int i = 0; plugin.games.size() > i; i++) {
+                            ret.add(Integer.toString(i + 1));
+                        }
+                        return ret;
                     default: 
                         ret.add("list");
                         ret.add("join");
+                        if (sender instanceof Player) {
+                            if (Utils.checkPermission(sender, "escape.debug")) {
+                                ret.add("debug");
+                            }
+                        }
                         return ret;
                 }
             default:

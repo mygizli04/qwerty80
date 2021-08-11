@@ -3,6 +3,13 @@ package me.qwerty80;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.RegisteredServiceProvider;
+
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.model.user.User;
 
 public interface Utils {
     static int random(double min, double max) {
@@ -56,5 +63,62 @@ public interface Utils {
         }
 
         return null; // Should never happen (pls). :L
+    }
+
+    static RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+    static LuckPerms luckperms = lpProvider.getProvider();
+
+    static boolean checkPermission(User user, String permission) {
+        return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
+    }
+
+    static boolean checkPermission(Player player, String permission) {
+        return checkPermission(luckperms.getPlayerAdapter(Player.class).getUser(player), permission);
+    }
+
+    static boolean checkPermission(CommandSender sender, String permission) {
+        if (sender instanceof Player) {
+            return checkPermission((Player) sender, permission);
+        }
+        else {
+            return true;
+        }
+    }
+
+    static boolean stringIsTruthy(String string) {
+        if (string == null) {
+            return false;
+        }
+        
+        if (string.length() == 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    static void teleportPlayerToWorld(Player player, String world) {
+        Location destination = Bukkit.getServer().getWorld(world).getSpawnLocation();
+        player.teleport(destination);
+    }
+
+    static void teleportPlayerToWorld(CommandSender sender, String world) {
+        if (sender instanceof Player) {
+            teleportPlayerToWorld((Player) sender, world);
+        }
+        else {
+            Bukkit.getLogger().warning("Tried to teleport non-entity sender! Failing silently instead...");
+        }
+    }
+
+    static double chooseHighest(double[] array) {
+        // I sure do hope no one passes a negative number here :)
+        double ret = 0;
+        for (double num : array) {
+            if (num > ret) {
+                ret = num;
+            }
+        }
+        return ret;
     }
 }

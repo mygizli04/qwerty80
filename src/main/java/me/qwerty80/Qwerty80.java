@@ -15,11 +15,12 @@ public class Qwerty80 extends JavaPlugin {
     public Stack<Game> games = new Stack<Game>(); // This stack will have every game instance.
 
     Commands commandHandler = new Commands(this);
+    TabComplete tabCompleter = new TabComplete(this);
 
     @Override
     public void onEnable() {
         getCommand("escape").setExecutor(commandHandler);
-        getCommand("escape").setTabCompleter(new TabComplete());
+        getCommand("escape").setTabCompleter(tabCompleter);
 
         getCommand("Lobby").setExecutor(commandHandler);
 

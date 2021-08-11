@@ -7,12 +7,30 @@ import org.bukkit.inventory.ItemStack;
 
 public class LootTable {
 
-    boolean rare = Utils.percentage(10);
-    LootType weapons = new LootType(100, rare);
-    LootType healing = new LootType(60, rare);
-    LootType ammo = new LootType(50 , rare);
-    LootType building = new LootType(100, rare);
-    LootType armor = new LootType(40, rare);
+    boolean rare;
+    LootType weapons;
+    LootType healing;
+    LootType ammo;
+    LootType building;
+    LootType armor;
+
+    public LootTable() {
+        rare = Utils.percentage(10);
+        armor = new LootType(40, rare);
+        weapons = new LootType(100, rare);
+        building = new LootType(100, rare);
+        ammo = new LootType(50 , rare);
+        healing = new LootType(60, rare);
+    }
+
+    public LootTable(boolean _rare) {
+        rare = _rare;
+        armor = new LootType(40, rare);
+        weapons = new LootType(100, rare);
+        building = new LootType(100, rare);
+        ammo = new LootType(50 , rare);
+        healing = new LootType(60, rare);
+    }
 
     ItemStack[] chooseItems(Items[] items) {
         Items chosen = Utils.choose(items);
@@ -38,7 +56,7 @@ public class LootTable {
                     }
                     break;
                 case EPIC:
-                    for ( ItemStack item: chooseItems(Table.Weapon.rare)){
+                    for ( ItemStack item: chooseItems(Table.Weapon.epic)){
                         list.add(new ItemStack(item));
                     }
                     break;
@@ -63,7 +81,7 @@ public class LootTable {
                     }
                     break;
                 case EPIC:
-                    for ( ItemStack item: chooseItems(Table.Healing.rare)){
+                    for ( ItemStack item: chooseItems(Table.Healing.epic)){
                         list.add(new ItemStack(item));
                     }
                     break;
@@ -88,7 +106,7 @@ public class LootTable {
                     }
                     break;
                 case EPIC:
-                    for ( ItemStack item: chooseItems(Table.Ammo.rare)){
+                    for ( ItemStack item: chooseItems(Table.Ammo.epic)){
                         list.add(new ItemStack(item));
                     }
                     break;
@@ -113,7 +131,7 @@ public class LootTable {
                     }
                     break;
                 case EPIC:
-                    for ( ItemStack item: chooseItems(Table.Building.rare)){
+                    for ( ItemStack item: chooseItems(Table.Building.epic)){
                         list.add(new ItemStack(item));
                     }
                     break;
@@ -152,6 +170,7 @@ public class LootTable {
                     for (ArmorType type : item.items) {
                         list.add(new ItemStack(ArmorMaterial.combine(rarity, type)));
                     }
+                    break;
                 }
             }
         }
@@ -384,23 +403,23 @@ interface Table {
         };
 
         static Items[] epic = {
-            new Items(Material.FISHING_ROD)
+            new Items(Material.FISHING_ROD),
+            new Items(Material.FIRE_CHARGE, Utils.random(3, 4))
         };
 
         static Items[] legendary = {
             new Items(Material.FISHING_ROD),
-            new Items(Material.FIRE_CHARGE, Utils.random(2, 4))
         };
     }
 
     static interface Building {
         static Items[] common = {
-            new Items(Material.STONE, 10)
+            new Items(Material.STONE, 15)
         };
 
         static Items[] rare = {
             new Items(Material.COAL_BLOCK, 5),
-            new Items(Material.STONE, 15)
+            new Items(Material.STONE, 20)
         };
 
         static Items[] epic = {

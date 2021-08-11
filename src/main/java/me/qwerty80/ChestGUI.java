@@ -17,7 +17,20 @@ public class ChestGUI implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().getWorld().getName().endsWith("_GAME_escape_new") && isChest(event.getClickedBlock().getType())) {
-            LootTable table = new LootTable();
+            LootTable table;
+            switch (event.getClickedBlock().getType()) {
+                case CHEST:
+                    table = new LootTable(false);
+                    table.rare = false;
+                    break;
+                case ENDER_CHEST:
+                    table = new LootTable(true);
+                    table.rare = true;
+                    break;
+                default:
+                    // Impossible.
+                    return;
+            }
             Inventory inventory = new LootChest(table, table.rare).generate();
 
             event.getPlayer().playSound(event.getClickedBlock().getLocation(), Sound.BLOCK_CHEST_OPEN, 100, 1); 

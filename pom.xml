@@ -30,17 +30,32 @@
       <version>4.3.0</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>net.luckperms</groupId>
+      <artifactId>api</artifactId>
+      <version>5.3</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <repositories>
+    <!-- Paper -->
     <repository>
       <id>papermc</id>
       <url>https://papermc.io/repo/repository/maven-public/</url>
     </repository>
 
+    <!-- Multiverse -->
     <repository>
       <id>OnARandomBox</id>
       <url>http://repo.onarandombox.com/content/groups/public/</url>
+    </repository>
+  
+    <!-- LuckPerms -->
+    <repository>
+      <id>luck-repo</id>
+      <url>https://nexus.lucko.me/repository/all/</url>
     </repository>
   </repositories>
 
