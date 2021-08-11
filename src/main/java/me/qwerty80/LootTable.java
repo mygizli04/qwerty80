@@ -47,22 +47,22 @@ public class LootTable {
             switch (weapons.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Weapon.common)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Weapon.rare)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Weapon.epic)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Weapon.legendary)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
             }
@@ -72,22 +72,22 @@ public class LootTable {
             switch (healing.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Healing.common)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Healing.rare)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Healing.epic)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Healing.legendary)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
             }
@@ -97,22 +97,22 @@ public class LootTable {
             switch (ammo.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Ammo.common)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Ammo.rare)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Ammo.epic)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Ammo.legendary)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
             }
@@ -122,22 +122,22 @@ public class LootTable {
             switch (building.rarity) {
                 case COMMON:
                     for ( ItemStack item: chooseItems(Table.Building.common)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case RARE:
                     for ( ItemStack item: chooseItems(Table.Building.rare)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case EPIC:
                     for ( ItemStack item: chooseItems(Table.Building.epic)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
                 case LEGENDARY:
                     for ( ItemStack item: chooseItems(Table.Building.legendary)){
-                        list.add(new ItemStack(item));
+                        list.add(item);
                     }
                     break;
             }
