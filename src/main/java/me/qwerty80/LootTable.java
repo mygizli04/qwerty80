@@ -1,6 +1,7 @@
 package me.qwerty80;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -13,6 +14,14 @@ public class LootTable {
     LootType ammo;
     LootType building;
     LootType armor;
+
+    public void forEachCategory(Consumer<LootType> lambda) {
+        lambda.accept(weapons);
+        lambda.accept(healing);
+        lambda.accept(ammo);
+        lambda.accept(building);
+        lambda.accept(armor);
+    }
 
     public LootTable() {
         rare = Utils.percentage(10);
