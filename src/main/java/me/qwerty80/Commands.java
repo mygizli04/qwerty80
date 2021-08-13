@@ -67,70 +67,13 @@ public class Commands implements CommandExecutor {
                             }
 
                             if (sender instanceof Player) {
-                                Utils.teleportPlayerToWorld(sender, destination + "_GAME_escape_new");
+                                Utils.teleportPlayerToWorld(sender, destination + "_GAME_island_water");
                             }
                             else {
                                 sender.sendMessage("I can't teleport the console you know...");
                             }
 
                             break;
-                        case "debug":
-                            if (sender instanceof Player) {
-                                Player player = (Player) sender;
-                                if (Utils.checkPermission(player, "escape.debug")) {
-                                    if (args.length < 2) {
-                                        sender.sendMessage("Debug what? I didn't work on that fancy tab thing for nothing, boyo!");
-                                    }
-                                    else {
-                                        switch (args[1]) {
-                                            case "createchest":
-                                                if (args.length < 3) {
-                                                    sender.sendMessage("Fun fact! You can use tab to see what values you can use, but whatever.\nUsage: /escape debug createchest <common|rare|epic|legendary> <rare|regular>");
-                                                }
-                                                else {
-                                                    Rarity rarity;
-
-                                                    LootTable table = new LootTable(false);
-
-                                                    switch (args[2]) {
-                                                        case "common":
-                                                            rarity = Rarity.COMMON;
-                                                            break;
-                                                        case "rare":
-                                                            rarity = Rarity.RARE;
-                                                            break;
-                                                        case "epic":
-                                                            rarity = Rarity.EPIC;
-                                                            break;
-                                                        case "legendary":
-                                                            rarity = Rarity.LEGENDARY;
-                                                            break;
-                                                        default:
-                                                            sender.sendMessage("It's common, rare, epic, or legendary not whatever *that* is...");
-                                                            return true;
-                                                    }
-
-                                                    table.forEachCategory((category) -> {
-                                                        category.rarity = rarity;
-                                                    });
-
-                                                    player.openInventory(new LootChest(table, false).generate());
-                                                }
-                                                break;
-                                            default:
-                                                sender.sendMessage("Oh yeah let me debug that real quick oh wait, yeah, no one coded that in :)");
-                                        }
-                                    }
-                                    return true;
-                                }
-                                else {
-                                    return false;
-                                }
-                            }
-                            else {
-                                sender.sendMessage("debugging here does not seem like a great idea, captain.");
-                                return true;
-                            }
                         default: // everything else
                             sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");
                     }

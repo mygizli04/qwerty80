@@ -23,7 +23,7 @@ public class ChestGUI implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().getWorld().getName().endsWith("_GAME_escape_new") && isChest(event.getClickedBlock().getType())) {
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().getWorld().getName().endsWith("_GAME_island_water") && isChest(event.getClickedBlock().getType())) {
             LootTable table;
             switch (event.getClickedBlock().getType()) {
                 case CHEST:
@@ -45,26 +45,30 @@ public class ChestGUI implements Listener {
             event.getPlayer().openInventory(inventory);
             event.getClickedBlock().setType(Material.AIR);
 
-            inventories.add(new PlayerInventory(event.getPlayer(), inventory));
+            inventories.add(new PlayerInventory(event.getPlayer(), inventory, event.getClickedBlock().getLocation()));
         }
     }
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
+        ArrayList<PlayerInventory> toRemove = new ArrayList<PlayerInventory>();
+        
         inventories.forEach((inventory) -> {
             if (inventory.player == event.getPlayer()) {
+                ((Player) event.getPlayer()).playSound(inventory.location, Sound.BLOCK_CHEST_CLOSE, 100, 1);
                 inventory.inventory.forEach((item) -> {
                     if (item == null) {
                         return;
                     }
-                    event.getPlayer().getWorld().dropItem(event.getPlayer().getTargetBlock(null, 5).getLocation().add(new Location(event.getPlayer().getWorld(), 0, 1, 0)), item);
+                    event.getPlayer().getWorld().dropItem(inventory.location, item);
                 });
 
-                try {
-                    inventories.remove(inventory);
-                }
-                catch (Exception err) {}
+                toRemove.add(inventory);
             }
+        });
+
+        toRemove.forEach((remove) -> {
+            inventories.remove(remove);
         });
     }
 }
@@ -72,9 +76,11 @@ public class ChestGUI implements Listener {
 class PlayerInventory {
     Player player;
     Inventory inventory;
+    Location location;
 
-    public PlayerInventory(Player _player, Inventory _inventory) {
+    public PlayerInventory(Player _player, Inventory _inventory, Location _location) {
         player = _player;
         inventory = _inventory;
+        location = _location;
     }
 }

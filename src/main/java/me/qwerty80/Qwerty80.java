@@ -33,7 +33,7 @@ public class Qwerty80 extends JavaPlugin {
         //Delete old worlds (if any)
         Collection<MultiverseWorld> worlds = worldManager.getMVWorlds();
         worlds.forEach(world -> {
-            if (world.getName().endsWith("_GAME_escape_new")) {
+            if (world.getName().endsWith("_GAME_island_water")) {
                 worldManager.deleteWorld(world.getName());
             }
         });

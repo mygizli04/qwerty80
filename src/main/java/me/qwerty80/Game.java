@@ -29,16 +29,31 @@ public class Game {
         MultiverseCore multiverse = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
         MVWorldManager worldManager = multiverse.getMVWorldManager();
 
-        worldManager.cloneWorld("escape_new", id + "_GAME_escape_new");
-        world = Bukkit.getServer().getWorld(id + "_GAME_escape_new");
+        worldManager.cloneWorld("island_water", id + "_GAME_island_water");
+        world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
 
         for (int i = 0; i != chestCount; i++) {
-            int x = Utils.random(-69, 447);
-            int y = Utils.random(77, 78);
-            int z = Utils.random(-69, 447);
+            int x = Utils.random(-174, 941);
+            int y = Utils.random(31, 38);
+            int z = Utils.random(12, 887);
 
-            if (y == 78 && getMaterial(x, 77, z) == Material.AIR) {
-                y = 77;
+            while (getMaterial(x, y - 1, z) == Material.AIR) {
+                y -= 1;
+            }
+
+            if (getMaterial(x, y - 1, z) == Material.WATER) {
+                // Don't gen on water, silly!
+                i--;
+                continue;
+            }
+
+            while (getMaterial(x, y, z) != Material.AIR) {
+                if (y == 255) {
+                    // Eh at this point don't even bother.
+                    i--;
+                    continue;
+                }
+                y += 1;
             }
 
             if (getMaterial(x, y, z) == Material.AIR) {

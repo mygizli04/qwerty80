@@ -30,27 +30,9 @@ public class TabComplete implements TabCompleter {
                             ret.add(Integer.toString(i + 1));
                         }
                         return ret;
-                    case "debug":
-                        switch (args.length) {
-                            case 2:
-                                ret.add("createchest");
-                                break;
-                            case 3:
-                                ret.add("common");
-                                ret.add("rare");
-                                ret.add("epic");
-                                ret.add("legendary");
-                                break;
-                        }
-                        return ret;
                     default: 
                         ret.add("list");
                         ret.add("join");
-                        if (sender instanceof Player) {
-                            if (Utils.checkPermission(sender, "escape.debug")) {
-                                ret.add("debug");
-                            }
-                        }
                         return ret;
                 }
             default:
