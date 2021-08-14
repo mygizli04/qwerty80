@@ -68,6 +68,11 @@ public class Commands implements CommandExecutor {
                             sender.sendMessage("There are currently " + main.games.size() + " games active.");
                             break;
                         case "join": // /escape join
+                            if (main.games.size() == 0) {
+                                sender.sendMessage("There are no games to join!");
+                                return true;
+                            }
+
                             int destination = 0;
 
                             if (args.length >= 2) {
@@ -121,6 +126,10 @@ public class Commands implements CommandExecutor {
                                         break;
                                     case "stopgame":
                                         if (Utils.checkPermission(sender, "escape.admin.stopgame")) {
+                                            if (main.games.size() == 0) {
+                                                sender.sendMessage("There are no games to stop!");
+                                                return true;
+                                            }
                                             if (args.length < 3) {
                                                 Bukkit.broadcast(Component.text("Warning: A game instance is being removed. Please ignore the lag. We're sorry for the inconvenience"));
                                                 main.games.get(0).delete();
