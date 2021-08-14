@@ -1,10 +1,15 @@
 package me.qwerty80;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import net.kyori.adventure.text.Component;
 
 // Handle everything command related.
 // on command:
@@ -29,6 +34,23 @@ public class Commands implements CommandExecutor {
             }
             sender.sendMessage(ret);
         }
+    }
+
+    private String errorMessage(CommandSender sender) {
+        String ret = "Unknown subcommand. Available subcommands are: ";
+        if (Utils.checkPermission(sender, "escape.admin.startgame")) {
+            ret += "startgame, ";
+        }
+
+        if (Utils.checkPermission(sender, "escape.admin.stopgame")) {
+            ret += "stopgame, ";
+        }
+
+        if (Utils.checkPermission(sender, "escape.admin.getmap")) {
+            ret += "getmap, ";
+        }
+
+        return ret.substring(0, ret.length() - 2);
     }
 
     @Override
@@ -72,8 +94,70 @@ public class Commands implements CommandExecutor {
                             else {
                                 sender.sendMessage("I can't teleport the console you know...");
                             }
-
                             break;
+                        case "admin":
+                            if (!(sender instanceof Player)) {
+                                sender.sendMessage("whoops sorry no console admin sad face");
+                                return true;
+                            }
+
+                            Player player = (Player) sender;
+                            
+                            if (Utils.checkPermission(player, "escape.admin")) {
+                                if (args.length < 2) {
+                                    sender.sendMessage("oopsie daisy you haven't provided any argsies. Tip: Use tab lmao");
+                                    return true;
+                                }
+
+                                switch (args[1]) {
+                                    case "startgame":
+                                        if (Utils.checkPermission(sender, "escape.admin.startgame")) {
+                                            Bukkit.broadcast(Component.text("Warning: A new game is being generated. Please ignore the lag. We're sorry for the inconvenience"));
+                                            main.games.add(new Game(main.games.size()));
+                                        }
+                                        else {
+                                            sender.sendMessage(errorMessage(sender));
+                                        }
+                                        break;
+                                    case "stopgame":
+                                        if (Utils.checkPermission(sender, "escape.admin.stopgame")) {
+                                            if (args.length < 3) {
+                                                Bukkit.broadcast(Component.text("Warning: A game instance is being removed. Please ignore the lag. We're sorry for the inconvenience"));
+                                                main.games.get(0).delete();
+                                                main.games.remove(0);
+                                            }
+                                            else {
+                                                if (!(Utils.range(Integer.parseInt(args[2]), 1, main.games.size()))) {
+                                                    sender.sendMessage("Cannot stop a game that doesn't exist!");
+                                                    return true;
+                                                }
+
+                                                main.games.get(Integer.parseInt(args[2]) - 1).delete();
+                                                main.games.remove(Integer.parseInt(args[2]) - 1);
+                                            }
+                                        }
+                                        else {
+                                            sender.sendMessage(errorMessage(sender));
+                                        }
+                                        break;
+                                    case "getmap":
+                                        if (Utils.checkPermission(sender, "escape.admin.getmap")) {
+                                            if (sender instanceof Player) {
+                                                sender.sendMessage("§a§lHere's the map of the island for island_water");
+                                                ItemStack item = new ItemStack(Material.FILLED_MAP);
+                                                player.getInventory().addItem(item);
+                                            }
+                                        }
+                                        else {
+                                            sender.sendMessage("Console cant get maps...");
+                                        }
+                                        break;
+                                    default:
+                                        sender.sendMessage(errorMessage(sender));
+                                }
+                                return true;
+                            }
+                            return false;
                         default: // everything else
                             sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");
                     }
@@ -96,3 +180,18 @@ public class Commands implements CommandExecutor {
         }
     }
 }
+
+// I'm muted for a min lol
+
+
+/*
+            case "getmap":
+                if (sender instanceof Player) {
+                    sender.sendMessage("§a§lHere's the map of the island for island_water");
+                    Player player = (Player) sender;
+                    player.getInventory.add(new ItemStack(Material.FILLED_MAP{map:103}, 1));
+                }
+                else {
+                    sender.sendMessage("Console cant get maps...");
+                }
+*/

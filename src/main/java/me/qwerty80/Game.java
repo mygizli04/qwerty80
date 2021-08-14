@@ -22,12 +22,16 @@ public class Game {
         return new Location(world, x, y, z).getBlock();
     }
 
+    MultiverseCore multiverse = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
+    MVWorldManager worldManager = multiverse.getMVWorldManager();
     int chestCount = 10000; // how many chests will be generated
+    
+    public void delete() {
+        worldManager.deleteWorld(world.getName());
+    }
     
     public Game(int id) {
         // Initilize multiverse
-        MultiverseCore multiverse = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core");
-        MVWorldManager worldManager = multiverse.getMVWorldManager();
 
         worldManager.cloneWorld("island_water", id + "_GAME_island_water");
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");

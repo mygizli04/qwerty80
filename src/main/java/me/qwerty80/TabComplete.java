@@ -29,9 +29,25 @@ public class TabComplete implements TabCompleter {
                             ret.add(Integer.toString(i + 1));
                         }
                         return ret;
+                    case "admin":
+                        if (Utils.checkPermission(sender, "escape.admin")) {
+                            if (Utils.checkPermission(sender, "escape.admin.stopgame")) {
+                                ret.add("stopgame");
+                            }
+                            if (Utils.checkPermission(sender, "escape.admin.startgame")) {
+                                ret.add("startgame");
+                            }
+                            if (Utils.checkPermission(sender, "escape.admin.getmap")) {
+                                ret.add("getmap");
+                            }
+                            return ret;
+                        }
                     default: 
                         ret.add("list");
                         ret.add("join");
+                        if (Utils.checkPermission(sender, "escape.admin")) {
+                            ret.add("admin");
+                        }
                         return ret;
                 }
             default:

@@ -12,6 +12,6 @@ commands:
     description: Go back to the lobby cause ur a chicken
     usage: /lobby
 permissions:
-  escape.debug:
-    description: Debug the escape plugin.
+  escape.admin:
+    description: Use admin permissions.
     default: false
