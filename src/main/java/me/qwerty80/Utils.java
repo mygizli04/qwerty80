@@ -1,5 +1,6 @@
 package me.qwerty80;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import org.bukkit.Bukkit;
@@ -120,5 +121,18 @@ public interface Utils {
             }
         }
         return ret;
+    }
+
+    static void delete(String folder) {
+        File index = new File(folder);
+        if (index.isFile()) {
+            index.delete();
+        }
+        else {
+            String[] entries = index.list();
+            for (String entry : entries) {
+                delete(index.getPath() + entry);
+            }
+        }
     }
 }

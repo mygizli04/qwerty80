@@ -33,7 +33,10 @@ public class Game {
     public Game(int id) {
         // Initilize multiverse
 
-        worldManager.cloneWorld("island_water", id + "_GAME_island_water");
+        if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
+            Utils.delete(Bukkit.getServer().getWorldContainer().getAbsolutePath() + "/" + id + "_GAME_island_water");
+            worldManager.cloneWorld("island_water", id + "_GAME_island_water");
+        }
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
         worldManager.getMVWorld(world).setKeepSpawnInMemory(false);
 
