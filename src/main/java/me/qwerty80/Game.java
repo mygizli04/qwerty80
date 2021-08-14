@@ -35,6 +35,7 @@ public class Game {
 
         worldManager.cloneWorld("island_water", id + "_GAME_island_water");
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
+        worldManager.getMVWorld(world).setAutoLoad(false);
 
         for (int i = 0; i != chestCount; i++) {
             int x = Utils.random(-174, 941);
