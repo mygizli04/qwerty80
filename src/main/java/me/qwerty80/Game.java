@@ -35,7 +35,7 @@ public class Game {
 
         worldManager.cloneWorld("island_water", id + "_GAME_island_water");
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
-        worldManager.getMVWorld(world).setAutoLoad(false);
+        worldManager.getMVWorld(world).setKeepSpawnInMemory(false);
 
         for (int i = 0; i != chestCount; i++) {
             int x = Utils.random(-174, 941);
@@ -61,17 +61,15 @@ public class Game {
                 y += 1;
             }
 
-            if (getMaterial(x, y, z) == Material.AIR) {
-                LootTable table = new LootTable();
-                if (table.rare) {
-                    getBlock(x, y, z).setType(Material.ENDER_CHEST);
-                }
-                else {
-                    getBlock(x, y, z).setType(Material.CHEST);
-                }
-                LootChest chest = new LootChest(table, table.rare);
-                chest.generate();
+            LootTable table = new LootTable();
+            if (table.rare) {
+                getBlock(x, y, z).setType(Material.ENDER_CHEST);
             }
+            else {
+                getBlock(x, y, z).setType(Material.CHEST);
+            }
+            LootChest chest = new LootChest(table, table.rare);
+            chest.generate();
         }
     }
 }
