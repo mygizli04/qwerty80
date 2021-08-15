@@ -54,6 +54,7 @@ public class Commands implements CommandExecutor {
         return ret.substring(0, ret.length() - 2);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 
@@ -156,7 +157,7 @@ public class Commands implements CommandExecutor {
                                                 sender.sendMessage("§a§lHere's the map of the island for island_water");
                                                 ItemStack item = new ItemStack(Material.FILLED_MAP);
                                                 MapMeta meta = (MapMeta) item.getItemMeta();
-                                                meta.setMapId(103); // I know it's deprecated, but it's more convenient this way. Sometimes I wonder if convenience > functionality (in limited cases). Anyway, it's staying like this until I can be bothered to fix it.
+                                                meta.setMapView(Bukkit.getServer().getMap(103)); // Replacing
                                                 item.setItemMeta(meta);
                                                 player.getInventory().addItem(item);
                                             }
