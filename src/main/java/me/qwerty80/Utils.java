@@ -3,6 +3,9 @@ package me.qwerty80;
 import java.io.File;
 import java.util.ArrayList;
 
+import com.viaversion.viaversion.api.Via;
+import com.viaversion.viaversion.api.ViaAPI;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
@@ -135,4 +138,7 @@ public interface Utils {
             }
         }
     }
+
+    @SuppressWarnings("unchecked")
+    ViaAPI<Player> viaApi = Via.getAPI();
 }
