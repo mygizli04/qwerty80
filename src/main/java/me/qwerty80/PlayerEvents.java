@@ -28,7 +28,7 @@ public class PlayerEvents implements Listener {
             }
 
             if (version < 735) {
-                event.getPlayer().sendMessage(Component.text("Hey there! Thank you for joining our server. Even though we allow legacy clients to join, please don't forget that since you're on a version below 1.16 some items or block might look different than expected. We do not support versions below 1.16.").color(NamedTextColor.RED));
+                event.getPlayer().sendMessage(Component.text("Hey there! Thank you for joining our server. Even though we allow legacy clients to join, please don't forget that since you're on a version below 1.16 some items or blocks might look different than expected. We do not support versions below 1.16.").color(NamedTextColor.RED));
                 return;
             }
         }, 5);
