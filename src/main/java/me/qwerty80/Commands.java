@@ -157,7 +157,7 @@ public class Commands implements CommandExecutor {
                                                 sender.sendMessage("§a§lHere's the map of the island for island_water");
                                                 ItemStack item = new ItemStack(Material.FILLED_MAP);
                                                 MapMeta meta = (MapMeta) item.getItemMeta();
-                                                meta.setMapView(Bukkit.getServer().getMap(103)); // Replacing
+                                                meta.setMapView(Bukkit.getServer().getMap(103));
                                                 item.setItemMeta(meta);
                                                 player.getInventory().addItem(item);
                                             }
