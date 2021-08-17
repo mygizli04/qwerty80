@@ -3,8 +3,12 @@ package me.qwerty80;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
+import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -32,5 +36,28 @@ public class PlayerEvents implements Listener {
                 return;
             }
         }, 5);
+    }
+
+    @EventHandler
+    public void onPlayerLeave(PlayerQuitEvent event) {
+        try {
+            Utils.getPlayersGame(event.getPlayer(), main.games).playerLeave(event.getPlayer());
+        }
+        catch (NotFoundException err) {
+            // Do nothing.
+        }
+
+        event.getPlayer().teleport(Bukkit.getWorld("empty").getSpawnLocation());
+    }
+    
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
+            return;
+        }
+
+        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType().name().contains("_BED")) {
+            event.setCancelled(true);
+        }
     }
 }

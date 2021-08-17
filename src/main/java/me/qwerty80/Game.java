@@ -1,5 +1,7 @@
 package me.qwerty80;
 
+import java.util.ArrayList;
+
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
 
@@ -8,11 +10,28 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 // This class will handle everything regarding a single game
 public class Game {
 
     World world;
+    public ArrayList<Player> players = new ArrayList<Player>();
+
+    void setPlayerInventory(Player player) {
+        player.getInventory().setItem(0, new ItemStack(Material.STONE, 1));
+    }
+
+    public void playerJoin(Player player) {
+        players.add(player);
+        setPlayerInventory(player);
+    }
+
+    public void playerLeave(Player player) {
+        players.remove(player);
+        player.getInventory().clear();
+    }
 
     Material getMaterial(int x, int y, int z) {
         return getBlock(x, y, z).getType();
@@ -32,13 +51,15 @@ public class Game {
     
     public Game(int id) {
         // Initilize multiverse
-
-        if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
-            Utils.delete(Bukkit.getServer().getWorldContainer().getAbsolutePath() + "/" + id + "_GAME_island_water");
-            worldManager.cloneWorld("island_water", id + "_GAME_island_water");
-        }
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
-        worldManager.getMVWorld(world).setKeepSpawnInMemory(false);
+        
+        if (world == null) {
+            if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
+                Utils.delete(Bukkit.getServer().getWorldContainer().getAbsolutePath() + "/" + id + "_GAME_island_water");
+                worldManager.cloneWorld("island_water", id + "_GAME_island_water");
+            }
+            world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
+        }
 
         for (int i = 0; i != chestCount; i++) {
             int x = Utils.random(-174, 941);
@@ -46,6 +67,11 @@ public class Game {
             int z = Utils.random(12, 887);
 
             while (getMaterial(x, y - 1, z) == Material.AIR) {
+                if (y == 0) {
+                    // Give up.
+                    i--;
+                    continue;
+                }
                 y -= 1;
             }
 

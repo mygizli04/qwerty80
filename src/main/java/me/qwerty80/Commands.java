@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 
+import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
 
 // Handle everything command related.
@@ -96,6 +97,7 @@ public class Commands implements CommandExecutor {
                             }
 
                             if (sender instanceof Player) {
+                                main.games.get(destination).playerJoin((Player) sender);
                                 Utils.teleportPlayerToWorld(sender, destination + "_GAME_island_water");
                             }
                             else {
@@ -103,14 +105,7 @@ public class Commands implements CommandExecutor {
                             }
                             break;
                         case "admin":
-                            if (!(sender instanceof Player)) {
-                                sender.sendMessage("whoops sorry no console admin sad face");
-                                return true;
-                            }
-
-                            Player player = (Player) sender;
-                            
-                            if (Utils.checkPermission(player, "escape.admin")) {
+                            if (Utils.checkPermission(sender, "escape.admin")) {
                                 if (args.length < 2) {
                                     sender.sendMessage("oopsie daisy you haven't provided any argsies. Tip: Use tab lmao");
                                     return true;
@@ -154,6 +149,7 @@ public class Commands implements CommandExecutor {
                                     case "getmap":
                                         if (Utils.checkPermission(sender, "escape.admin.getmap")) {
                                             if (sender instanceof Player) {
+                                                Player player = (Player) sender;
                                                 sender.sendMessage("§a§lHere's the map of the island for island_water");
                                                 ItemStack item = new ItemStack(Material.FILLED_MAP);
                                                 MapMeta meta = (MapMeta) item.getItemMeta();
@@ -177,35 +173,33 @@ public class Commands implements CommandExecutor {
                     }
                 }
                 return true;
-            case "lobby":
+            case "spawn":
                 if (sender instanceof Player) {
-                    sender.sendMessage("§a§lReturning to lobby...");
-                    Location world = main.getServer().getWorld("empty").getSpawnLocation();
                     Player player = (Player) sender;
+                    if (player.getWorld().getName() == "empty") {
+                        sender.sendMessage("You are already in the lobby!");
+                        return true;
+                    }
+                    sender.sendMessage("§a§lReturning to lobby...");
+                    try {
+                        Utils.getPlayersGame(player, main.games).playerLeave(player);
+                    }
+                    catch (NotFoundException err) {
+                        sender.sendMessage("You are not in a game!");
+                        return true;
+                    }
+                    Location world = main.getServer().getWorld("empty").getSpawnLocation();
                     player.teleport(world);
                 }
                 else {
                     sender.sendMessage("Bruh I can't teleport the console anywhere...");
                 }
                 return true;
-           // If the command isn't defined
+/*            case "confirm":
+                if (sender instanceof Player) 
+           // If the command isn't defined */
             default:
                 return false;     
         }
     }
 }
-
-// I'm muted for a min lol
-
-
-/*
-            case "getmap":
-                if (sender instanceof Player) {
-                    sender.sendMessage("§a§lHere's the map of the island for island_water");
-                    Player player = (Player) sender;
-                    player.getInventory.add(new ItemStack(Material.FILLED_MAP{map:103}, 1));
-                }
-                else {
-                    sender.sendMessage("Console cant get maps...");
-                }
-*/

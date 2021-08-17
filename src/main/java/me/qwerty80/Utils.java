@@ -2,6 +2,7 @@ package me.qwerty80;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
@@ -141,4 +142,19 @@ public interface Utils {
 
     @SuppressWarnings("unchecked")
     ViaAPI<Player> viaApi = Via.getAPI();
+
+    static Game getPlayersGame(Player player, Stack<Game> games) throws Exceptions.NotFoundException {
+        Game[] ret = new Game[1]; // I hate java SO SO much....
+        games.forEach(game -> {
+            game.players.forEach(searchPlayer -> {
+                if (searchPlayer == player) {
+                    ret[0] = game;
+                }
+            });
+        });
+        if (ret[0] == null) {
+            throw new Exceptions.NotFoundException();
+        }
+        return ret[0];
+    }
 }

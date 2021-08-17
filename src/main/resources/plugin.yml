@@ -8,9 +8,9 @@ commands:
   escape:
     description: Manage and join escape games.
     usage: /escape <list|join>
-  lobby:
+  spawn:
     description: Go back to the lobby cause ur a chicken
-    usage: /lobby
+    usage: /spawn
 permissions:
   escape.admin:
     description: Use admin permissions.
