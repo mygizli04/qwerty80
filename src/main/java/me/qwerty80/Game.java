@@ -13,10 +13,6 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
-
 // This class will handle everything regarding a single game
 public class Game {
 
@@ -24,7 +20,7 @@ public class Game {
     public ArrayList<Player> players = new ArrayList<Player>();
 
     void setPlayerInventory(Player player) {
-        player.getInventory().setItem(15, Utils.changeItemName(new ItemStack(Material.PAPER, 1), Component.text("Leaderboard!").color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true)));
+        player.getInventory().setItem(15, Utils.changeItemName(new ItemStack(Material.PAPER, 1), players.size() + " players alive."));
         player.getInventory().setItem(16, new ItemStack(Material.PLAYER_HEAD, 1));
         player.getInventory().setItem(17, new ItemStack(Material.PLAYER_HEAD, 1));
         player.getInventory().setItem(24, new ItemStack(Material.PLAYER_HEAD, 1));
@@ -44,13 +40,21 @@ public class Game {
         player.getInventory().setItem(10, new ItemStack(Material.BARRIER, 1));
     }
 
+    void updatePlayerInventories() {
+        players.forEach(player -> {
+            player.getInventory().setItem(15, Utils.changeItemName(new ItemStack(Material.PAPER, 1), players.size() + " players alive."));
+        });
+    }
+
     public void playerJoin(Player player) {
         players.add(player);
         setPlayerInventory(player);
+        updatePlayerInventories();
     }
 
     public void playerLeave(Player player) {
         players.remove(player);
+        updatePlayerInventories();
         player.getInventory().clear();
     }
 

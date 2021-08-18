@@ -17,6 +17,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 
@@ -170,6 +171,6 @@ public interface Utils {
     }
 
     static ItemStack changeItemName(ItemStack item, String name) {
-        return changeItemName(item, Component.text(name));
+        return changeItemName(item, Component.text(name).decoration(TextDecoration.ITALIC, false));
     }
 }
