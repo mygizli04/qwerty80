@@ -76,6 +76,21 @@ public class Commands implements CommandExecutor {
                                 return true;
                             }
 
+                            if (sender instanceof Player) {
+                                try {
+                                    Utils.getPlayersGame((Player) sender, main.games);
+                                    sender.sendMessage("You're already in-game!");
+                                    return true;
+                                }
+                                catch (NotFoundException err) {
+                                    // Nothing.
+                                }
+                            }
+                            else {
+                                sender.sendMessage("Uhhh I don't have magical powers to teleport the console y'know..");
+                                return true;
+                            }
+
                             int destination = 0;
 
                             if (args.length >= 2) {

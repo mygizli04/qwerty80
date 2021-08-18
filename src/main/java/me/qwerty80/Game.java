@@ -13,6 +13,10 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextDecoration;
+
 // This class will handle everything regarding a single game
 public class Game {
 
@@ -20,7 +24,24 @@ public class Game {
     public ArrayList<Player> players = new ArrayList<Player>();
 
     void setPlayerInventory(Player player) {
-        player.getInventory().setItem(0, new ItemStack(Material.STONE, 1));
+        player.getInventory().setItem(15, Utils.changeItemName(new ItemStack(Material.PAPER, 1), Component.text("Leaderboard!").color(NamedTextColor.GOLD).decoration(TextDecoration.BOLD, true)));
+        player.getInventory().setItem(16, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(17, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(24, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(25, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(26, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(33, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(34, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(35, new ItemStack(Material.PLAYER_HEAD, 1));
+        player.getInventory().setItem(12, new ItemStack(Material.BOOK, 1));
+        player.getInventory().setItem(13, new ItemStack(Material.BOOK, 1));
+        player.getInventory().setItem(14, new ItemStack(Material.BOOK, 1));
+        player.getInventory().setItem(7, new ItemStack(Material.SADDLE, 1));
+        player.getInventory().setItem(8, new ItemStack(Material.MAP, 1));
+        player.getInventory().setItem(6, new ItemStack(Material.ANVIL, 1));
+        player.getInventory().setItem(11, new ItemStack(Material.EXPERIENCE_BOTTLE, 1));
+        player.getInventory().setItem(9, new ItemStack(Material.STRUCTURE_VOID, 1));
+        player.getInventory().setItem(10, new ItemStack(Material.BARRIER, 1));
     }
 
     public void playerJoin(Player player) {
@@ -63,7 +84,7 @@ public class Game {
 
         for (int i = 0; i != chestCount; i++) {
             int x = Utils.random(-174, 941);
-            int y = Utils.random(31, 38);
+            int y = Utils.random(31, 112);
             int z = Utils.random(12, 887);
 
             while (getMaterial(x, y - 1, z) == Material.AIR) {

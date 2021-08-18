@@ -11,8 +11,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
 
@@ -156,5 +160,16 @@ public interface Utils {
             throw new Exceptions.NotFoundException();
         }
         return ret[0];
+    }
+
+    static ItemStack changeItemName(ItemStack item, TextComponent name) {
+        ItemMeta meta = item.getItemMeta();
+        meta.displayName(name);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    static ItemStack changeItemName(ItemStack item, String name) {
+        return changeItemName(item, Component.text(name));
     }
 }
