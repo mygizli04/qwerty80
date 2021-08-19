@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
+import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -172,5 +173,15 @@ public interface Utils {
 
     static ItemStack changeItemName(ItemStack item, String name) {
         return changeItemName(item, Component.text(name).decoration(TextDecoration.ITALIC, false));
+    }
+
+    static boolean playerIsInAGame(Player player, Stack<Game> games) {
+        try {
+            getPlayersGame(player, games);
+            return true;
+        }
+        catch (NotFoundException err) {
+            return false;
+        }
     }
 }
