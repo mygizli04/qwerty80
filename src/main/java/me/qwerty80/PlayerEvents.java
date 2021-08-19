@@ -166,7 +166,6 @@ public class PlayerEvents implements Listener {
                     event.setCancelled(true);
                     break;
                 default:
-                    player.sendMessage(event.getSlot() + "");
                     switch (event.getHotbarButton()) {
                         case 6:
                             event.setCancelled(true);
