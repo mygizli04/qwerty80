@@ -20,7 +20,7 @@ public class Game {
     public ArrayList<Player> players = new ArrayList<Player>();
 
     void setPlayerInventory(Player player) {
-        player.getInventory().setItem(15, Utils.changeItemName(new ItemStack(Material.PAPER, 1), players.size() + " players alive."));
+        player.getInventory().setItem(15, Utils.createNamedItem(Material.PAPER, players.size() + " players alive."));
         player.getInventory().setItem(16, new ItemStack(Material.PLAYER_HEAD, 1));
         player.getInventory().setItem(17, new ItemStack(Material.PLAYER_HEAD, 1));
         player.getInventory().setItem(24, new ItemStack(Material.PLAYER_HEAD, 1));
@@ -42,7 +42,7 @@ public class Game {
 
     void updatePlayerInventories() {
         players.forEach(player -> {
-            player.getInventory().setItem(15, Utils.changeItemName(new ItemStack(Material.PAPER, 1), players.size() + " players alive."));
+            player.getInventory().setItem(15, Utils.createNamedItem(Material.PAPER, players.size() + " players alive."));
         });
     }
 

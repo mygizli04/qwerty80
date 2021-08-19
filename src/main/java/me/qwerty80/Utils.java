@@ -9,6 +9,7 @@ import com.viaversion.viaversion.api.ViaAPI;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -173,6 +174,14 @@ public interface Utils {
 
     static ItemStack changeItemName(ItemStack item, String name) {
         return changeItemName(item, Component.text(name).decoration(TextDecoration.ITALIC, false));
+    }
+
+    static ItemStack createNamedItem(Material item, TextComponent name) {
+        return changeItemName(new ItemStack(item), name);
+    }
+
+    static ItemStack createNamedItem(Material item, String name) {
+        return changeItemName(new ItemStack(item), name);
     }
 
     static boolean playerIsInAGame(Player player, Stack<Game> games) {
