@@ -4,9 +4,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
@@ -59,5 +61,21 @@ public class PlayerEvents implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getClickedBlock().getType().name().contains("_BED")) {
             event.setCancelled(true);
         }
+    }
+
+    @EventHandler
+    public void onPlayerDeath(PlayerDeathEvent event) {
+        try {
+            Game game = Utils.getPlayersGame(event.getEntity(), main.games);
+            game.playerLeave(event.getEntity());
+        }
+        catch (NotFoundException err) {
+            // Do nothing, they're not in a game.
+        }
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        event.setRespawnLocation(Bukkit.getServer().getWorld("empty").getSpawnLocation());
     }
 }

@@ -54,6 +54,7 @@ public class Game {
 
     public void playerLeave(Player player) {
         players.remove(player);
+        Utils.teleportPlayerToWorld(player, "empty");
         updatePlayerInventories();
         player.getInventory().clear();
     }
