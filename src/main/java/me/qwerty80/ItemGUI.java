@@ -26,6 +26,15 @@ public class ItemGUI implements Listener {
 
         // Add things to anvil
         inventory.setItem(11, Utils.changeItemName(new ItemStack(Material.NAME_TAG, 1), Component.text("Rename!").decoration(TextDecoration.ITALIC, false)));
+        inventory.setItem(0, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(2, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(4, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(6, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(8, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(0, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(0, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(0, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
+        inventory.setItem(0, Utils.changeItemName(new ItemStack(Material.LIME_STAINED_GLASS_PANE, 1), Component.text("")));
 
         // Show anvil to user
         player.openInventory(inventory);
