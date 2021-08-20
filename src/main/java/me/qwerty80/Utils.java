@@ -216,14 +216,19 @@ public interface Utils {
                 replace = replace.replaceAll(thing, with);
             }
             else {
+                String banned = null;
                 for (String exception : except) {
                     if (replace.substring(lastSeen).indexOf(thing) == replace.substring(lastSeen).indexOf(exception)) {
-                        lastSeen = replace.substring(lastSeen).indexOf(exception) + exception.length();
-                        continue;
+                        banned = exception;
                     }
-                    else {
-                        replace = replace.replaceFirst(thing, with);
-                    }
+                }
+
+                if (banned != null) {
+                    lastSeen = replace.substring(lastSeen).indexOf(thing) + banned.length();
+                    continue;
+                }
+                else {
+                    replace = replace.replaceFirst(thing, with);
                 }
             }
         }

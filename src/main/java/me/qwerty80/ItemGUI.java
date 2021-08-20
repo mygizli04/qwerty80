@@ -13,6 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.TextDecoration;
 
 public class ItemGUI implements Listener {
@@ -144,6 +145,30 @@ public class ItemGUI implements Listener {
 
             String rename = event.getMessage().replaceAll("§", "&");
             ArrayList<String> bannedColorCodes = new ArrayList<String>();
+
+            // lol easter eggs & cancel
+            switch (rename.toLowerCase()) {
+                case "cancel":
+                    event.getPlayer().sendMessage("§c§lCancelled.");
+                    break;
+                case "\"cancel\"":
+                    event.getPlayer().sendMessage("... not with the quotes... but cancelled rename.");
+                    break;
+                case "&ccancel":
+                    event.getPlayer().sendMessage("Haha you did the color code too... cancelled.");
+                    break;
+                case "&lcancel":
+                    event.getPlayer().sendMessage("What a §lbold§r way to cancel a rename.");
+                    break;
+                case "&c\"cancel\"":
+                    event.getPlayer().sendMessage("You forgot the bold. Cancelled.");
+                    break;
+                case "&l&c\"cancel\"":
+                    event.getPlayer().sendMessage("No no no the bold has to come §iafter§r the &c or else it cancells.");
+                    break;
+                case "&c&l\"cancel\"":
+                    event.getPlayer().sendMessage(Component.text("You did it...").clickEvent(ClickEvent.openUrl("https://www.urbandictionary.com/define.php?term=Type%20any%20word...")));
+            }
 
             if (!Utils.checkPermission(event.getPlayer(), "escape.rename.format")) {
                 bannedColorCodes.add("&k");
