@@ -109,6 +109,18 @@ public class PlayerEvents implements Listener {
             return;
         }
 
+        switch (event.getHotbarButton()) {
+            case 6:
+                event.setCancelled(true);
+                break;
+            case 7:
+                event.setCancelled(true);
+                break;
+            case 8:
+                event.setCancelled(true);
+                break;
+        }
+
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
             switch (event.getSlot()) {
                 case 6:
@@ -165,20 +177,6 @@ public class PlayerEvents implements Listener {
                 case 35:
                     event.setCancelled(true);
                     break;
-                default:
-                    switch (event.getHotbarButton()) {
-                        case 6:
-                            event.setCancelled(true);
-                            break;
-                        case 7:
-                            event.setCancelled(true);
-                            break;
-                        case 8:
-                            event.setCancelled(true);
-                            break;
-                        default:
-                            event.setCancelled(false);
-                    }
             }
         }
     }
