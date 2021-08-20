@@ -152,19 +152,19 @@ public class ItemGUI implements Listener {
                     event.getPlayer().sendMessage("§c§lCancelled.");
                     break;
                 case "\"cancel\"":
-                    event.getPlayer().sendMessage("... not with the quotes... but cancelled rename.");
+                    event.getPlayer().sendMessage("... not with the quotes... but §c§lcancelled§r rename.");
                     break;
                 case "&ccancel":
-                    event.getPlayer().sendMessage("Haha you did the color code too... cancelled.");
+                    event.getPlayer().sendMessage("Haha you did the color code too... §c§lcancelled.§r");
                     break;
                 case "&lcancel":
-                    event.getPlayer().sendMessage("What a §lbold§r way to cancel a rename.");
+                    event.getPlayer().sendMessage("What a §lbold§r way to §c§lcancel§r a rename.");
                     break;
                 case "&c\"cancel\"":
-                    event.getPlayer().sendMessage("You forgot the bold. Cancelled.");
+                    event.getPlayer().sendMessage("You forgot the bold. §c§lCancelled.§r");
                     break;
                 case "&l&c\"cancel\"":
-                    event.getPlayer().sendMessage("No no no the bold has to come §iafter§r the &c or else it cancells.");
+                    event.getPlayer().sendMessage("No no no the bold has to come §iafter§r the &c or else it §c§lcancells.§r");
                     break;
                 case "&c&l\"cancel\"":
                     event.getPlayer().sendMessage(Component.text("You did it...").clickEvent(ClickEvent.openUrl("https://www.urbandictionary.com/define.php?term=Type%20any%20word...")));
