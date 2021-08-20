@@ -70,11 +70,7 @@ public class PlayerEvents implements Listener {
         if (Utils.playerIsInAGame(event.getPlayer(), main.games)) {
             switch (event.getPlayer().getInventory().getHeldItemSlot()) {
                 case 6:
-                    // Handled in ItemGUI EXCEPT AIR FOR SOME REASON
-                    if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-                        ItemGUI.openAnvilInventory(event.getPlayer());
-                        event.setCancelled(true);
-                    }
+                    // Handled in ItemGUI
                     break;
                 case 7:
                     event.setCancelled(true);
@@ -183,6 +179,9 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
+        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+            return;
+        }
         switch (event.getPlayer().getInventory().getHeldItemSlot()) {
             case 6:
                 event.setCancelled(true);

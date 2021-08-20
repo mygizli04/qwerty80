@@ -13,6 +13,7 @@ import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
@@ -192,5 +193,40 @@ public interface Utils {
         catch (NotFoundException err) {
             return false;
         }
+    }
+
+    static void renameHeldItem(String name, Player player) {
+        PlayerInventory inventory = player.getInventory();
+        inventory.setItemInMainHand(changeItemName(inventory.getItem(inventory.getHeldItemSlot()), name));
+    }
+
+    static int countOccurance(String string, String compare) {
+        int ret = 0;
+        while (string.contains(compare)) {
+            string = string.replaceFirst(compare, "");
+            ret++;
+        }
+        return ret;
+    }
+
+    static String replaceExcept(String replace, String thing, String with, String[] except) {
+        int lastSeen = 0;
+        for (int i = 0; i < countOccurance(replace, thing); i++) {
+            if (except.length == 0) {
+                replace = replace.replaceAll(thing, with);
+            }
+            else {
+                for (String exception : except) {
+                    if (replace.substring(lastSeen).indexOf(thing) == replace.substring(lastSeen).indexOf(exception)) {
+                        lastSeen = replace.substring(lastSeen).indexOf(exception) + exception.length();
+                        continue;
+                    }
+                    else {
+                        replace = replace.replaceFirst(thing, with);
+                    }
+                }
+            }
+        }
+        return replace;
     }
 }

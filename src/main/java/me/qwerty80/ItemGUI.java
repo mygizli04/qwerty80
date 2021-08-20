@@ -1,10 +1,14 @@
 package me.qwerty80;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -19,7 +23,10 @@ public class ItemGUI implements Listener {
         main = _main;
     }
 
-    static void openAnvilInventory(Player player) {
+    ArrayList<Player> playersWithGuiOpen = new ArrayList<Player>();
+    ArrayList<Player> playersRenamingItems = new ArrayList<Player>();
+
+    void openAnvilInventory(Player player) {
         // Create anvil
         Inventory inventory = Bukkit.getServer().createInventory(null, 27, Component.text("Anvil"));
 
@@ -42,7 +49,7 @@ public class ItemGUI implements Listener {
         inventory.setItem(15, Utils.createNamedItem(Material.ENCHANTED_BOOK, Component.text("§kL§r§LFormating Text§r§kL").decoration(TextDecoration.ITALIC, false)));
         inventory.setItem(16, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, Component.text("")));
         inventory.setItem(17, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, Component.text("")));
-        inventory.setItem(18, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, Component.text("")));
+        inventory.setItem(18, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, Component.text("§l§cCancel!")));
         inventory.setItem(19, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, Component.text("")));
         inventory.setItem(20, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, Component.text("")));
         inventory.setItem(21, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, Component.text("")));
@@ -54,6 +61,7 @@ public class ItemGUI implements Listener {
 
         // Show anvil to user
         player.openInventory(inventory);
+        playersWithGuiOpen.add(player);
     }
 
     @EventHandler
@@ -65,6 +73,13 @@ public class ItemGUI implements Listener {
         }
 
         if (player.getInventory().getHeldItemSlot() == 6) {
+
+            if (event.getClickedBlock() == null) {
+                openAnvilInventory(player);
+                event.setCancelled(true);
+                return;
+            }
+
             switch (event.getClickedBlock().getType()) {
                 case CHEST:
                     break;
@@ -74,6 +89,80 @@ public class ItemGUI implements Listener {
                     openAnvilInventory(player);
                     event.setCancelled(true);
                     return;
+            }
+        }
+    }
+
+    @EventHandler
+    public void closeAnvil(InventoryCloseEvent event) {
+        playersWithGuiOpen.remove(event.getPlayer());
+    }
+
+    @EventHandler
+    public void clickAnvil(InventoryClickEvent event) {
+        Player player = (Player) event.getWhoClicked();
+        if (playersWithGuiOpen.contains((Player) event.getWhoClicked())) {
+            switch (event.getRawSlot()) {
+                case 11:
+                    player.closeInventory();
+                    if (!Utils.checkPermission(player, "escape.rename.normal")) {
+                        player.sendMessage("You do not have permission to rename items!");
+                        return;
+                    }
+                    player.sendMessage("§aHold the item you want to §e§lrename§a, and type it in chat! §bType §c§l\"Cancel\"§b to cancel.");
+                    playersRenamingItems.add(player);
+                    break;
+                case 13:
+                    event.getWhoClicked().sendMessage("Open change color menu?");
+                    break;
+                case 15:
+                    event.getWhoClicked().sendMessage("Open text formatting tips");
+                    break;
+                case 18:
+                    event.getWhoClicked().closeInventory();
+                    break;
+            }
+            
+            if (event.getRawSlot() <= 26) {
+                event.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    @SuppressWarnings("deprecation") // I don't care, I can't get the message from the "recommended" method.
+    public void renameItem(org.bukkit.event.player.AsyncPlayerChatEvent event) {
+        if (playersRenamingItems.contains(event.getPlayer())) {
+
+            playersRenamingItems.remove(event.getPlayer());
+            event.setCancelled(true);
+
+            if (!Utils.checkPermission(event.getPlayer(), "escape.rename.normal")) {
+                event.getPlayer().sendMessage("You do not have permission to rename items!");
+                return;
+            }
+
+            String rename = event.getMessage().replaceAll("§", "&");
+            ArrayList<String> bannedColorCodes = new ArrayList<String>();
+
+            if (!Utils.checkPermission(event.getPlayer(), "escape.rename.format")) {
+                bannedColorCodes.add("&k");
+                bannedColorCodes.add("&l");
+                bannedColorCodes.add("&m");
+                bannedColorCodes.add("&n");
+                bannedColorCodes.add("&o");
+                bannedColorCodes.add("&r");
+            }
+
+            if (Utils.checkPermission(event.getPlayer(), "escape.rename.color")) {
+                rename = Utils.replaceExcept(rename, "&", "§", bannedColorCodes.toArray(new String[0]));
+            }
+
+            if (!Utils.range(event.getPlayer().getInventory().getHeldItemSlot(), 6, 8)) {
+                Utils.renameHeldItem(rename, event.getPlayer());
+            }
+            else {
+                event.getPlayer().sendMessage("You can't rename that!");
             }
         }
     }
