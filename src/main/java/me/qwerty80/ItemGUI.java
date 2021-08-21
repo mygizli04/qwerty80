@@ -114,7 +114,6 @@ public class ItemGUI implements Listener {
                     playersRenamingItems.add(player);
                     break;
                 case 13:
-                    event.getWhoClicked().sendMessage("Open change color menu?");
                     //create
                     Inventory color = Bukkit.getServer().createInventory(null, 36, Component.text("Anvil"));
                     //add stuff
@@ -123,6 +122,15 @@ public class ItemGUI implements Listener {
                     color.setItem(11, Utils.createNamedItem(Material.ORANGE_STAINED_GLASS_PANE, Component.text("§6Orange - &6").decoration(TextDecoration.ITALIC, false)));
                     color.setItem(20, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, Component.text("§eYellow - &e").decoration(TextDecoration.ITALIC, false)));
                     color.setItem(12, Utils.createNamedItem(Material.GREEN_STAINED_GLASS_PANE, Component.text("§2Dark Green - &2").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(21, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, Component.text("§aLime - &a").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(13, Utils.createNamedItem(Material.CYAN_STAINED_GLASS_PANE, Component.text("§3Cyan - &3").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(22, Utils.createNamedItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE, Component.text("§bLight Blue - &b").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(14, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, Component.text("§1Dark Blue - &1").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(23, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, Component.text("§9Blue - &9").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(15, Utils.createNamedItem(Material.PURPLE_STAINED_GLASS_PANE, Component.text("§5Purple - &5").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(24, Utils.createNamedItem(Material.PINK_STAINED_GLASS_PANE, Component.text("§dMagenta - &d").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(16, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, Component.text("§0Black - §f &0").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(25, Utils.createNamedItem(Material.GRAY_STAINED_GLASS_PANE, Component.text("§8Gray - &8").decoration(TextDecoration.ITALIC, false)));
                     
                     player.openInventory(color);
                     break;
@@ -174,7 +182,7 @@ public class ItemGUI implements Listener {
                     event.getPlayer().sendMessage("You forgot the bold. §c§lCancelled.§r");
                     break;
                 case "&l&c\"cancel\"":
-                    event.getPlayer().sendMessage("No no no the bold has to come §iafter§r the &c or else it §c§lcancells.§r");
+                    event.getPlayer().sendMessage("No no no the bold has to come §iafter§r the &c or else it §c§lcancels.§r");
                     break;
                 case "&c&l\"cancel\"":
                     event.getPlayer().sendMessage(Component.text("You did it...").clickEvent(ClickEvent.openUrl("https://www.urbandictionary.com/define.php?term=Type%20any%20word...")));
