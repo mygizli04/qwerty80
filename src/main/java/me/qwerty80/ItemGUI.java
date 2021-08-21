@@ -139,7 +139,7 @@ public class ItemGUI implements Listener {
                                 color.setItem(23, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, "§9Blue - &9"));
                                 color.setItem(15, Utils.createNamedItem(Material.PURPLE_STAINED_GLASS_PANE, "§5Purple - &5"));
                                 color.setItem(24, Utils.createNamedItem(Material.PINK_STAINED_GLASS_PANE, "§dMagenta - &d"));
-                                color.setItem(16, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, "§0Black - §f &0"));
+                                color.setItem(16, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, "§fBlack - §f &0"));
                                 color.setItem(25, Utils.createNamedItem(Material.GRAY_STAINED_GLASS_PANE, "§8Gray - &8"));
 
                                 player.openInventory(color);
