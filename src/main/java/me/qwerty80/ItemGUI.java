@@ -127,14 +127,26 @@ public class ItemGUI implements Listener {
                                 // create
                                 Inventory color = Bukkit.getServer().createInventory(null, 36, Component.text("Anvil"));
                                 // add stuff
+                                color.setItem(0, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(1, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(2, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(3, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(4, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(5, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(6, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(7, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(8, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(9, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
                                 color.setItem(10, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§4Dark Red - &4"));
                                 color.setItem(11, Utils.createNamedItem(Material.ORANGE_STAINED_GLASS_PANE, "§6Orange - &6"));
                                 color.setItem(12, Utils.createNamedItem(Material.GREEN_STAINED_GLASS_PANE, "§2Dark Green - &2"));
                                 color.setItem(13, Utils.createNamedItem(Material.CYAN_STAINED_GLASS_PANE, "§3Cyan - &3"));
                                 color.setItem(14, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, "§1Dark Blue - &1"));
-                                color.setItem(19, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§cLight Red - &c"));
                                 color.setItem(15, Utils.createNamedItem(Material.PURPLE_STAINED_GLASS_PANE, "§5Purple - &5"));
-                                color.setItem(16, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, "§fBlack - §f &0"));
+                                color.setItem(16, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, "§fBlack - &0"));
+                                color.setItem(17, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(18, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(19, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§cLight Red - &c"));
                                 color.setItem(20, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, "§eYellow - &e"));
                                 color.setItem(21, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, "§aLime - &a"));
                                 color.setItem(22, Utils.createNamedItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "§bLight Blue - &b"));
@@ -142,12 +154,52 @@ public class ItemGUI implements Listener {
                                 color.setItem(24, Utils.createNamedItem(Material.PINK_STAINED_GLASS_PANE, "§dMagenta - &d"));
                                 color.setItem(25, Utils.createNamedItem(Material.GRAY_STAINED_GLASS_PANE, "§8Gray - &8"));
                                 color.setItem(27, Utils.createNamedItem(Material.BARRIER, "§l§cGo back"));
+                                color.setItem(26, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(28, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(29, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(30, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(31, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(32, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(33, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(34, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(35, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
 
                                 player.openInventory(color);
                                 playersWithGuiOpen.add(new PlayerWithGUI((Player) event.getWhoClicked(), GUIType.COLOR));
                                 break;
                             case 15:
-                                event.getWhoClicked().sendMessage("Open text formatting tips");
+                                Inventory format = Bukkit.getServer().createInventory(null, 27, Component.text("Anvil"));
+                                //items
+                                format.setItem(0, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(1, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(2, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(3, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(4, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(5, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(6, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(7, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(8, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(9, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(10, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(11, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§lBold - &l"));
+                                format.setItem(12, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§oItalics - &o"));
+                                format.setItem(13, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§nUnderline - &n"));
+                                format.setItem(14, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§mStrikethrough - &m"));
+                                format.setItem(15, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§kWow you either cheated or translated... §r- &k")); //watch someone translate this lmao
+                                format.setItem(16, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(17, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(18, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§l§cGo back"));
+                                format.setItem(19, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(20, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(21, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(22, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(23, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(24, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(25, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(26, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+
+                                player.openInventory(format);
+                                playersWithGuiOpen.add(new PlayerWithGUI((Player) event.getWhoClicked(), GUIType.FORMAT));
                                 break;
                             case 18:
                                 event.getWhoClicked().closeInventory();
@@ -165,6 +217,16 @@ public class ItemGUI implements Listener {
                         }
 
                         if (event.getRawSlot() <= 35) {
+                            event.setCancelled(true);
+                        }
+                        break;
+                    case FORMAT:
+                        if (event.getRawSlot() == 18) {
+                            event.getWhoClicked().closeInventory();
+                            openAnvilInventory(playerWithGui.player);
+                        }
+
+                        if (event.getRawSlot() <= 26) {
                             event.setCancelled(true);
                         }
                         break;
@@ -238,7 +300,8 @@ public class ItemGUI implements Listener {
 
 enum GUIType {
     ANVIL,
-    COLOR
+    COLOR,
+    FORMAT
 }
 
 class PlayerWithGUI {
