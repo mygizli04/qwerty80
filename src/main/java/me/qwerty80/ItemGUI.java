@@ -115,6 +115,16 @@ public class ItemGUI implements Listener {
                     break;
                 case 13:
                     event.getWhoClicked().sendMessage("Open change color menu?");
+                    //create
+                    Inventory color = Bukkit.getServer().createInventory(null, 36, Component.text("Anvil"));
+                    //add stuff
+                    color.setItem(10, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, Component.text("§4Dark Red - &4").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(19, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, Component.text("§cLight Red - &c").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(11, Utils.createNamedItem(Material.ORANGE_STAINED_GLASS_PANE, Component.text("§6Orange - &6").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(20, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, Component.text("§eYellow - &e").decoration(TextDecoration.ITALIC, false)));
+                    color.setItem(12, Utils.createNamedItem(Material.GREEN_STAINED_GLASS_PANE, Component.text("§2Dark Green - &2").decoration(TextDecoration.ITALIC, false)));
+                    
+                    player.openInventory(color);
                     break;
                 case 15:
                     event.getWhoClicked().sendMessage("Open text formatting tips");
