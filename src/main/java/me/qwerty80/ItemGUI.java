@@ -141,7 +141,7 @@ public class ItemGUI implements Listener {
                                 color.setItem(23, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, "§9Blue - &9"));
                                 color.setItem(24, Utils.createNamedItem(Material.PINK_STAINED_GLASS_PANE, "§dMagenta - &d"));
                                 color.setItem(25, Utils.createNamedItem(Material.GRAY_STAINED_GLASS_PANE, "§8Gray - &8"));
-                                color.setItem(27, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§l§cGo back"));
+                                color.setItem(27, Utils.createNamedItem(Material.BARRIER, "§l§cGo back"));
 
                                 player.openInventory(color);
                                 playersWithGuiOpen.add(new PlayerWithGUI((Player) event.getWhoClicked(), GUIType.COLOR));
