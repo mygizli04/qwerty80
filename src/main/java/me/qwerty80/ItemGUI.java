@@ -49,8 +49,8 @@ public class ItemGUI implements Listener {
         inventory.setItem(15, Utils.createNamedItem(Material.ENCHANTED_BOOK, "§kL§r§LFormating Text§r§kL"));
         inventory.setItem(16, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, ""));
         inventory.setItem(17, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
-        inventory.setItem(18, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§l§cCancel!"));
         inventory.setItem(19, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+        inventory.setItem(18, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§l§cCancel!"));
         inventory.setItem(20, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, ""));
         inventory.setItem(21, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
         inventory.setItem(22, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, ""));
@@ -128,19 +128,20 @@ public class ItemGUI implements Listener {
                                 Inventory color = Bukkit.getServer().createInventory(null, 36, Component.text("Anvil"));
                                 // add stuff
                                 color.setItem(10, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§4Dark Red - &4"));
-                                color.setItem(19, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§cLight Red - &c"));
                                 color.setItem(11, Utils.createNamedItem(Material.ORANGE_STAINED_GLASS_PANE, "§6Orange - &6"));
-                                color.setItem(20, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, "§eYellow - &e"));
                                 color.setItem(12, Utils.createNamedItem(Material.GREEN_STAINED_GLASS_PANE, "§2Dark Green - &2"));
-                                color.setItem(21, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, "§aLime - &a"));
                                 color.setItem(13, Utils.createNamedItem(Material.CYAN_STAINED_GLASS_PANE, "§3Cyan - &3"));
-                                color.setItem(22, Utils.createNamedItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "§bLight Blue - &b"));
                                 color.setItem(14, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, "§1Dark Blue - &1"));
-                                color.setItem(23, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, "§9Blue - &9"));
+                                color.setItem(19, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§cLight Red - &c"));
                                 color.setItem(15, Utils.createNamedItem(Material.PURPLE_STAINED_GLASS_PANE, "§5Purple - &5"));
-                                color.setItem(24, Utils.createNamedItem(Material.PINK_STAINED_GLASS_PANE, "§dMagenta - &d"));
                                 color.setItem(16, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, "§fBlack - §f &0"));
+                                color.setItem(20, Utils.createNamedItem(Material.YELLOW_STAINED_GLASS_PANE, "§eYellow - &e"));
+                                color.setItem(21, Utils.createNamedItem(Material.LIME_STAINED_GLASS_PANE, "§aLime - &a"));
+                                color.setItem(22, Utils.createNamedItem(Material.LIGHT_BLUE_STAINED_GLASS_PANE, "§bLight Blue - &b"));
+                                color.setItem(23, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, "§9Blue - &9"));
+                                color.setItem(24, Utils.createNamedItem(Material.PINK_STAINED_GLASS_PANE, "§dMagenta - &d"));
                                 color.setItem(25, Utils.createNamedItem(Material.GRAY_STAINED_GLASS_PANE, "§8Gray - &8"));
+                                color.setItem(27, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§l§cGo back"));
 
                                 player.openInventory(color);
                                 playersWithGuiOpen.add(new PlayerWithGUI((Player) event.getWhoClicked(), GUIType.COLOR));
@@ -158,7 +159,12 @@ public class ItemGUI implements Listener {
                         }
                         break;
                     case COLOR:
-                        if (event.getRawSlot() <= 26) {
+                        if (event.getRawSlot() == 27) {
+                            event.getWhoClicked().closeInventory();
+                            openAnvilInventory(playerWithGui.player);
+                        }
+
+                        if (event.getRawSlot() <= 35) {
                             event.setCancelled(true);
                         }
                         break;
