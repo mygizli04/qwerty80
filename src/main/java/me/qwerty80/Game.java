@@ -85,6 +85,7 @@ public class Game {
                 if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
                     Bukkit.getLogger().severe("Cannot clone world! Please check logs!");
                     Bukkit.getPluginManager().disablePlugin(main);
+                    return;
                 }
             }
             world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
