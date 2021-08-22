@@ -293,14 +293,13 @@ public class ItemGUI implements Listener {
                 case "&c&l\"cancel\"":
                     event.getPlayer().sendMessage(Component.text("You did it...").clickEvent(ClickEvent.openUrl("https://www.urbandictionary.com/define.php?term=Type%20any%20word...")));
                     return;
-                case "reset": // lol I'm joining
+                case "reset":
                     Utils.renameHeldItem(null, event.getPlayer());
                     event.getPlayer().sendMessage(Component.text("§eYour item name has been §b§lReset!"));
                     return;
             }
 
             if (rename.contains("&") && !Utils.checkPermission(event.getPlayer(), "escape.rename.color")) {
-                // there
                 event.getPlayer().sendMessage("You do not have permission to use color codes in your items!");
             }
 
