@@ -130,7 +130,7 @@ public class Commands implements CommandExecutor {
                                     case "startgame":
                                         if (Utils.checkPermission(sender, "escape.admin.startgame")) {
                                             Bukkit.broadcast(Component.text("Warning: A new game is being generated. Please ignore the lag. We're sorry for the inconvenience"));
-                                            main.games.add(new Game(main.games.size()));
+                                            main.games.add(new Game(main.games.size(), main));
                                         }
                                         else {
                                             sender.sendMessage(errorMessage(sender));

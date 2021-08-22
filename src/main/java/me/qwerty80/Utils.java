@@ -135,17 +135,18 @@ public interface Utils {
         return ret;
     }
 
-    static void delete(String folder) {
-        File index = new File(folder);
-        if (index.isFile()) {
-            index.delete();
-        }
-        else {
-            String[] entries = index.list();
-            for (String entry : entries) {
-                delete(index.getPath() + entry);
+    static void deleteRecursively(File toDelete) {
+        File[] contents = toDelete.listFiles();
+        if (contents != null) {
+            for (File file : contents) {
+                deleteRecursively(file);
             }
         }
+        toDelete.delete();
+    }
+
+    static void deleteRecursively(String toDelete) {
+        deleteRecursively(new File(toDelete));
     }
 
     @SuppressWarnings("unchecked")

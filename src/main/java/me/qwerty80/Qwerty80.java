@@ -38,14 +38,14 @@ public class Qwerty80 extends JavaPlugin {
         worldManager = multiverse.getMVWorldManager();
 
         // Create new game
-        games.add(new Game(0));
+        games.add(new Game(0, this));
 
         worldManager.getMVWorlds().forEach(world -> {
             if (world.getName().endsWith("_GAME_island_water")) {
                 int gameNumber = Integer.parseInt(world.getName().substring(0, world.getName().indexOf("_")));
                 if (gameNumber == 0) {return;}
                 getLogger().info("Ongoing game #" + gameNumber + " detected.");
-                games.add(new Game(gameNumber));
+                games.add(new Game(gameNumber, this));
             }
         });;
     }

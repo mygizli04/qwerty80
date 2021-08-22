@@ -75,14 +75,17 @@ public class Game {
         worldManager.deleteWorld(world.getName());
     }
     
-    public Game(int id) {
+    public Game(int id, Qwerty80 main) {
         // Initilize multiverse
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
         
         if (world == null) {
             if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
-                Utils.delete(Bukkit.getServer().getWorldContainer().getAbsolutePath() + "/" + id + "_GAME_island_water");
-                worldManager.cloneWorld("island_water", id + "_GAME_island_water");
+                Utils.deleteRecursively(Bukkit.getServer().getWorldContainer().getAbsolutePath() + "/" + id + "_GAME_island_water");
+                if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
+                    Bukkit.getLogger().severe("Cannot clone world! Please check logs!");
+                    Bukkit.getPluginManager().disablePlugin(main);
+                }
             }
             world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
         }
