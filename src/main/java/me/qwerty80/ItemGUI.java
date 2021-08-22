@@ -11,6 +11,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
@@ -98,6 +99,16 @@ public class ItemGUI implements Listener {
         playersWithGuiOpen.removeIf(element -> element.player == event.getPlayer());
     }
 
+    void initRenameItem(Player player) {
+        player.closeInventory();
+        if (!Utils.checkPermission(player, "escape.rename.normal")) {
+            player.sendMessage("You do not have permission to rename items!");
+            return;
+        }
+        player.sendMessage("§aHold the item you want to §e§lRename§a, and type it in chat! §aType §c§l\"Cancel\"§a to cancel or §b§l\"Reset\"§a to reset.");
+        playersRenamingItems.add(player);
+    }
+
     @EventHandler
     public void clickAnvil(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
@@ -108,13 +119,7 @@ public class ItemGUI implements Listener {
                     case ANVIL:
                         switch (event.getRawSlot()) {
                             case 11:
-                                player.closeInventory();
-                                if (!Utils.checkPermission(player, "escape.rename.normal")) {
-                                    player.sendMessage("You do not have permission to rename items!");
-                                    return;
-                                }
-                                player.sendMessage("§aHold the item you want to §e§lRename§a, and type it in chat! §aType §c§l\"Cancel\"§a to cancel or §b§l\"Reset\"§a to reset.");
-                                playersRenamingItems.add(player);
+                                initRenameItem(player);
                                 break;
                             case 13:
                                 // Check permission
@@ -158,7 +163,7 @@ public class ItemGUI implements Listener {
                                 color.setItem(28, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
                                 color.setItem(29, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
                                 color.setItem(30, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
-                                color.setItem(31, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
+                                color.setItem(31, Utils.createNamedItem(Material.NAME_TAG, "Rename!"));
                                 color.setItem(32, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
                                 color.setItem(33, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
                                 color.setItem(34, Utils.createNamedItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, ""));
@@ -168,6 +173,10 @@ public class ItemGUI implements Listener {
                                 playersWithGuiOpen.add(new PlayerWithGUI((Player) event.getWhoClicked(), GUIType.COLOR));
                                 break;
                             case 15:
+                                if (!Utils.checkPermission(event.getWhoClicked(), "escape.rename.format")) {
+                                    event.getWhoClicked().sendMessage("You do not have permission to use format codes in your items.");
+                                    return;
+                                }
                                 Inventory format = Bukkit.getServer().createInventory(null, 27, Component.text("Anvil"));
                                 //items
                                 format.setItem(0, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
@@ -181,18 +190,18 @@ public class ItemGUI implements Listener {
                                 format.setItem(8, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
                                 format.setItem(9, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
                                 format.setItem(10, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
-                                format.setItem(11, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§lBold - &l"));
-                                format.setItem(12, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§oItalics - &o"));
-                                format.setItem(13, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§nUnderline - &n"));
-                                format.setItem(14, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§mStrikethrough - &m"));
-                                format.setItem(15, Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§kWow you either cheated or translated... §r- &k")); //watch someone translate this lmao
+                                format.setItem(11, Utils.addFlag(Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§lBold - &l"), ItemFlag.HIDE_POTION_EFFECTS));
+                                format.setItem(12, Utils.addFlag(Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§oItalics - &o"), ItemFlag.HIDE_POTION_EFFECTS));
+                                format.setItem(13, Utils.addFlag(Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§nUnderline - &n"), ItemFlag.HIDE_POTION_EFFECTS));
+                                format.setItem(14, Utils.addFlag(Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§mStrikethrough - &m"), ItemFlag.HIDE_POTION_EFFECTS));
+                                format.setItem(15, Utils.addFlag(Utils.createNamedItem(Material.MOJANG_BANNER_PATTERN, "§kWow you either cheated or translated... §r- &k"), ItemFlag.HIDE_POTION_EFFECTS));
                                 format.setItem(16, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
-                                format.setItem(17, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
+                                format.setItem(17, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, "")); // tell me which ones i should add it to the banners all of em these 5
                                 format.setItem(18, Utils.createNamedItem(Material.RED_STAINED_GLASS_PANE, "§l§cGo back"));
                                 format.setItem(19, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
                                 format.setItem(20, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
                                 format.setItem(21, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
-                                format.setItem(22, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
+                                format.setItem(22, Utils.createNamedItem(Material.NAME_TAG, "Rename!"));
                                 format.setItem(23, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
                                 format.setItem(24, Utils.createNamedItem(Material.BLUE_STAINED_GLASS_PANE, ""));
                                 format.setItem(25, Utils.createNamedItem(Material.BLACK_STAINED_GLASS_PANE, ""));
@@ -211,23 +220,33 @@ public class ItemGUI implements Listener {
                         }
                         break;
                     case COLOR:
-                        if (event.getRawSlot() == 27) {
-                            event.getWhoClicked().closeInventory();
-                            openAnvilInventory(playerWithGui.player);
-                        }
-
-                        if (event.getRawSlot() <= 35) {
-                            event.setCancelled(true);
+                        switch (event.getRawSlot()) {
+                            case 27:
+                                event.getWhoClicked().closeInventory();
+                                openAnvilInventory(playerWithGui.player);
+                                break;
+                            case 31:
+                                initRenameItem(player);
+                                break;
+                            default:
+                                if (event.getRawSlot() <= 35) {
+                                    event.setCancelled(true);
+                                }
                         }
                         break;
                     case FORMAT:
-                        if (event.getRawSlot() == 18) {
-                            event.getWhoClicked().closeInventory();
-                            openAnvilInventory(playerWithGui.player);
-                        }
-
-                        if (event.getRawSlot() <= 26) {
-                            event.setCancelled(true);
+                        switch (event.getRawSlot()) {
+                            case 18:
+                                event.getWhoClicked().closeInventory();
+                                openAnvilInventory(playerWithGui.player);
+                                break;
+                            case 22:
+                                initRenameItem(player);
+                                break;
+                            default:
+                                if (event.getRawSlot() <= 26) {
+                                    event.setCancelled(true);
+                                }
                         }
                         break;
                 }

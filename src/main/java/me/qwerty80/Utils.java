@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -242,5 +243,18 @@ public interface Utils {
             }
         }
         return replace;
+    }
+
+    static ItemStack addFlags(ItemStack item, ItemFlag[] flags) {
+        ItemMeta meta = item.getItemMeta();
+        meta.addItemFlags(flags);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    static ItemStack addFlag(ItemStack item, ItemFlag flag) {
+        return addFlags(item, new ItemFlag[]{
+            flag
+        });
     }
 }
