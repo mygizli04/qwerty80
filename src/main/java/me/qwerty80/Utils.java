@@ -175,7 +175,15 @@ public interface Utils {
     }
 
     static ItemStack changeItemName(ItemStack item, String name) {
-        return changeItemName(item, Component.text(name).decoration(TextDecoration.ITALIC, false));
+        if (name == null) {
+            ItemMeta meta = item.getItemMeta();
+            meta.displayName(null);
+            item.setItemMeta(meta);
+            return item;
+        }
+        else {
+            return changeItemName(item, Component.text(name).decoration(TextDecoration.ITALIC, false));
+        }
     }
 
     static ItemStack createNamedItem(Material item, TextComponent name) {

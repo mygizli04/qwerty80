@@ -113,7 +113,7 @@ public class ItemGUI implements Listener {
                                     player.sendMessage("You do not have permission to rename items!");
                                     return;
                                 }
-                                player.sendMessage("§aHold the item you want to §e§lrename§a, and type it in chat! §bType §c§l\"Cancel\"§b to cancel.");
+                                player.sendMessage("§aHold the item you want to §e§lRename§a, and type it in chat! §aType §c§l\"Cancel\"§a to cancel or §b§l\"Reset\"§a to reset.");
                                 playersRenamingItems.add(player);
                                 break;
                             case 13:
@@ -251,7 +251,7 @@ public class ItemGUI implements Listener {
             String rename = event.getMessage().replaceAll("§", "&");
             ArrayList<String> bannedColorCodes = new ArrayList<String>();
 
-            // lol easter eggs & cancel
+            // lol easter eggs, cancel and reset
             switch (rename.toLowerCase()) {
                 case "cancel":
                     event.getPlayer().sendMessage("§c§lCancelled.");
@@ -274,6 +274,15 @@ public class ItemGUI implements Listener {
                 case "&c&l\"cancel\"":
                     event.getPlayer().sendMessage(Component.text("You did it...").clickEvent(ClickEvent.openUrl("https://www.urbandictionary.com/define.php?term=Type%20any%20word...")));
                     return;
+                case "reset": // lol I'm joining
+                    Utils.renameHeldItem(null, event.getPlayer());
+                    event.getPlayer().sendMessage(Component.text("§eYour item name has been §b§lReset!"));
+                    return;
+            }
+
+            if (rename.contains("&") && !Utils.checkPermission(event.getPlayer(), "escape.rename.color")) {
+                // there
+                event.getPlayer().sendMessage("You do not have permission to use color codes in your items!");
             }
 
             if (!Utils.checkPermission(event.getPlayer(), "escape.rename.format")) {
@@ -289,10 +298,14 @@ public class ItemGUI implements Listener {
                 rename = Utils.replaceExcept(rename, "&", "§", bannedColorCodes.toArray(new String[0]));
             }
 
+            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR) {
+                event.getPlayer().sendMessage("§cYou can't rename air?!?!");
+            }
+
             if (!Utils.range(event.getPlayer().getInventory().getHeldItemSlot(), 6, 8)) {
                 Utils.renameHeldItem(rename, event.getPlayer());
             } else {
-                event.getPlayer().sendMessage("You can't rename that!");
+                event.getPlayer().sendMessage("§cYou can't rename that!");
             }
         }
     }
