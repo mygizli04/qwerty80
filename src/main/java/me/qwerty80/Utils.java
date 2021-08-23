@@ -12,6 +12,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -192,7 +193,12 @@ public interface Utils {
     }
 
     static ItemStack createNamedItem(Material item, String name) {
-        return changeItemName(new ItemStack(item), name);
+        if (item == Material.AIR) {
+            return null;
+        }
+        else {
+            return changeItemName(new ItemStack(item), name);
+        }
     }
 
     static boolean playerIsInAGame(Player player, Stack<Game> games) {
@@ -256,5 +262,51 @@ public interface Utils {
         return addFlags(item, new ItemFlag[]{
             flag
         });
+    }
+
+    static Inventory createGui(int size, TextComponent name, ItemStack item1, ItemStack item2, InventoryOverride[] overrides) {
+        Inventory inventory = Bukkit.getServer().createInventory(null, size, name);
+        
+        for (int i = 0; i < size; i++) {
+            if (i % 2 == 0) {
+                inventory.setItem(i, item1);
+            }
+            else {
+                inventory.setItem(i, item2);
+            }
+        }
+
+        for (InventoryOverride override : overrides) {
+            inventory.setItem(override.slot, override.item);
+        }
+
+        return inventory;
+    }
+
+    static Inventory createGui(int size, String name, Material item1, Material item2, InventoryOverride[] overrides) {
+        return createGui(size, Component.text(name), createNamedItem(item1, ""), createNamedItem(item2, ""), overrides);
+    }
+
+    static Inventory createGui(int size, TextComponent name, Material item1, Material item2, InventoryOverride[] overrides) {
+        return createGui(size, name, new ItemStack(item1), new ItemStack(item2), overrides);
+    }
+
+    static Inventory createGui(int size, String name, ItemStack item1, ItemStack item2, InventoryOverride[] overrides) {
+        return createGui(size, Component.text(name), item1, item2, overrides);
+    }
+
+    static class InventoryOverride {
+        int slot;
+        ItemStack item;
+
+        public InventoryOverride(int _slot, ItemStack _item) {
+            slot = _slot;
+            item = _item;
+        }
+
+        public InventoryOverride(int _slot, Material material) {
+            slot = _slot;
+            item = new ItemStack(material);
+        }
     }
 }
