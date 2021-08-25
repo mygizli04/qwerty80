@@ -348,7 +348,7 @@ interface Table {
             new Items(Material.IRON_SWORD),
             new Items(new Item[]{
                 new Item(Material.CROSSBOW),
-                new Item(Material.ARROW, 8)
+                new Item(Material.SPECTRAL_ARROW, 8)
             }),
             new Items(Material.BOW)
         };
@@ -357,7 +357,7 @@ interface Table {
             new Items(Material.DIAMOND_SWORD),
             new Items(new Item[]{
                 new Item(Material.BOW),
-                new Item(Material.ARROW, 8)
+                new Item(Material.SPECTRAL_ARROW, 8)
             })
         };
 
@@ -365,7 +365,7 @@ interface Table {
             new Items(Material.NETHERITE_SWORD),
             new Items(new Item[]{
                 new Item(Material.BOW),
-                new Item(Material.ARROW, 8)
+                new Item(Material.SPECTRAL_ARROW, 8)
             }),
             new Items(Material.TRIDENT)
         };

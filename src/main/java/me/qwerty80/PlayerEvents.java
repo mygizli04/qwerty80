@@ -1,6 +1,7 @@
 package me.qwerty80;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -13,6 +14,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
 
 import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
@@ -175,6 +177,22 @@ public class PlayerEvents implements Listener {
                     break;
             }
         }
+        if (event.getClickedInventory().getType() == InventoryType.CHEST) {
+            if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) {
+                ItemStack arrow = new ItemStack(Material.ARROW, 8);
+                if(event.isShiftClick()) {
+                    if (player.getInventory().getItem(7).getType() == Material.SADDLE) {
+                        player.getInventory().setItem(7, arrow);
+                        //can I end it?
+                    }
+                    if (player.getInventory().getItem(7).getType() == Material.ARROW) {
+                        int amount = player.getInventory().getItem(7).getAmount() + 8;
+                        ItemStack addArrow = new ItemStack(Material.ARROW, amount);
+                        player.getInventory().setItem(7, addArrow);
+                    }
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -186,7 +204,14 @@ public class PlayerEvents implements Listener {
             case 6:
                 event.setCancelled(true);
             case 7:
-                event.setCancelled(true);
+                if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.ARROW) {
+                    ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW,1);
+                    event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), specArrow);
+                    event.setCancelled(false);
+                }
+                if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.SADDLE) {
+                    event.setCancelled(true);
+                }
             case 8:
                 event.setCancelled(true);
         }
