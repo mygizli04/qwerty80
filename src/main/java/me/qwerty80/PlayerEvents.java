@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+//import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
@@ -64,7 +65,8 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getClickedBlock().getType().name().contains("_BED") && !Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
+            if (event.getClickedBlock().getType().name().contains("_BED")
+                    && !Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
                 event.setCancelled(true);
             }
         }
@@ -181,11 +183,14 @@ public class PlayerEvents implements Listener {
             int originalSlot = event.getRawSlot();
             if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) { // And clicked on a spectral arrow
                 int arrows = event.getCurrentItem().getAmount(); // get the amount of arrows
-                ItemStack arrow = new ItemStack(Material.ARROW, arrows); // create new itemstack with that amount of arrows
-                if(event.isShiftClick()) { // if it's a shift click
+                ItemStack arrow = new ItemStack(Material.ARROW, arrows); // create new itemstack with that amount of
+                                                                         // arrows
+                if (event.isShiftClick()) { // if it's a shift click
                     switch (player.getInventory().getItem(7).getType()) {
                         case ARROW:
-                            int amount = player.getInventory().getItem(7).getAmount() + arrows; // get amount of arrows that will be in slot 7
+                            int amount = player.getInventory().getItem(7).getAmount() + arrows; // get amount of arrows
+                                                                                                // that will be in slot
+                                                                                                // 7
                             int amountOver = 0;
                             if (amount > 100) { // if it's over 100
                                 amountOver = amount - 100; // set amount over and amount
@@ -199,25 +204,24 @@ public class PlayerEvents implements Listener {
                             break;
                         case SADDLE:
                             player.getInventory().setItem(7, arrow); // just set the arrow amount to quiver
-                            player.getInventory().remove(Material.SPECTRAL_ARROW);
+                            event.setCancelled(true);
+                            event.getClickedInventory().setItem(event.getSlot(), null);
                             break;
                         default:
                             // nothing
                     }
                 }
-/*will fix later for just regular clicking                if (event.getInventory().getType() == InventoryType.CHEST) {
-                    if (event.getCursor().getType() == Material.SPECTRAL_ARROW) {
-                        if (event.getInventory().getType() == InventoryType.PLAYER) {
-                            if (player.getInventory().getItem(7).getType() == Material.ARROW) {
-                                int amount = player.getInventory().getItem(7).getAmount() + 8;                                    ItemStack addArrow = new ItemStack(Material.ARROW, amount);
-                                player.getInventory().setItem(7, addArrow);
-                            }
-                            if (player.getInventory().getItem(7).getType() == Material.SADDLE) {
-                                player.getInventory().setItem(7, arrow);
-                            }
-                        }
-                    }
-                } */
+                /*
+                 * will fix later for just regular clicking if (event.getInventory().getType()
+                 * == InventoryType.CHEST) { if (event.getCursor().getType() ==
+                 * Material.SPECTRAL_ARROW) { if (event.getInventory().getType() ==
+                 * InventoryType.PLAYER) { if (player.getInventory().getItem(7).getType() ==
+                 * Material.ARROW) { int amount = player.getInventory().getItem(7).getAmount() +
+                 * 8; ItemStack addArrow = new ItemStack(Material.ARROW, amount);
+                 * player.getInventory().setItem(7, addArrow); } if
+                 * (player.getInventory().getItem(7).getType() == Material.SADDLE) {
+                 * player.getInventory().setItem(7, arrow); } } } }
+                 */
             }
         }
     }
@@ -232,7 +236,7 @@ public class PlayerEvents implements Listener {
                 event.setCancelled(true);
             case 7:
                 if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.ARROW) {
-                    ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW,1);
+                    ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW, 1);
                     event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), specArrow);
                     event.setCancelled(false);
                 }
@@ -241,6 +245,25 @@ public class PlayerEvents implements Listener {
                 }
             case 8:
                 event.setCancelled(true);
+            default:
+                // nothing ig (I think this may be contributing to my problems with dropping
+                // from inv...)
         }
     }
+
+/*    @EventHandler
+    public void arrowPickup(PlayerPickupArrowEvent event) {
+        Player player = event.getPlayer();
+        switch (player.getInventory().getItem(7).getType()) {
+            case ARROW:
+                if (player.getInventory().getItem(7).getAmount() >= 100) {
+                    event.getArrow().remove();
+                }
+            case SADDLE:
+                ItemStack arrow = new ItemStack(Material.ARROW, 1);
+                player.getInventory().setItem(7, arrow);
+            default:
+                // nothing
+        }
+    }*/
 }
