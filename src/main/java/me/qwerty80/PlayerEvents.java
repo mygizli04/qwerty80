@@ -105,6 +105,10 @@ public class PlayerEvents implements Listener {
             return;
         }
 
+        if (event.getClickedInventory() == null) {
+            return;
+        }
+
         switch (event.getHotbarButton()) {
             case 6:
                 event.setCancelled(true);

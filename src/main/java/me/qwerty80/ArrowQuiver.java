@@ -6,6 +6,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -13,6 +14,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import net.kyori.adventure.text.Component;
 
 public class ArrowQuiver implements Listener {
 
@@ -27,6 +30,10 @@ public class ArrowQuiver implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         if (!Utils.playerIsInAGame(player, main.games)) {
+            return;
+        }
+
+        if (event.getClickedInventory() == null){
             return;
         }
 
@@ -80,17 +87,20 @@ public class ArrowQuiver implements Listener {
         }
 
         if (event.getItemDrop().getItemStack().getType() == Material.ARROW) {
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.ARROW) {
-                ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW, 1);
-                event.setCancelled(true);
+            ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW, 1);
+            event.setCancelled(true);
+            if (event.getPlayer().getInventory().getItem(7) == null) {
+                event.getPlayer().getInventory().setItem(7, new ItemStack(Material.SADDLE));
+            }
+            else {
                 event.getPlayer().getInventory().setItem(7, new ItemStack(Material.ARROW, event.getPlayer().getInventory().getItem(7).getAmount() - 1));
-                Item droppedItem = event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), specArrow);
-                droppedItem.setPickupDelay(20);
-                droppedItem.setVelocity(event.getPlayer().getLocation().getDirection().multiply(3));
             }
-            else if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.SADDLE) {
-                event.setCancelled(true);
-            }
+            Item droppedItem = event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation().add(0,1,0), specArrow);
+            droppedItem.setPickupDelay(20);
+            droppedItem.setVelocity(event.getPlayer().getLocation().getDirection());
+        }
+        else if (event.getItemDrop().getItemStack().getType() == Material.SADDLE) {
+            event.setCancelled(true);
         }
     }
 
@@ -129,5 +139,53 @@ public class ArrowQuiver implements Listener {
                     // Nothing :)
             }
         });
+    }
+
+    @EventHandler
+    public void itemPickup(EntityPickupItemEvent event) {
+        if (event.getEntity() instanceof Player && event.getItem().getItemStack().getType() == Material.SPECTRAL_ARROW ) {
+            Player player = (Player) event.getEntity();
+            Inventory inventory = player.getInventory();
+            int amount;
+            try {
+                amount = inventory.getItem(7).getAmount();
+            }
+            catch (NullPointerException err) {
+                player.sendMessage("§cUh oh, an error occured and we cannot recover from it. We're sorry about this bug and please inform the devs about this issue.");
+                inventory.remove(Material.ARROW);
+                inventory.remove(Material.SPECTRAL_ARROW);
+                inventory.remove(Material.SADDLE);
+                inventory.setItem(7, new ItemStack(Material.SADDLE));
+                player.sendMessage("§c" + err.getMessage());
+                return;
+            }
+
+            switch (inventory.getItem(7).getType()) {
+                case SADDLE:
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                        inventory.remove(Material.SPECTRAL_ARROW);
+                        inventory.setItem(7, new ItemStack(Material.ARROW, event.getItem().getItemStack().getAmount()));
+                    });
+                    break;
+                case ARROW:
+                    if (amount == 100) {
+                        event.setCancelled(true);
+                    }
+                    else {
+                        Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                            inventory.remove(Material.SPECTRAL_ARROW);
+                            inventory.setItem(7, new ItemStack(Material.ARROW, amount + event.getItem().getItemStack().getAmount()));
+                        });
+                    }
+                    break;
+                default:
+                    // If it's NEITHER saddle or arrow we have to recover from it
+                    inventory.remove(Material.ARROW);
+                    inventory.remove(Material.SPECTRAL_ARROW);
+                    inventory.remove(Material.SADDLE);
+                    inventory.setItem(7, new ItemStack(Material.SADDLE));
+                    player.sendMessage(Component.text("Sorry, but we've run into an unfixable problem and had to reset your arrows. Please report this bug to the admins. We apologize for the inconveniece."));
+            }
+        }
     }
 }
