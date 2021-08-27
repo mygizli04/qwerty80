@@ -17,8 +17,6 @@ public class Qwerty80 extends JavaPlugin {
     Commands commandHandler = new Commands(this);
     TabComplete tabCompleter = new TabComplete(this);
 
-    ItemGUI itemGui = new ItemGUI(this);
-
     MultiverseCore multiverse;
     MVWorldManager worldManager;
 
@@ -29,9 +27,10 @@ public class Qwerty80 extends JavaPlugin {
 
         getCommand("spawn").setExecutor(commandHandler);
 
-        getServer().getPluginManager().registerEvents(itemGui, this);
+        getServer().getPluginManager().registerEvents(new ItemGUI(this), this);
         getServer().getPluginManager().registerEvents(new ChestGUI(), this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(this), this);
+        getServer().getPluginManager().registerEvents(new ArrowQuiver(this), this);
 
         // Ready multiverse
         multiverse = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core"); // <relevant line for help on discord>
