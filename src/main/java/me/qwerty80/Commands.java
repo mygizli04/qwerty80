@@ -219,8 +219,8 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage("§a§lBuilders:");
                 sender.sendMessage("     §bCloudy_TkT §2| §eTkT_Ohyeadude21#0179");
                 sender.sendMessage("     §bNorwegianNeko §2| §eEcho🇳🇴#7716");
-                sender.sendMessage("     §bSAVAGEBOY989235 §2| §e********#****");
-                sender.sendMessage("     §bSwagmannene §2| §e********#****");
+                sender.sendMessage("     §bSAVAGEBOY989235");
+                sender.sendMessage("     §bSwagmannene §2| §eMichal#4492");
                 sender.sendMessage("     §bLutappiBoon");
                 sender.sendMessage("     §bwestie404 §2| §ewestie404#0404");
                 sender.sendMessage("     §bSyxaer §2| §eSyxaer#1072");
