@@ -179,31 +179,28 @@ public class PlayerEvents implements Listener {
                     break;
             }
         }
-        if (event.getClickedInventory().getType() == InventoryType.CHEST) { // If clicked on a chest
+        if (event.getClickedInventory().getType() == InventoryType.CHEST) {
             int originalSlot = event.getRawSlot();
-            if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) { // And clicked on a spectral arrow
-                int arrows = event.getCurrentItem().getAmount(); // get the amount of arrows
-                ItemStack arrow = new ItemStack(Material.ARROW, arrows); // create new itemstack with that amount of
-                                                                         // arrows
+            if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) {
+                int arrows = event.getCurrentItem().getAmount();
+                ItemStack arrow = new ItemStack(Material.ARROW, arrows);
                 if (event.isShiftClick()) { // if it's a shift click
                     switch (player.getInventory().getItem(7).getType()) {
                         case ARROW:
-                            int amount = player.getInventory().getItem(7).getAmount() + arrows; // get amount of arrows
-                                                                                                // that will be in slot
-                                                                                                // 7
+                            int amount = player.getInventory().getItem(7).getAmount() + arrows;
                             int amountOver = 0;
-                            if (amount > 100) { // if it's over 100
-                                amountOver = amount - 100; // set amount over and amount
+                            if (amount > 100) {
+                                amountOver = amount - 100;
                                 amount = 100;
                             }
-                            ItemStack addArrow = new ItemStack(Material.ARROW, amount); // make itemstack with arrows
+                            ItemStack addArrow = new ItemStack(Material.ARROW, amount);
                             player.getInventory().setItem(7, addArrow);
                             ItemStack remainingArrow = new ItemStack(Material.SPECTRAL_ARROW, amountOver);
                             event.getClickedInventory().setItem(originalSlot, remainingArrow);
                             player.getInventory().remove(Material.SPECTRAL_ARROW);
                             break;
                         case SADDLE:
-                            player.getInventory().setItem(7, arrow); // just set the arrow amount to quiver
+                            player.getInventory().setItem(7, arrow);
                             event.setCancelled(true);
                             event.getClickedInventory().setItem(event.getSlot(), null);
                             break;
