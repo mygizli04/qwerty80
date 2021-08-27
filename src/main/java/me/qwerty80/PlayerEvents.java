@@ -121,105 +121,115 @@ public class PlayerEvents implements Listener {
                 break;
         }
 
+        switch (event.getClickedInventory().getType()) {
+            case PLAYER:
+                switch (event.getSlot()) {
+                    case 6:
+                        event.setCancelled(true);
+                        break;
+                    case 7:
+                        event.setCancelled(true);
+                        break;
+                    case 8:
+                        event.setCancelled(true);
+                        break;
+                    case 9:
+                        event.setCancelled(true);
+                        break;
+                    case 10:
+                        event.setCancelled(true);
+                        break;
+                    case 11:
+                        event.setCancelled(true);
+                        break;
+                    case 12:
+                        event.setCancelled(true);
+                        break;
+                    case 13:
+                        event.setCancelled(true);
+                        break;
+                    case 14:
+                        event.setCancelled(true);
+                        break;
+                    case 15:
+                        event.setCancelled(true);
+                        break;
+                    case 16:
+                        event.setCancelled(true);
+                        break;
+                    case 17:
+                        event.setCancelled(true);
+                        break;
+                    case 24:
+                        event.setCancelled(true);
+                        break;
+                    case 25:
+                        event.setCancelled(true);
+                        break;
+                    case 26:
+                        event.setCancelled(true);
+                        break;
+                    case 33:
+                        event.setCancelled(true);
+                        break;
+                    case 34:
+                        event.setCancelled(true);
+                        break;
+                    case 35:
+                        event.setCancelled(true);
+                        break;
+                }
+                break;
+            case CHEST:
+                if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) {
+                    int arrows = event.getCurrentItem().getAmount();
+                    ItemStack arrow = new ItemStack(Material.ARROW, arrows);
+                    if (event.isShiftClick()) { // if it's a shift click
+                        switch (player.getInventory().getItem(7).getType()) {
+                            case ARROW:
+                                int amount = player.getInventory().getItem(7).getAmount() + arrows;
+                                int amountOver = 0;
+                                if (amount > 100) {
+                                    amountOver = amount - 100;
+                                    amount = 100;
+                                }
+                                ItemStack addArrow = new ItemStack(Material.ARROW, amount);
+                                player.getInventory().setItem(7, addArrow);
+                                ItemStack remainingArrow = new ItemStack(Material.SPECTRAL_ARROW, amountOver);
+                                event.setCancelled(true);
+                                event.getClickedInventory().setItem(event.getSlot(), remainingArrow);
+                                break;
+                            case SADDLE:
+                                player.getInventory().setItem(7, arrow);
+                                event.setCancelled(true);
+                                event.getClickedInventory().setItem(event.getSlot(), null);
+                                break;
+                            default:
+                                // nothing
+                        }
+                    }
+                    /*
+                     * will fix later for just regular clicking if (event.getInventory().getType()
+                     * == InventoryType.CHEST) { if (event.getCursor().getType() ==
+                     * Material.SPECTRAL_ARROW) { if (event.getInventory().getType() ==
+                     * InventoryType.PLAYER) { if (player.getInventory().getItem(7).getType() ==
+                     * Material.ARROW) { int amount = player.getInventory().getItem(7).getAmount() +
+                     * 8; ItemStack addArrow = new ItemStack(Material.ARROW, amount);
+                     * player.getInventory().setItem(7, addArrow); } if
+                     * (player.getInventory().getItem(7).getType() == Material.SADDLE) {
+                     * player.getInventory().setItem(7, arrow); } } } }
+                     */
+                }
+                break;
+            default:
+                // Nothing.
+        }
+
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-            switch (event.getSlot()) {
-                case 6:
-                    event.setCancelled(true);
-                    break;
-                case 7:
-                    event.setCancelled(true);
-                    break;
-                case 8:
-                    event.setCancelled(true);
-                    break;
-                case 9:
-                    event.setCancelled(true);
-                    break;
-                case 10:
-                    event.setCancelled(true);
-                    break;
-                case 11:
-                    event.setCancelled(true);
-                    break;
-                case 12:
-                    event.setCancelled(true);
-                    break;
-                case 13:
-                    event.setCancelled(true);
-                    break;
-                case 14:
-                    event.setCancelled(true);
-                    break;
-                case 15:
-                    event.setCancelled(true);
-                    break;
-                case 16:
-                    event.setCancelled(true);
-                    break;
-                case 17:
-                    event.setCancelled(true);
-                    break;
-                case 24:
-                    event.setCancelled(true);
-                    break;
-                case 25:
-                    event.setCancelled(true);
-                    break;
-                case 26:
-                    event.setCancelled(true);
-                    break;
-                case 33:
-                    event.setCancelled(true);
-                    break;
-                case 34:
-                    event.setCancelled(true);
-                    break;
-                case 35:
-                    event.setCancelled(true);
-                    break;
-            }
+            
         }
         if (event.getClickedInventory().getType() == InventoryType.CHEST) {
-            int originalSlot = event.getRawSlot();
-            if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) {
-                int arrows = event.getCurrentItem().getAmount();
-                ItemStack arrow = new ItemStack(Material.ARROW, arrows);
-                if (event.isShiftClick()) { // if it's a shift click
-                    switch (player.getInventory().getItem(7).getType()) {
-                        case ARROW:
-                            int amount = player.getInventory().getItem(7).getAmount() + arrows;
-                            int amountOver = 0;
-                            if (amount > 100) {
-                                amountOver = amount - 100;
-                                amount = 100;
-                            }
-                            ItemStack addArrow = new ItemStack(Material.ARROW, amount);
-                            player.getInventory().setItem(7, addArrow);
-                            ItemStack remainingArrow = new ItemStack(Material.SPECTRAL_ARROW, amountOver);
-                            event.getClickedInventory().setItem(originalSlot, remainingArrow);
-                            player.getInventory().remove(Material.SPECTRAL_ARROW);
-                            break;
-                        case SADDLE:
-                            player.getInventory().setItem(7, arrow);
-                            event.setCancelled(true);
-                            event.getClickedInventory().setItem(event.getSlot(), null);
-                            break;
-                        default:
-                            // nothing
-                    }
-                }
-                /*
-                 * will fix later for just regular clicking if (event.getInventory().getType()
-                 * == InventoryType.CHEST) { if (event.getCursor().getType() ==
-                 * Material.SPECTRAL_ARROW) { if (event.getInventory().getType() ==
-                 * InventoryType.PLAYER) { if (player.getInventory().getItem(7).getType() ==
-                 * Material.ARROW) { int amount = player.getInventory().getItem(7).getAmount() +
-                 * 8; ItemStack addArrow = new ItemStack(Material.ARROW, amount);
-                 * player.getInventory().setItem(7, addArrow); } if
-                 * (player.getInventory().getItem(7).getType() == Material.SADDLE) {
-                 * player.getInventory().setItem(7, arrow); } } } }
-                 */
-            }
+
         }
     }
 
