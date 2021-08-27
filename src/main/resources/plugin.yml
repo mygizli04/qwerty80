@@ -11,6 +11,9 @@ commands:
   spawn:
     description: Go back to the lobby cause ur a chicken
     usage: /spawn
+  credits:
+    description: Credits for our (awesome) staff team!
+    usage: /credits
 permissions:
   escape.admin:
     description: Use admin permissions.

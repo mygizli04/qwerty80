@@ -26,6 +26,8 @@ public class Qwerty80 extends JavaPlugin {
         getCommand("escape").setTabCompleter(tabCompleter);
 
         getCommand("spawn").setExecutor(commandHandler);
+        
+        getCommand("credits").setExecutor(commandHandler);
 
         getServer().getPluginManager().registerEvents(new ItemGUI(this), this);
         getServer().getPluginManager().registerEvents(new ChestGUI(), this);
