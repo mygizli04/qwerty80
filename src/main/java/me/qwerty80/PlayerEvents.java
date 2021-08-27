@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -255,6 +256,18 @@ public class PlayerEvents implements Listener {
             default:
                 // nothing ig (I think this may be contributing to my problems with dropping
                 // from inv...)
+        }
+    }
+
+    @EventHandler
+    public void onShootBow(EntityShootBowEvent event) {
+        if (event.getEntity() instanceof Player) {
+            Player player = (Player) event.getEntity();
+            if (player.getInventory().getItem(7).getType() == Material.ARROW && player.getInventory().getItem(7).getAmount() == 1) {
+                Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                    player.getInventory().setItem(7, new ItemStack(Material.SADDLE));
+                }, 1);
+            }
         }
     }
 
