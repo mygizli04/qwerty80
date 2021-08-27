@@ -79,16 +79,16 @@ public class ArrowQuiver implements Listener {
             return;
         }
 
-        if (event.getPlayer().getInventory().getHeldItemSlot() == 7) {
+        if (event.getItemDrop().getItemStack().getType() == Material.ARROW) {
             if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.ARROW) {
                 ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW, 1);
                 event.setCancelled(true);
+                event.getPlayer().getInventory().setItem(7, new ItemStack(Material.ARROW, event.getPlayer().getInventory().getItem(7).getAmount() - 1));
                 Item droppedItem = event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation(), specArrow);
                 droppedItem.setPickupDelay(20);
-                droppedItem.setVelocity(event.getPlayer().getLocation().getDirection());
+                droppedItem.setVelocity(event.getPlayer().getLocation().getDirection().multiply(3));
             }
-
-            if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.SADDLE) {
+            else if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.SADDLE) {
                 event.setCancelled(true);
             }
         }
