@@ -13,9 +13,11 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerPickupArrowEvent;
 //import org.bukkit.event.player.PlayerPickupArrowEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import me.qwerty80.Exceptions.NotFoundException;
@@ -227,7 +229,7 @@ public class PlayerEvents implements Listener {
         }
 
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-            
+
         }
         if (event.getClickedInventory().getType() == InventoryType.CHEST) {
 
@@ -271,19 +273,28 @@ public class PlayerEvents implements Listener {
         }
     }
 
-/*    @EventHandler
+    @EventHandler
     public void arrowPickup(PlayerPickupArrowEvent event) {
-        Player player = event.getPlayer();
-        switch (player.getInventory().getItem(7).getType()) {
-            case ARROW:
-                if (player.getInventory().getItem(7).getAmount() >= 100) {
-                    event.getArrow().remove();
-                }
-            case SADDLE:
-                ItemStack arrow = new ItemStack(Material.ARROW, 1);
-                player.getInventory().setItem(7, arrow);
-            default:
-                // nothing
-        }
-    }*/
+        Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+            Inventory inventory = event.getPlayer().getInventory();
+            switch (inventory.getItem(7).getType()) {
+                case ARROW:
+                    int arrowAmount = inventory.getItem(7).getAmount();
+                    if (arrowAmount == 100) {
+                        inventory.remove(Material.ARROW);
+                        inventory.setItem(7, new ItemStack(Material.ARROW, 100));
+                    } else if (arrowAmount >= 64) {
+                        inventory.remove(Material.ARROW);
+                        inventory.setItem(7, new ItemStack(Material.ARROW, arrowAmount + 1));
+                    }
+                    break;
+                case SADDLE:
+                    inventory.remove(Material.ARROW);
+                    inventory.setItem(7, new ItemStack(Material.ARROW));
+                    break;
+                default:
+                    // Nothing :)
+            }
+        });
+    }
 }
