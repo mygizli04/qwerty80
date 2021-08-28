@@ -126,9 +126,7 @@ public class PlayerEvents implements Listener {
                 case 6:
                     event.setCancelled(true);
                     break;
-                case 7:
-                    event.setCancelled(true);
-                    break;
+                // Case 7 handled in ArrowQuiver.java
                 case 8:
                     event.setCancelled(true);
                     break;

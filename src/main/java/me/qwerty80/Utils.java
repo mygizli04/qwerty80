@@ -309,4 +309,14 @@ public interface Utils {
             item = new ItemStack(material);
         }
     }
+
+    static <T> boolean arrayContains(T compare, T[] to) {
+        boolean result = false;
+        for (T comparing : to) {
+            if (compare == comparing) {
+                result = true;
+            }
+        }
+        return result;
+    }
 }

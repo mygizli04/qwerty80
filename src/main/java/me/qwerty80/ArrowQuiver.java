@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerDropItemEvent;
@@ -77,6 +78,43 @@ public class ArrowQuiver implements Listener {
                  * player.getInventory().setItem(7, arrow); } } } }
                  */
             }
+        }
+        else if (event.getClickedInventory().getType() == InventoryType.PLAYER && event.getSlot() == 7) {
+            event.setCancelled(true);
+            if (event.getClick() == ClickType.DROP) {
+                dropQuiver((Player) event.getWhoClicked());
+            }
+        }
+    }
+
+    boolean dropQuiver(Player player) throws NullPointerException {
+        if (player.getInventory().getItem(7).getType() == Material.ARROW) {
+            ItemStack specArrow = new ItemStack(Material.SPECTRAL_ARROW, 1);
+            if (player.getInventory().getItem(7).getAmount() == 1) {
+                player.getInventory().setItem(7, new ItemStack(Material.SADDLE));
+                Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                    player.getInventory().remove(Material.ARROW);
+                });
+            }
+            else {
+                player.getInventory().setItem(7, new ItemStack(Material.ARROW, player.getInventory().getItem(7).getAmount() - 1));
+            }
+            Item droppedItem = player.getWorld().dropItem(player.getLocation().add(0,1,0), specArrow);
+            droppedItem.setPickupDelay(20);
+            droppedItem.setVelocity(player.getLocation().getDirection().multiply(0.5));
+            return true;
+        }
+        else if (player.getInventory().getItem(7).getType() == Material.SADDLE) {
+            return false;
+        }
+        else {
+            // If it's NEITHER saddle or arrow we have to recover from it
+            player.getInventory().remove(Material.ARROW);
+            player.getInventory().remove(Material.SPECTRAL_ARROW);
+            player.getInventory().remove(Material.SADDLE);
+            player.getInventory().setItem(7, new ItemStack(Material.SADDLE));
+            player.sendMessage(Component.text("Sorry, but we've run into an unfixable problem and had to reset your arrows. Please report this bug to the admins. We apologize for the inconveniece."));
+            return false;
         }
     }
 
