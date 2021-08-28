@@ -1,11 +1,9 @@
 package me.qwerty80;
 
-import java.util.Collection;
 import java.util.Stack;
 
 import com.onarandombox.MultiverseCore.MultiverseCore;
 import com.onarandombox.MultiverseCore.api.MVWorldManager;
-import com.onarandombox.MultiverseCore.api.MultiverseWorld;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -53,12 +51,8 @@ public class Qwerty80 extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Delete worlds
-        Collection<MultiverseWorld> worlds = worldManager.getMVWorlds();
-        worlds.forEach(world -> {
-            if (world.getName().endsWith("_GAME_island_water")) {
-                worldManager.deleteWorld(world.getName());
-            }
+        games.forEach(game -> {
+            game.delete();
         });
     }
 }
