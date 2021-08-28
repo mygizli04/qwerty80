@@ -91,6 +91,9 @@ public class ArrowQuiver implements Listener {
             event.setCancelled(true);
             if (event.getPlayer().getInventory().getItem(7) == null) {
                 event.getPlayer().getInventory().setItem(7, new ItemStack(Material.SADDLE));
+                Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                    event.getPlayer().getInventory().remove(Material.ARROW);
+                });
             }
             else {
                 event.getPlayer().getInventory().setItem(7, new ItemStack(Material.ARROW, event.getPlayer().getInventory().getItem(7).getAmount() - 1));
