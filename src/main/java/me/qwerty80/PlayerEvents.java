@@ -61,17 +61,18 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (event.getClickedBlock().getType().name().contains("_BED") && !Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
-                event.setCancelled(true);
-            }
+
+        if (event.getAction() != Action.RIGHT_CLICK_AIR || event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+
+        if (event.getClickedBlock().getType().name().contains("_BED") && !Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
+            event.setCancelled(true);
         }
 
         if (Utils.playerIsInAGame(event.getPlayer(), main.games)) {
             switch (event.getPlayer().getInventory().getHeldItemSlot()) {
-                case 6:
-                    // Handled in ItemGUI
-                    break;
+                // Case 6 handled in ItemGUI
                 case 7:
                     event.setCancelled(true);
                     break;
