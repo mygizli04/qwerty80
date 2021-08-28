@@ -97,7 +97,7 @@ public class ArrowQuiver implements Listener {
             }
             Item droppedItem = event.getPlayer().getWorld().dropItem(event.getPlayer().getLocation().add(0,1,0), specArrow);
             droppedItem.setPickupDelay(20);
-            droppedItem.setVelocity(event.getPlayer().getLocation().getDirection());
+            droppedItem.setVelocity(event.getPlayer().getLocation().getDirection().multiply(0.5));
         }
         else if (event.getItemDrop().getItemStack().getType() == Material.SADDLE) {
             event.setCancelled(true);
