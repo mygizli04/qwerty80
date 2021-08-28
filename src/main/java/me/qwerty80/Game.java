@@ -52,6 +52,14 @@ public class Game {
         updatePlayerInventories();
     }
 
+    public void kickAllPlayers() {
+        players.forEach(player -> {
+            player.getInventory().clear();
+            Utils.teleportPlayerToWorld(player, "empty");
+        });
+        players.removeAll(players);
+    }
+
     public void playerLeave(Player player) {
         players.remove(player);
         Utils.teleportPlayerToWorld(player, "empty");
@@ -72,9 +80,7 @@ public class Game {
     int chestCount = 10000; // how many chests will be generated
     
     public void delete() {
-        players.forEach(player -> {
-            playerLeave(player);
-        });
+        kickAllPlayers();
         worldManager.deleteWorld(world.getName());
     }
     
