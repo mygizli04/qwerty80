@@ -72,6 +72,9 @@ public class Game {
     int chestCount = 10000; // how many chests will be generated
     
     public void delete() {
+        players.forEach(player -> {
+            playerLeave(player);
+        });
         worldManager.deleteWorld(world.getName());
     }
     
