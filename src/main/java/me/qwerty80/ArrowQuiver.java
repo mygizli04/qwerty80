@@ -154,6 +154,7 @@ public class ArrowQuiver implements Listener {
                 amount = inventory.getItem(7).getAmount();
             }
             catch (NullPointerException err) {
+                event.setCancelled(true);
                 player.sendMessage("§cUh oh, an error occured and we cannot recover from it. We're sorry about this bug and please inform the devs about this issue.");
                 inventory.remove(Material.ARROW);
                 inventory.remove(Material.SPECTRAL_ARROW);
