@@ -41,7 +41,7 @@ public class ArrowQuiver implements Listener {
             if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) {
                 int arrows = event.getCurrentItem().getAmount();
                 ItemStack arrow = new ItemStack(Material.ARROW, arrows);
-                if (event.isShiftClick()) { // if it's a shift click
+                if (event.isShiftClick()) {
                     switch (player.getInventory().getItem(7).getType()) {
                         case ARROW:
                             int amount = player.getInventory().getItem(7).getAmount() + arrows;
