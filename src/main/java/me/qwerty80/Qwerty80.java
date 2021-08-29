@@ -46,7 +46,7 @@ public class Qwerty80 extends JavaPlugin {
                 getLogger().info("Ongoing game #" + gameNumber + " detected.");
                 games.add(new Game(gameNumber, this));
             }
-        });;
+        });
     }
 
     @Override
