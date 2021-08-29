@@ -116,8 +116,8 @@ public class PlayerEvents implements Listener {
         }
 
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-            // If it's in range of 6-17 (excluding 7) or range of 24-35 excluding 27, 28, 29, 30, 31, 32, 33
-            if (Utils.inRangeExcept(event.getSlot(), 6, 17, new int[] { 7 })
+            // If it's in range of 6-17 (excluding 7 and 8) or range of 24-35 excluding 27, 28, 29, 30, 31, 32, 33
+            if (Utils.inRangeExcept(event.getSlot(), 6, 17, new int[] { 7, 8 })
                     || Utils.inRangeExcept(event.getSlot(), 24, 35, new int[] { 27, 28, 29, 30, 31, 32, 33 })) {
                 event.setCancelled(true);
             }
