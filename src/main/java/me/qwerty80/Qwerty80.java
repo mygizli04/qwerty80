@@ -31,6 +31,7 @@ public class Qwerty80 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChestGUI(), this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(this), this);
         getServer().getPluginManager().registerEvents(new ArrowQuiver(this), this);
+        getServer().getPluginManager().registerEvents(new Team(this), this);
 
         // Ready multiverse
         multiverse = (MultiverseCore) Bukkit.getServer().getPluginManager().getPlugin("Multiverse-Core"); // <relevant line for help on discord>

@@ -1,9 +1,11 @@
 package me.qwerty80;
 
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
-public class Team {
+public class Team implements Listener {
 
     Qwerty80 main;
 
@@ -11,6 +13,7 @@ public class Team {
         main = _main;
     }
 
+    @EventHandler
     public void inventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if (!Utils.playerIsInAGame(player, main.games)) {
