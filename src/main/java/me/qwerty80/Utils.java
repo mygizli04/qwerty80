@@ -319,4 +319,18 @@ public interface Utils {
         }
         return result;
     }
+
+    static boolean arrayContains(int compare, int[] to) {
+        boolean result = false;
+        for (int comparing : to) {
+            if (compare == comparing) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    static boolean inRangeExcept(int num, int min, int max, int[] exclude) {
+        return (min <= num) && (num <= max) && !arrayContains(num, exclude);
+    }
 }

@@ -66,7 +66,8 @@ public class PlayerEvents implements Listener {
             return;
         }
 
-        if (event.getClickedBlock().getType().name().contains("_BED") && !Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
+        if (event.getClickedBlock().getType().name().contains("_BED")
+                && !Utils.checkPermission(event.getPlayer(), "escape.admin.bedinteract")) {
             event.setCancelled(true);
         }
 
@@ -110,72 +111,15 @@ public class PlayerEvents implements Listener {
             return;
         }
 
-        switch (event.getHotbarButton()) {
-            case 6:
-                event.setCancelled(true);
-                break;
-            case 7:
-                event.setCancelled(true);
-                break;
-            case 8:
-                event.setCancelled(true);
-                break;
+        if (Utils.range(event.getHotbarButton(), 6, 8)) {
+            event.setCancelled(true);
         }
 
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-            switch (event.getSlot()) {
-                case 6:
-                    event.setCancelled(true);
-                    break;
-                // Case 7 handled in ArrowQuiver.java
-                case 8:
-                    event.setCancelled(true);
-                    break;
-                case 9:
-                    event.setCancelled(true);
-                    break;
-                case 10:
-                    event.setCancelled(true);
-                    break;
-                case 11:
-                    event.setCancelled(true);
-                    break;
-                case 12:
-                    event.setCancelled(true);
-                    break;
-                case 13:
-                    event.setCancelled(true);
-                    break;
-                case 14:
-                    event.setCancelled(true);
-                    break;
-                case 15:
-                    event.setCancelled(true);
-                    break;
-                case 16:
-                    event.setCancelled(true);
-                    break;
-                case 17:
-                    event.setCancelled(true);
-                    break;
-                case 24:
-                    event.setCancelled(true);
-                    break;
-                case 25:
-                    event.setCancelled(true);
-                    break;
-                case 26:
-                    event.setCancelled(true);
-                    break;
-                case 33:
-                    event.setCancelled(true);
-                    break;
-                case 34:
-                    event.setCancelled(true);
-                    break;
-                case 35:
-                    event.setCancelled(true);
-                    break;
+            // If it's in range of 6-17 (excluding 7) or range of 24-35 excluding 27, 28, 29, 30, 31, 32, 33
+            if (Utils.inRangeExcept(event.getSlot(), 6, 17, new int[] { 7 })
+                    || Utils.inRangeExcept(event.getSlot(), 24, 35, new int[] { 27, 28, 29, 30, 31, 32, 33 })) {
+                event.setCancelled(true);
             }
         }
     }
