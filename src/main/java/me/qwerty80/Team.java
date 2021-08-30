@@ -27,15 +27,16 @@ public class Team implements Listener {
                     //then when they leave they can go back to a newly generated team which I think is easier then back to the original, will help with bugs when the person who *owns* the team, the person eho started it leaves.
                     //anyway ima push now
                     if (size >= 4) {
+                        player.sendMessage("§cYour team has reached the maximum of §l4§c players!");
                         return;
                     }
                     else if (size < 4) {    
                         for(org.bukkit.entity.Entity entity : player.getNearbyEntities(25, 15, 25)) {
                             if( entity instanceof Player) {
-                                player.sendMessage("&aCurrently in teaming mode. Press the team button again to cancel. (timeout in 20 sec)");
+                                player.sendMessage("§aCurrently in teaming mode. Press the team button again to cancel. (timeout in 20 sec)");
                             }
                             else  {
-                                player.sendMessage("&cThere are no nearby players to team with!");
+                                player.sendMessage("§cThere are no nearby players to team with!");
                                 
                             }
                         }
