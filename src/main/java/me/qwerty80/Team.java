@@ -1,9 +1,14 @@
 package me.qwerty80;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 
 public class Team implements Listener {
 
@@ -15,42 +20,20 @@ public class Team implements Listener {
 
     @EventHandler
     public void inventoryClick(InventoryClickEvent event) {
+        if (event.getClickedInventory().getType() != InventoryType.PLAYER) {
+            return;
+        }
+
         Player player = (Player) event.getWhoClicked();
-        String playerEntry = player.getName();
-        //Team team = (Team) player.getScoreboard().getEntryTeam(playerEntry); for later
-        int size = player.getScoreboard().getEntryTeam(playerEntry).getSize();
-        if (!Utils.playerIsInAGame(player, main.games)) {
-            switch (event.getRawSlot()) {
-                case 9:
-                    //This wont work unless a player is in a team, I think we should automaticly put them in a blank team when they join
-                    //when they join they get assigned a team (prob easiest as a growing number) and when they request to team, the person who accepts will join that team and the other one will be abandoned
-                    //then when they leave they can go back to a newly generated team which I think is easier then back to the original, will help with bugs when the person who *owns* the team, the person eho started it leaves.
-                    //anyway ima push now
-                    if (size >= 4) {
-                        player.sendMessage("§cYour team has reached the maximum of §l4§c players!");
-                        return;
-                    }
-                    else if (size < 4) {    
-                        for(org.bukkit.entity.Entity entity : player.getNearbyEntities(25, 15, 25)) {
-                            if( entity instanceof Player) {
-                                player.sendMessage("§aCurrently in teaming mode. Press the team button again to cancel. (timeout in 20 sec)");
-                            }
-                            else  {
-                                player.sendMessage("§cThere are no nearby players to team with!");
-                                
-                            }
-                        }
-                    }
-                break;
 
-                case 10:
+        switch (event.getSlot()) {
+            case 8: // Join team, i know having 2 buttons for this is dumb but whatever
+                if (main.teams.playerIsInATeam(player)) {
+                    player.sendMessage("Sorry, but you can only be in a single team at a time.");
+                    return;
+                }
 
-                break;
-
-                default:
-                    //nothing
-                break;
-            }
+                Bukkit.broadcast(Component.text(player.getName() + " is looking for a team! Click here to join their team!").clickEvent(ClickEvent.runCommand("escape team join " + player.getName())).hoverEvent(Component.text("Click here!")));
         }
     }
 }
