@@ -11,7 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 // Main class
 public class Qwerty80 extends JavaPlugin {
     public Stack<Game> games = new Stack<Game>(); // This stack will have every game instance.
-    public CustomTeams teams = new CustomTeams();
+    public CustomTeams teams = new CustomTeams(this);
 
     Commands commandHandler = new Commands(this);
     TabComplete tabCompleter = new TabComplete(this);
@@ -32,7 +32,6 @@ public class Qwerty80 extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ChestGUI(), this);
         getServer().getPluginManager().registerEvents(new PlayerEvents(this), this);
         getServer().getPluginManager().registerEvents(new ArrowQuiver(this), this);
-        getServer().getPluginManager().registerEvents(new Team(this), this);
         getServer().getPluginManager().registerEvents(teams, this);
 
         // Ready multiverse

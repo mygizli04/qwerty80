@@ -16,6 +16,8 @@ import org.bukkit.inventory.ItemStack;
 // This class will handle everything regarding a single game
 public class Game {
 
+    Qwerty80 main;
+
     World world;
     public ArrayList<Player> players = new ArrayList<Player>();
 
@@ -65,6 +67,7 @@ public class Game {
         Utils.teleportPlayerToWorld(player, "empty");
         updatePlayerInventories();
         player.getInventory().clear();
+        main.teams.removePlayerFromTeams(player);
     }
 
     Material getMaterial(int x, int y, int z) {
@@ -84,7 +87,10 @@ public class Game {
         worldManager.deleteWorld(world.getName());
     }
     
-    public Game(int id, Qwerty80 main) {
+    public Game(int id, Qwerty80 _main) {
+
+        main = _main;
+
         // Initilize multiverse
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
         
@@ -93,7 +99,7 @@ public class Game {
                 Utils.deleteRecursively(Bukkit.getServer().getWorldContainer().getAbsolutePath() + "/" + id + "_GAME_island_water");
                 if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
                     Bukkit.getLogger().severe("Cannot clone world! Please check logs!");
-                    Bukkit.getPluginManager().disablePlugin(main);
+                    Bukkit.getPluginManager().disablePlugin(_main);
                     return;
                 }
             }
