@@ -183,6 +183,9 @@ public class Commands implements CommandExecutor {
                                 return true;
                             }
                             return false;
+                        case "team":
+                            // e
+                            return true;
                         default: // everything else
                             sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");
                     }

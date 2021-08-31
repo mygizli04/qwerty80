@@ -6,13 +6,14 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.entity.Player;
 
 public class TabComplete implements TabCompleter {
 
-    Qwerty80 plugin;
+    Qwerty80 main;
 
-    public TabComplete(Qwerty80 _plugin) {
-        plugin = _plugin;
+    public TabComplete(Qwerty80 _main) {
+        main = _main;
     }
 
     @Override
@@ -25,7 +26,7 @@ public class TabComplete implements TabCompleter {
                         // So if the player types /escape list, we don't have anything else to suggest.
                         return ret;
                     case "join":
-                        for (int i = 0; plugin.games.size() > i; i++) {
+                        for (int i = 0; main.games.size() > i; i++) {
                             ret.add(Integer.toString(i + 1));
                         }
                         return ret;
@@ -42,6 +43,19 @@ public class TabComplete implements TabCompleter {
                             }
                             return ret;
                         }
+                        break;
+                    case "team":
+                        ret.add("join");
+                        ret.add("leave");
+
+                        if (args.length >= 2) {
+                            if (args[1] == "join") {
+                                for (Player player : main.teams.getPlayersLookingForTeam()) {
+                                    ret.add(player.getName());
+                                }                                
+                            }
+                        }
+                        return ret;
                     default: 
                         ret.add("list");
                         ret.add("join");

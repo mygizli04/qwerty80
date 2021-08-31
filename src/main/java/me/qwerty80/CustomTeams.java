@@ -6,6 +6,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -25,6 +26,10 @@ public class CustomTeams implements Listener {
         main = _main;
     }
 
+    public Player[] getPlayersLookingForTeam() {
+        return lookingForTeam.toArray(new Player[0]);
+    }
+
     public boolean addPlayerLookingForTeam(Player player) {
         if (playerIsInATeam(player)) {
             return false;
@@ -40,16 +45,17 @@ public class CustomTeams implements Listener {
             return true;
         }
         else {
-            ArrayList<Player> toAdd = new ArrayList<>();
-//for(org.bukkit.entity.Entity entity : player.getNearbyEntities(25, 15, 25)) {
-            toAdd.add(lookingForTeam.get(0));
-            toAdd.add(player);
 
-            lookingForTeam.get(0).sendMessage("§aYou have been teamed up with " + player.getName());
-            player.sendMessage("§aYou have been teamed up with " + lookingForTeam.get(0).getName());
+            for (Entity entity : player.getNearbyEntities(25, 15, 25)) {
+                if (entity instanceof Player && lookingForTeam.contains(entity)) {
+                    lookingForTeam.remove(entity);
 
-            lookingForTeam.removeAll(lookingForTeam);
-            teams.add(toAdd);
+                    ArrayList<Player> toAdd = new ArrayList<>();
+                    toAdd.add((Player) entity);
+                    toAdd.add(player);
+                    teams.add(toAdd);
+                }
+            }
             return true;
         }
     }
