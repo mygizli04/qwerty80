@@ -41,7 +41,7 @@ public class CustomTeams implements Listener {
 
         if (lookingForTeam.size() == 0) {
             lookingForTeam.add(player);
-            Bukkit.broadcast(Component.text(player.getName() + " is looking for a team! Click here to join their team!").clickEvent(ClickEvent.runCommand("escape team join " + player.getName())).hoverEvent(Component.text("Click here!")));
+            Bukkit.broadcast(Component.text(player.getName() + " is looking for a team! Click here to join their team!").clickEvent(ClickEvent.runCommand("/escape team join " + player.getName())).hoverEvent(Component.text("Click here!")));
             return true;
         }
         else {
@@ -84,6 +84,34 @@ public class CustomTeams implements Listener {
                 team.remove(player);
             }
         });
+    }
+
+    public ArrayList<Player> getPlayersTeam(Player player) {
+        // fml | lol
+        ArrayList<ArrayList<Player>> ret = new ArrayList<>();
+        teams.forEach(team -> {
+            if (team.contains(player)) {
+                ret.add(team);
+            }
+        });
+
+        if (ret.size() == 0) {
+            return null;
+        }
+        else {
+            return ret.get(0);
+        }
+    }
+
+    public void createTeam(Player player1, Player player2) {
+        ArrayList<Player> toAdd = new ArrayList<>();
+        toAdd.add(player1);
+        toAdd.add(player2);
+
+        lookingForTeam.remove(player1);
+        lookingForTeam.remove(player2);
+
+        teams.add(toAdd);
     }
 
     @EventHandler

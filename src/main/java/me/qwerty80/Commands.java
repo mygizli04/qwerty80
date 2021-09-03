@@ -1,5 +1,7 @@
 package me.qwerty80;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -184,7 +186,62 @@ public class Commands implements CommandExecutor {
                             }
                             return false;
                         case "team":
-                            // e
+                            if (!(sender instanceof Player)) {
+                                sender.sendMessage("You cannot be in a team, you're the console!");
+                                return true;
+                            }
+
+                            Player player = (Player) sender;
+
+                            if (args.length < 2) {
+                                sender.sendMessage("Join or leave lmao idk");
+                                return true;
+                            }
+
+                            switch (args[1]) {
+                                case "join":
+                                    if (main.teams.playerIsInATeam(player)) {
+                                        sender.sendMessage("You are already in a team!");
+                                        return true;
+                                    }
+
+                                    if (args.length < 3) {
+                                        sender.sendMessage("Whose team?");
+                                        return true;
+                                    }
+
+                                    Player targetPlayer = Bukkit.getServer().getPlayer(args[2]);
+
+                                    if (targetPlayer == player) {
+                                        sender.sendMessage("You can't join your own team!");
+                                        return true;
+                                    }
+
+                                    ArrayList<Player> team = main.teams.getPlayersTeam(targetPlayer);
+
+                                    if (team != null) {
+                                        team.add(player);
+                                        sender.sendMessage("success");
+                                    }
+                                    else if (Utils.arrayContains(player, main.teams.getPlayersLookingForTeam())) {
+                                        main.teams.createTeam(player, targetPlayer);
+                                        sender.sendMessage("success");
+                                    }
+                                    else {
+                                        sender.sendMessage("That player does not have a team!");
+                                    }
+                                    break;
+                                case "leave":
+                                    if (!main.teams.playerIsInATeam(player)) {
+                                        sender.sendMessage("You are not in a team!");
+                                        return true;
+                                    } //sometimes
+
+                                    main.teams.removePlayerFromTeams(player);
+                                    break;
+                                default:
+                                sender.sendMessage("§cSorry, an error has occured. Please report this to a developer (Commands.java Error: Case not matched)");
+                            }
                             return true;
                         default: // everything else
                             sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");

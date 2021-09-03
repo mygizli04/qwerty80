@@ -48,8 +48,8 @@ public class TabComplete implements TabCompleter {
                         ret.add("join");
                         ret.add("leave");
 
-                        if (args.length >= 2) {
-                            if (args[1] == "join") {
+                        if (args.length > 2) {
+                            if (args[2] == "join") {
                                 for (Player player : main.teams.getPlayersLookingForTeam()) {
                                     ret.add(player.getName());
                                 }                                
@@ -62,6 +62,7 @@ public class TabComplete implements TabCompleter {
                         if (Utils.checkPermission(sender, "escape.admin")) {
                             ret.add("admin");
                         }
+                        ret.add("team");
                         return ret;
                 }
             default:
