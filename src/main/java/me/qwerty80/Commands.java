@@ -60,7 +60,6 @@ public class Commands implements CommandExecutor {
     @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-
         switch (cmd.getName().toLowerCase()) {
             // on command escape:
             case "escape":
@@ -70,9 +69,11 @@ public class Commands implements CommandExecutor {
                 else {
                     switch (args[0]) { // First (0th) argument of command
                         case "list": // /escape list
+                        case "l":
                             sender.sendMessage("There are currently " + main.games.size() + " games active.");
                             break;
                         case "join": // /escape join
+                        case "j":
                             if (main.games.size() == 0) {
                                 sender.sendMessage("There are no games to join!");
                                 return true;
