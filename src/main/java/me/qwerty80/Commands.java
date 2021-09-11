@@ -28,10 +28,10 @@ public class Commands implements CommandExecutor {
     // Unused for now
     void invalidCommand(String[] subcommands, CommandSender sender) {
         if (subcommands.length == 0) {
-            sender.sendMessage("Invalid subcommand. You cannot use any subcommands of this command.");
+            sender.sendMessage("§cInvalid subcommand. You cannot use any subcommands of this command.");
         }
         else {
-            String ret = "Invalid subcommand. Available subcommands are: ";
+            String ret = "§cInvalid subcommand. Available subcommands are: ";
             for (int i = 0; i < subcommands.length; i++) {
                 ret += subcommands[0];
                 if (i != subcommands.length - 1) ret += ", ";
@@ -41,7 +41,7 @@ public class Commands implements CommandExecutor {
     }
 
     private String errorMessage(CommandSender sender) {
-        String ret = "Unknown subcommand. Available subcommands are: ";
+        String ret = "§cUnknown subcommand. Available subcommands are: ";
         if (Utils.checkPermission(sender, "escape.admin.startgame")) {
             ret += "startgame, ";
         }
@@ -64,25 +64,25 @@ public class Commands implements CommandExecutor {
             // on command escape:
             case "escape":
                 if (args.length == 0) { // If someone just runs /escape
-                    sender.sendMessage("Invalid arguments provided. Valid subcommands are: list");
+                    sender.sendMessage("§cInvalid arguments provided. Valid subcommands are: list");
                 }
                 else {
                     switch (args[0]) { // First (0th) argument of command
                         case "list": // /escape list
                         case "l":
-                            sender.sendMessage("There are currently " + main.games.size() + " games active.");
+                            sender.sendMessage("§aThere are currently §b" + main.games.size() + "§a games active.");
                             break;
                         case "join": // /escape join
                         case "j":
                             if (main.games.size() == 0) {
-                                sender.sendMessage("There are no games to join!");
+                                sender.sendMessage("§cThere are no games to join!");
                                 return true;
                             }
 
                             if (sender instanceof Player) {
                                 try {
                                     Utils.getPlayersGame((Player) sender, main.games);
-                                    sender.sendMessage("You're already in-game!");
+                                    sender.sendMessage("§cYou're already in-game!");
                                     return true;
                                 }
                                 catch (NotFoundException err) {
@@ -102,12 +102,12 @@ public class Commands implements CommandExecutor {
                                     target = Integer.parseInt(args[1]);
                                 }
                                 catch (NumberFormatException err) {
-                                    sender.sendMessage("The argument provided is not a valid number.");
+                                    sender.sendMessage("§cThe argument provided is not a valid number.");
                                     return true;
                                 }
 
                                 if (!Utils.range(target, 1, main.games.size())) {
-                                    sender.sendMessage("That is not a valid game.");
+                                    sender.sendMessage("§cThat is not a valid game.");
                                     return true;
                                 }
 
@@ -125,14 +125,14 @@ public class Commands implements CommandExecutor {
                         case "admin":
                             if (Utils.checkPermission(sender, "escape.admin")) {
                                 if (args.length < 2) {
-                                    sender.sendMessage("oopsie daisy you haven't provided any argsies. Tip: Use tab lmao");
+                                    sender.sendMessage("§coopsie daisy you haven't provided any argsies. Tip: Use tab lmao");
                                     return true;
                                 }
 
                                 switch (args[1]) {
                                     case "startgame":
                                         if (Utils.checkPermission(sender, "escape.admin.startgame")) {
-                                            Bukkit.broadcast(Component.text("Warning: A new game is being generated. Please ignore the lag. We're sorry for the inconvenience"));
+                                            Bukkit.broadcast(Component.text("§eWarning: A new game is being generated. Please ignore the lag. We're sorry for the inconvenience"));
                                             main.games.add(new Game(main.games.size(), main));
                                         }
                                         else {
@@ -142,17 +142,17 @@ public class Commands implements CommandExecutor {
                                     case "stopgame":
                                         if (Utils.checkPermission(sender, "escape.admin.stopgame")) {
                                             if (main.games.size() == 0) {
-                                                sender.sendMessage("There are no games to stop!");
+                                                sender.sendMessage("§cThere are no games to stop!");
                                                 return true;
                                             }
                                             if (args.length < 3) {
-                                                Bukkit.broadcast(Component.text("Warning: A game instance is being removed. Please ignore the lag. We're sorry for the inconvenience"));
+                                                Bukkit.broadcast(Component.text("§eWarning: A game instance is being removed. Please ignore the lag. We're sorry for the inconvenience"));
                                                 main.games.get(0).delete();
                                                 main.games.remove(0);
                                             }
                                             else {
                                                 if (!(Utils.range(Integer.parseInt(args[2]), 1, main.games.size()))) {
-                                                    sender.sendMessage("Cannot stop a game that doesn't exist!");
+                                                    sender.sendMessage("§cCannot stop a game that doesn't exist!");
                                                     return true;
                                                 }
 
@@ -168,7 +168,7 @@ public class Commands implements CommandExecutor {
                                         if (Utils.checkPermission(sender, "escape.admin.getmap")) {
                                             if (sender instanceof Player) {
                                                 Player player = (Player) sender;
-                                                sender.sendMessage("§a§lHere's the map of the island for island_water");
+                                                sender.sendMessage("§aHere's the map of the island for island_water");
                                                 ItemStack item = new ItemStack(Material.FILLED_MAP);
                                                 MapMeta meta = (MapMeta) item.getItemMeta();
                                                 meta.setMapView(Bukkit.getServer().getMap(103));
@@ -195,26 +195,26 @@ public class Commands implements CommandExecutor {
                             Player player = (Player) sender;
 
                             if (args.length < 2) {
-                                sender.sendMessage("Join or leave lmao idk");
+                                sender.sendMessage("§cJoin or leave lmao idk");
                                 return true;
                             }
 
                             switch (args[1]) {
                                 case "join":
                                     if (main.teams.playerIsInATeam(player)) {
-                                        sender.sendMessage("You are already in a team!");
+                                        sender.sendMessage("§cYou are already in a team!");
                                         return true;
                                     }
 
                                     if (args.length < 3) {
-                                        sender.sendMessage("Whose team?");
+                                        sender.sendMessage("§cWhose team?");
                                         return true;
                                     }
 
                                     Player targetPlayer = Bukkit.getServer().getPlayer(args[2]);
 
                                     if (targetPlayer == player) {
-                                        sender.sendMessage("You can't join your own team!");
+                                        sender.sendMessage("§cYou can't join your own team!");
                                         return true;
                                     }
 
@@ -222,19 +222,19 @@ public class Commands implements CommandExecutor {
 
                                     if (team != null) {
                                         team.add(player);
-                                        sender.sendMessage("success");
+                                        sender.sendMessage("§asuccess");
                                     }
                                     else if (Utils.arrayContains(player, main.teams.getPlayersLookingForTeam())) {
                                         main.teams.createTeam(player, targetPlayer);
-                                        sender.sendMessage("success");
+                                        sender.sendMessage("§asuccess");
                                     }
                                     else {
-                                        sender.sendMessage("That player does not have a team!");
+                                        sender.sendMessage("§cThat player does not have a team!");
                                     }
                                     break;
                                 case "leave":
                                     if (!main.teams.playerIsInATeam(player)) {
-                                        sender.sendMessage("You are not in a team!");
+                                        sender.sendMessage("§cYou are not in a team!");
                                         return true;
                                     } //sometimes
 
@@ -245,7 +245,7 @@ public class Commands implements CommandExecutor {
                             }
                             return true;
                         default: // everything else
-                            sender.sendMessage("Invalid arguments provided. Valid subcommands are: list, join");
+                            sender.sendMessage("§cInvalid arguments provided. Valid subcommands are: list, join");
                     }
                 }
                 return true;
@@ -253,7 +253,7 @@ public class Commands implements CommandExecutor {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     if (player.getWorld().getName() == "empty") {
-                        sender.sendMessage("You are already in the lobby!");
+                        sender.sendMessage("§cYou are already in the lobby!");
                         return true;
                     }
                     sender.sendMessage("§a§lReturning to lobby...");
@@ -261,7 +261,7 @@ public class Commands implements CommandExecutor {
                         Utils.getPlayersGame(player, main.games).playerLeave(player);
                     }
                     catch (NotFoundException err) {
-                        sender.sendMessage("You are not in a game!");
+                        sender.sendMessage("§cYou are not in a game!");
                         return true;
                     }
                     Location world = main.getServer().getWorld("empty").getSpawnLocation();
