@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 // This class will handle everything regarding a single game
@@ -22,24 +23,27 @@ public class Game {
     public ArrayList<Player> players = new ArrayList<Player>();
 
     void setPlayerInventory(Player player) {
-        player.getInventory().setItem(15, Utils.createNamedItem(Material.PAPER, players.size() + " players alive."));
-        player.getInventory().setItem(16, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(17, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(24, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(25, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(26, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(33, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(34, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(35, new ItemStack(Material.PLAYER_HEAD, 1));
-        player.getInventory().setItem(12, new ItemStack(Material.BOOK, 1));
-        player.getInventory().setItem(13, new ItemStack(Material.BOOK, 1));
-        player.getInventory().setItem(14, new ItemStack(Material.BOOK, 1));
-        player.getInventory().setItem(7, new ItemStack(Material.SADDLE, 1));
-        player.getInventory().setItem(8, new ItemStack(Material.MAP, 1));
-        player.getInventory().setItem(6, new ItemStack(Material.ANVIL, 1));
-        player.getInventory().setItem(11, new ItemStack(Material.EXPERIENCE_BOTTLE, 1));
-        player.getInventory().setItem(9, new ItemStack(Material.STRUCTURE_VOID, 1));
-        player.getInventory().setItem(10, new ItemStack(Material.BARRIER, 1));
+        Inventory inventory = player.getInventory();
+
+        inventory.setItem(0, Utils.createUnbreakableItem(Material.DIAMOND_PICKAXE));
+        inventory.setItem(15, Utils.createNamedItem(Material.PAPER, players.size() + " players alive."));
+        inventory.setItem(16, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(17, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(24, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(25, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(26, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(33, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(34, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(35, new ItemStack(Material.PLAYER_HEAD, 1));
+        inventory.setItem(12, new ItemStack(Material.BOOK, 1));
+        inventory.setItem(13, new ItemStack(Material.BOOK, 1));
+        inventory.setItem(14, new ItemStack(Material.BOOK, 1));
+        inventory.setItem(7, new ItemStack(Material.SADDLE, 1));
+        inventory.setItem(8, new ItemStack(Material.MAP, 1));
+        inventory.setItem(6, new ItemStack(Material.ANVIL, 1));
+        inventory.setItem(11, new ItemStack(Material.EXPERIENCE_BOTTLE, 1));
+        inventory.setItem(9, new ItemStack(Material.STRUCTURE_VOID, 1));
+        inventory.setItem(10, new ItemStack(Material.BARRIER, 1));
     }
 
     void updatePlayerInventories() {

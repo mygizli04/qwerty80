@@ -25,7 +25,6 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
-
 public interface Utils {
     static int random(double min, double max) {
         return (int) Math.round(Math.random() * (max - min) + min);
@@ -332,5 +331,14 @@ public interface Utils {
 
     static boolean inRangeExcept(int num, int min, int max, int[] exclude) {
         return (min <= num) && (num <= max) && !arrayContains(num, exclude);
+    }
+
+    static ItemStack createUnbreakableItem(Material material) {
+        ItemStack item = new ItemStack(material);
+        ItemMeta itemMeta = item.getItemMeta();
+        itemMeta.setUnbreakable(true);
+        item.setItemMeta(itemMeta);
+        item.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        return item;
     }
 }

@@ -1,6 +1,7 @@
 package me.qwerty80;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -140,6 +141,9 @@ public class PlayerEvents implements Listener {
                 event.setCancelled(true);
                 break;
             default:
+                if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE) {
+                    event.setCancelled(true);
+                }
                 // nothing ig (I think this may be contributing to my problems with dropping
                 // from inv...)
         }
