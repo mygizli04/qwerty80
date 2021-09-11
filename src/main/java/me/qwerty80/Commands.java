@@ -69,7 +69,7 @@ public class Commands implements CommandExecutor {
                 else {
                     switch (args[0]) { // First (0th) argument of command
                         case "list": // /escape list
-                        case "l":
+                        case "li":
                             sender.sendMessage("§aThere are currently §b" + main.games.size() + "§a games active.");
                             break;
                         case "join": // /escape join
@@ -122,6 +122,31 @@ public class Commands implements CommandExecutor {
                                 sender.sendMessage("I can't teleport the console you know...");
                             }
                             break;
+                        case "le":
+                        case "leave":
+                            //identical to spawn, Changed a few things
+                            if (sender instanceof Player) {
+                                Player player = (Player) sender;
+                            /* if (player.getWorld().getName() == "empty") {
+                                    sender.sendMessage("§cYou are already in the lobby!");
+                                    return true;
+                                } */
+                                sender.sendMessage("§aReturning to lobby...");
+                                try {
+                                    Utils.getPlayersGame(player, main.games).playerLeave(player);
+                                    sender.sendMessage("§cLeaving Game");
+                                }
+                                catch (NotFoundException err) {
+                                    /*sender.sendMessage("§cYou are not in a game!");
+                                    return true;*/
+                                }
+                                Location world = main.getServer().getWorld("empty").getSpawnLocation();
+                                player.teleport(world);
+                            }
+                            else {
+                                sender.sendMessage("Bruh I can't teleport the console anywhere...");
+                            }
+                            return true;
                         case "admin":
                             if (Utils.checkPermission(sender, "escape.admin")) {
                                 if (args.length < 2) {
@@ -252,17 +277,18 @@ public class Commands implements CommandExecutor {
             case "spawn":
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    if (player.getWorld().getName() == "empty") {
+                   /* if (player.getWorld().getName() == "empty") {
                         sender.sendMessage("§cYou are already in the lobby!");
                         return true;
-                    }
-                    sender.sendMessage("§a§lReturning to lobby...");
+                    } */
+                    sender.sendMessage("§aReturning to lobby...");
                     try {
                         Utils.getPlayersGame(player, main.games).playerLeave(player);
+                        sender.sendMessage("§cLeaving Game");
                     }
                     catch (NotFoundException err) {
-                        sender.sendMessage("§cYou are not in a game!");
-                        return true;
+                        /*sender.sendMessage("§cYou are not in a game!");
+                        return true;*/
                     }
                     Location world = main.getServer().getWorld("empty").getSpawnLocation();
                     player.teleport(world);

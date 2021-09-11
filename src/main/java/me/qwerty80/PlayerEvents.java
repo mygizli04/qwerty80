@@ -115,7 +115,7 @@ public class PlayerEvents implements Listener {
         if (Utils.range(event.getHotbarButton(), 6, 8)) {
             event.setCancelled(true);
         }
-
+        //for somereason slot 34 is not getting cancelled.
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
             // If it's in range of 6-17 (excluding 7) or range of 24-35 excluding 27, 28, 29, 30, 31, 32, 33
             if (Utils.inRangeExcept(event.getSlot(), 6, 17, new int[] { 7 })
