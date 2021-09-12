@@ -103,6 +103,30 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
+        boolean diaCursor = false;
+        int slot = event.getRawSlot();
+
+        if (event.getClickedInventory().getType() != InventoryType.PLAYER) {
+            return;
+        }
+
+        if (event.getCurrentItem().getType() == Material.DIAMOND_PICKAXE) {
+            diaCursor = true;
+        }
+        if (event.getClickedInventory().getItem(slot).getType() == Material.DIAMOND_PICKAXE) { // First of all, this already makes 0 sense
+            diaCursor = false;
+        }
+
+
+
+
+        if (diaCursor == true) {
+            while (diaCursor == true) {
+                if (event.getClickedInventory().firstEmpty() == -1) {
+                    event.setCancelled(true);
+                }
+            }
+        }
 
         if (!Utils.playerIsInAGame(player, main.games)) {
             return;
@@ -117,9 +141,9 @@ public class PlayerEvents implements Listener {
         }
         //for somereason slot 34 is not getting cancelled.
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
-            // If it's in range of 6-17 (excluding 7) or range of 24-35 excluding 27, 28, 29, 30, 31, 32, 33
+            // If it's in range of 6-17 (excluding 7) or range of 24-35 excluding 27, 28, 29, 30, 31, 32
             if (Utils.inRangeExcept(event.getSlot(), 6, 17, new int[] { 7 })
-                    || Utils.inRangeExcept(event.getSlot(), 24, 35, new int[] { 27, 28, 29, 30, 31, 32, 33 })) {
+                    || Utils.inRangeExcept(event.getSlot(), 24, 35, new int[] { 27, 28, 29, 30, 31, 32 })) {
                 event.setCancelled(true);
             }
         }
@@ -144,8 +168,6 @@ public class PlayerEvents implements Listener {
                 if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE) {
                     event.setCancelled(true);
                 }
-                // nothing ig (I think this may be contributing to my problems with dropping
-                // from inv...)
         }
     }
 }
