@@ -23,6 +23,7 @@ public class Qwerty80 extends JavaPlugin {
 
     private final DebugMode debugMode = DebugMode.DISABLED; // Change this to enable debug mode!
     private final String[] disableDebugMode = new String[]{}; // Add things to here to disable debug mode from senders! For example to not get debug messages from DiamondPickaxe: new String[]{"DiamondPickaxe", "something else", "etc"}
+    public final boolean debugModeEnabled = debugMode != DebugMode.DISABLED;
 
     @SuppressWarnings("unused") // no idea why it think that some code is unreachable, will find out in the future i guess!
     public void debug(String message, Player player, String sender) {
