@@ -21,6 +21,30 @@ public class DiamondPickaxe implements Listener {
 
         main.debug("Event triggered!", player, "DiamondPickaxe");
 
+        if (main.debugModeEnabled && event.getHotbarButton() != -1) {
+            main.debug("Hotbar key " + event.getHotbarButton() + " pressed!", player, "DiamondPickaxe");
+        }
+
+        if (event.getHotbarButton() != -1 && player.getInventory().getItem(event.getHotbarButton()).getType() == Material.DIAMOND_PICKAXE) {
+            main.debug("Tried to move diamond pickaxe with hotbar keys!", player, "DiamondPickaxe");
+            event.setCancelled(true);
+            return;
+        }
+        else if (main.debugModeEnabled) {
+            if (event.getHotbarButton() != -1) {
+                main.debug("Tried to use hotbar button " + event.getHotbarButton(), player, "DiamondPickaxe");
+                main.debug("The item is " + player.getInventory().getItem(event.getHotbarButton()).getType().name(), player, "DiamondPickaxe");
+            }
+            else {
+                main.debug("Not hotbar button.", player, "DiamondPickaxe");
+            }
+        }
+
+        if (event.getCurrentItem() == null) {
+            main.debug("Current item is null!", player, "DiamondPickaxe");
+            return;
+        }
+
         if (event.getCurrentItem().getType() != Material.DIAMOND_PICKAXE) {
             main.debug("Current item not diamond pickaxe", player, "DiamondPickaxe");
             return;
@@ -39,7 +63,7 @@ public class DiamondPickaxe implements Listener {
             main.debug("Player has no available empty slots (cancel)", player, "DiamondPickaxe");
             event.setCancelled(true);
         }
-        else {
+        else if (main.debugModeEnabled) {
             main.debug("Player has " + emptySlotCount + " empty slots.", player, "DiamondPickaxe");
         }
     }
