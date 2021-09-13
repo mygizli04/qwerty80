@@ -19,6 +19,10 @@ public class DiamondPickaxe implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
+        if (!Utils.playerIsInAGame(player, main.games)) {
+            return;
+        }
+
         main.debug("Event triggered!", player, "DiamondPickaxe");
 
         if (main.debugModeEnabled && event.getHotbarButton() != -1) {
@@ -70,6 +74,10 @@ public class DiamondPickaxe implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
+        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+            return;
+        }
+
         if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE) {
             event.setCancelled(true);
         }

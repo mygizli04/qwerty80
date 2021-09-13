@@ -154,6 +154,11 @@ public class ArrowQuiver implements Listener {
     public void onShootBow(EntityShootBowEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
+
+            if (!Utils.playerIsInAGame(player, main.games)) {
+                return;
+            }
+
             if (player.getInventory().getItem(7).getType() == Material.ARROW && player.getInventory().getItem(7).getAmount() == 1) {
                 Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
                     player.getInventory().setItem(7, new ItemStack(Material.SADDLE));
@@ -164,6 +169,11 @@ public class ArrowQuiver implements Listener {
 
     @EventHandler
     public void arrowPickup(PlayerPickupArrowEvent event) {
+
+        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+            return;
+        }
+
         Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
             Inventory inventory = event.getPlayer().getInventory();
             switch (inventory.getItem(7).getType()) {
@@ -191,6 +201,11 @@ public class ArrowQuiver implements Listener {
     public void itemPickup(EntityPickupItemEvent event) {
         if (event.getEntity() instanceof Player && event.getItem().getItemStack().getType() == Material.SPECTRAL_ARROW ) {
             Player player = (Player) event.getEntity();
+
+            if (!Utils.playerIsInAGame(player, main.games)) {
+                return;
+            }
+
             Inventory inventory = player.getInventory();
             int amount;
             try {

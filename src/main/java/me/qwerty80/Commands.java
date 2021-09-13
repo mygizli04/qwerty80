@@ -219,6 +219,10 @@ public class Commands implements CommandExecutor {
 
                             Player player = (Player) sender;
 
+                            if (!Utils.playerIsInAGame(player, main.games)) {
+                               return true;
+                            }
+
                             if (args.length < 2) {
                                 sender.sendMessage("§cJoin or leave lmao idk");
                                 return true;

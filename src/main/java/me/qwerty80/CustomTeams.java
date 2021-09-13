@@ -157,6 +157,10 @@ public class CustomTeams implements Listener {
             return;
         }
 
+        if (!Utils.playerIsInAGame((Player) event.getEntity(), main.games)) {
+            return;
+         }
+
         teams.forEach(team -> {
             if (team.contains((Player) event.getEntity()) && team.contains((Player) event.getDamager())) {
                 event.setCancelled(true);

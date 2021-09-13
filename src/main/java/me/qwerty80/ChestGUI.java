@@ -15,6 +15,12 @@ import org.bukkit.inventory.Inventory;
 
 public class ChestGUI implements Listener {
 
+    Qwerty80 main;
+
+    public ChestGUI(Qwerty80 main) {
+        this.main = main;
+    }
+
     ArrayList<PlayerInventory> inventories = new ArrayList<PlayerInventory>();
 
     boolean isChest(Material type) {
@@ -23,6 +29,11 @@ public class ChestGUI implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
+
+        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+            return;
+        }
+
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getPlayer().getWorld().getName().endsWith("_GAME_island_water") && isChest(event.getClickedBlock().getType())) {
             LootTable table;
             switch (event.getClickedBlock().getType()) {
@@ -51,6 +62,10 @@ public class ChestGUI implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
+        if (!Utils.playerIsInAGame((Player) event.getPlayer(), main.games)) {
+            return;
+        }
+        
         ArrayList<PlayerInventory> toRemove = new ArrayList<PlayerInventory>();
         
         inventories.forEach((inventory) -> {

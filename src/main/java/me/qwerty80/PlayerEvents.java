@@ -62,6 +62,10 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
 
+        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+            return;
+        }
+
         if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
@@ -71,16 +75,14 @@ public class PlayerEvents implements Listener {
             event.setCancelled(true);
         }
 
-        if (Utils.playerIsInAGame(event.getPlayer(), main.games)) {
-            switch (event.getPlayer().getInventory().getHeldItemSlot()) {
-                // Case 6 handled in ItemGUI
-                case 7:
-                    event.setCancelled(true);
-                    break;
-                case 8:
-                    event.setCancelled(true);
-                    break;
-            }
+        switch (event.getPlayer().getInventory().getHeldItemSlot()) {
+            // Case 6 handled in ItemGUI
+            case 7:
+                event.setCancelled(true);
+                break;
+            case 8:
+                event.setCancelled(true);
+                break;
         }
     }
 
