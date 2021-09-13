@@ -63,6 +63,7 @@ public class TabComplete implements TabCompleter {
                             ret.add("admin");
                         }
                         ret.add("team");
+                        ret.add("leave");
                         return ret;
                 }
             default:
