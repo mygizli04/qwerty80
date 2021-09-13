@@ -2,6 +2,8 @@ package me.qwerty80;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.ListIterator;
 import java.util.Stack;
 
 import com.viaversion.viaversion.api.Via;
@@ -340,5 +342,47 @@ public interface Utils {
         item.setItemMeta(itemMeta);
         item.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
         return item;
+    }
+
+    static int[] getEmptySlotsInInventory(Inventory inv) {
+        ArrayList<Integer> slots = new ArrayList<>();
+        ListIterator<ItemStack> iterator = inv.iterator();
+
+        while (iterator.hasNext()) {
+            ItemStack item = iterator.next();
+            int index = iterator.hasNext() ? iterator.nextIndex() - 1 : inv.getSize();
+
+            if (item == null) {
+                slots.add(index);
+            }
+        }
+
+        Integer[] integerArray = slots.toArray(new Integer[0]);
+        int[] intArray = new int[integerArray.length];
+
+        for (int i = 0; i < integerArray.length; i++) {
+            intArray[i] = integerArray[i].intValue();
+        }
+
+        return intArray;
+    }
+
+    static <T> T[] removeItemFromArray(T[] array, T element) {
+        ArrayList<T> list = new ArrayList<>(Arrays.asList(array));
+
+        list.remove(element);
+
+        @SuppressWarnings("unchecked")
+        T[] toReturn = (T[]) list.toArray();
+
+        return toReturn;
+    }
+
+    static Integer[] intArrayToIntegerArray(int[] nums) {
+        Integer[] toRet = new Integer[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            toRet[i] = Integer.valueOf(nums[i]);
+        }
+        return toRet;
     }
 }

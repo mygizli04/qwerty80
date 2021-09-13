@@ -1,7 +1,6 @@
 package me.qwerty80;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -103,36 +102,16 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
-        boolean diaCursor = false;
-        int slot = event.getRawSlot();
+
+        if (event.getClickedInventory() == null) {
+            return;
+        }
 
         if (event.getClickedInventory().getType() != InventoryType.PLAYER) {
             return;
         }
 
-        if (event.getCurrentItem().getType() == Material.DIAMOND_PICKAXE) {
-            diaCursor = true;
-        }
-        if (event.getClickedInventory().getItem(slot).getType() == Material.DIAMOND_PICKAXE) { // First of all, this already makes 0 sense
-            diaCursor = false;
-        }
-
-
-
-
-        if (diaCursor == true) {
-            while (diaCursor == true) {
-                if (event.getClickedInventory().firstEmpty() == -1) {
-                    event.setCancelled(true);
-                }
-            }
-        }
-
         if (!Utils.playerIsInAGame(player, main.games)) {
-            return;
-        }
-
-        if (event.getClickedInventory() == null) {
             return;
         }
 
@@ -165,9 +144,7 @@ public class PlayerEvents implements Listener {
                 event.setCancelled(true);
                 break;
             default:
-                if (event.getItemDrop().getItemStack().getType() == Material.DIAMOND_PICKAXE) {
-                    event.setCancelled(true);
-                }
+                // Nothing.
         }
     }
 }
