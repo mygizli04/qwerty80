@@ -118,6 +118,9 @@ public class CustomTeams implements Listener {
     public void inventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
+        if (event.getClickedInventory() == null) {
+            return;
+        }
         
         if (event.getClickedInventory().getType() != InventoryType.PLAYER) {
             return;
