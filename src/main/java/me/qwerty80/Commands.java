@@ -124,22 +124,23 @@ public class Commands implements CommandExecutor {
                             break;
                         case "le":
                         case "leave":
-                            //identical to spawn, Changed a few things
                             if (sender instanceof Player) {
                                 Player player = (Player) sender;
-                            /* if (player.getWorld().getName() == "empty") {
+
+                                if (player.getWorld().getName() == "empty") {
                                     sender.sendMessage("§cYou are already in the lobby!");
                                     return true;
-                                } */
-                                sender.sendMessage("§aReturning to lobby...");
+                                }
+
                                 try {
                                     Utils.getPlayersGame(player, main.games).playerLeave(player);
-                                    sender.sendMessage("§cLeaving Game");
+                                    sender.sendMessage("§aReturning to lobby...");
                                 }
                                 catch (NotFoundException err) {
-                                    /*sender.sendMessage("§cYou are not in a game!");
-                                    return true;*/
+                                    sender.sendMessage("§cYou are not in a game!");
+                                    return true;
                                 }
+                                
                                 Location world = main.getServer().getWorld("empty").getSpawnLocation();
                                 player.teleport(world);
                             }
@@ -295,7 +296,7 @@ public class Commands implements CommandExecutor {
                         sender.sendMessage("§cYou are not in a game!");
                         return true;
                     }
-                    
+
                     Location world = main.getServer().getWorld("empty").getSpawnLocation();
                     player.teleport(world);
                 }
