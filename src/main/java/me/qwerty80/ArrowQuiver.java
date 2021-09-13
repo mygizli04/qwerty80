@@ -38,6 +38,11 @@ public class ArrowQuiver implements Listener {
             return;
         }
 
+        if (event.getCurrentItem() == null) {
+            main.debug("Current item is null!", player, "ArrowQuiver");
+            return;
+        }
+
         if (event.getClickedInventory().getType() == InventoryType.CHEST) {
             if (event.getCurrentItem().getType() == Material.SPECTRAL_ARROW) {
                 int arrows = event.getCurrentItem().getAmount();
