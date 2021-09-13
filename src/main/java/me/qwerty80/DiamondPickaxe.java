@@ -19,15 +19,15 @@ public class DiamondPickaxe implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        player.sendMessage("Event triggered!");
+        main.debug("Event triggered!", player, "DiamondPickaxe");
 
         if (event.getCurrentItem().getType() != Material.DIAMOND_PICKAXE) {
-            player.sendMessage("Current item not diamond pickaxe");
+            main.debug("Current item not diamond pickaxe", player, "DiamondPickaxe");
             return;
         }
 
         if (event.getInventory().getType() != InventoryType.CRAFTING) {
-            player.sendMessage("Inventory type is not player, it is " + event.getInventory().getType().name());
+            main.debug("Inventory type is not player, it is " + event.getInventory().getType().name(), player, "DiamondPickaxe");
             event.setCancelled(true);
             return;
         }
@@ -36,11 +36,11 @@ public class DiamondPickaxe implements Listener {
         int emptySlotCount = emptySlots.length - 5; // 5 unusable slots in inv after pick up
 
         if (emptySlotCount == 0) {
-            player.sendMessage("Player has no available empty slots (cancel)");
+            main.debug("Player has no available empty slots (cancel)", player, "DiamondPickaxe");
             event.setCancelled(true);
         }
         else {
-            player.sendMessage("Player has " + emptySlotCount + " empty slots.");
+            main.debug("Player has " + emptySlotCount + " empty slots.", player, "DiamondPickaxe");
         }
     }
 
