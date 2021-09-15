@@ -64,6 +64,8 @@ public class Commands implements CommandExecutor {
         return ret.substring(0, ret.length() - 2);
     }
 
+    ArrayList<Player> playersOnTeamTimeout = new ArrayList<>();
+
     @SuppressWarnings("deprecation")
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -232,6 +234,11 @@ public class Commands implements CommandExecutor {
                                return true;
                             }
 
+                            if (playersOnTeamTimeout.contains(player)) {
+                                sender.sendMessage("§cWhoa there partner, cool down your hats. We don't want you spammin' now do we?");
+                                return true;
+                            }
+
                             if (args.length < 2) {
                                 invalidCommand(new String[]{"join", "leave"}, sender);
                                 return true;
@@ -260,11 +267,15 @@ public class Commands implements CommandExecutor {
 
                                     if (team != null) {
                                         team.add(player);
-                                        sender.sendMessage("§asuccess");
+                                        sender.sendMessage("§aSuccess!");
+                                        playersOnTeamTimeout.add(player);
+                                        Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                                            playersOnTeamTimeout.remove(player);
+                                        }, 400);
                                     }
                                     else if (Utils.arrayContains(targetPlayer, main.teams.getPlayersLookingForTeam())) {
                                         main.teams.createTeam(player, targetPlayer);
-                                        sender.sendMessage("§asuccess");
+                                        sender.sendMessage("§aSuccess!");
                                     }
                                     else {
                                         sender.sendMessage("§cThat player does not have a team!");
@@ -277,6 +288,12 @@ public class Commands implements CommandExecutor {
                                     }
 
                                     main.teams.removePlayerFromTeams(player);
+                                    sender.sendMessage("§aSuccess!");
+                                    
+                                    playersOnTeamTimeout.add(player);
+                                    Bukkit.getScheduler().scheduleSyncDelayedTask(main, () -> {
+                                        playersOnTeamTimeout.remove(player);
+                                    }, 400);
                                     break;
                                 default:
                                 sender.sendMessage("§cSorry, an error has occured. Please report this to a developer (Commands.java Error: Case not matched)");
