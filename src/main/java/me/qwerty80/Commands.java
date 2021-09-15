@@ -262,7 +262,7 @@ public class Commands implements CommandExecutor {
                                         team.add(player);
                                         sender.sendMessage("§asuccess");
                                     }
-                                    else if (Utils.arrayContains(player, main.teams.getPlayersLookingForTeam())) {
+                                    else if (Utils.arrayContains(targetPlayer, main.teams.getPlayersLookingForTeam())) {
                                         main.teams.createTeam(player, targetPlayer);
                                         sender.sendMessage("§asuccess");
                                     }
