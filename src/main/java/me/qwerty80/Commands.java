@@ -25,7 +25,14 @@ public class Commands implements CommandExecutor {
         main = that;
     }
 
-    // Unused for now
+    /**
+     * Send a message to the player about invalid commands
+     * 
+     * @param subcommands Avaliable subcommands for the player for the specific subcommand.
+     * @param sender The CommandSender to send this message to.
+     * 
+     * @return void
+     */
     void invalidCommand(String[] subcommands, CommandSender sender) {
         if (subcommands.length == 0) {
             sender.sendMessage("§cInvalid subcommand. You cannot use any subcommands of this command.");
@@ -221,11 +228,12 @@ public class Commands implements CommandExecutor {
                             Player player = (Player) sender;
 
                             if (!Utils.playerIsInAGame(player, main.games)) {
+                               sender.sendMessage("§cYou are not in a game!");
                                return true;
                             }
 
                             if (args.length < 2) {
-                                sender.sendMessage("§cJoin or leave lmao idk");
+                                invalidCommand(new String[]{"join", "leave"}, sender);
                                 return true;
                             }
 
