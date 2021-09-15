@@ -245,7 +245,7 @@ public class Commands implements CommandExecutor {
                                     }
 
                                     if (args.length < 3) {
-                                        sender.sendMessage("§cWhose team?");
+                                        sender.sendMessage("§cWhose team would you like to join?");
                                         return true;
                                     }
 
@@ -274,7 +274,7 @@ public class Commands implements CommandExecutor {
                                     if (!main.teams.playerIsInATeam(player)) {
                                         sender.sendMessage("§cYou are not in a team!");
                                         return true;
-                                    } //sometimes
+                                    }
 
                                     main.teams.removePlayerFromTeams(player);
                                     break;
