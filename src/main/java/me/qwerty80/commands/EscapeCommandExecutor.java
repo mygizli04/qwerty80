@@ -16,16 +16,13 @@ public class EscapeCommandExecutor implements CommandExecutor {
         this.main = main;
     }
 
-    private final EscapeCommand[] commands = new EscapeCommand[]{};
+    private final EscapeCommand[] commands = new EscapeCommand[]{
+        new me.qwerty80.commands.Spawn.Main(main)
+    };
     private final EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{};
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (args.length == 0) {
-            sender.sendMessage("[INSERT CREDITS HERE]");
-            return true;
-        }
-
         Player player = null;
         if (sender instanceof Player) {
             player = (Player) sender;
@@ -33,6 +30,12 @@ public class EscapeCommandExecutor implements CommandExecutor {
 
         for (EscapeCommand command : commands) {
             if (Utils.arrayContains(cmd, command.supportedCommands)) {
+
+                if (player == null) {
+                    sender.sendMessage("This command cannot be executed by the console.");
+                    return true;
+                }
+
                 if (command.checkArguments(cmd.getName(), args)) {
                     command.execute(cmd.getName(), args, player);
                 }
