@@ -25,13 +25,14 @@ public class Qwerty80 extends JavaPlugin {
     private final String[] enableDebugFor = new String[]{}; // Add things to here to enable only certain debug mode from senders! For example to only get debug messages from DiamondPickaxe: new String[]{"DiamondPickaxe", "something else", "etc"}
     public final boolean debugModeEnabled = debugMode != DebugMode.DISABLED;
 
-    @SuppressWarnings("unused") // no idea why it think that some code is unreachable, will find out in the future i guess!
+    public final boolean noWorldGen = false; // Set this to true for no world gen.
+
     public void debug(String message, Player player, String sender) {
 
         String prefix = "[DEBUG] [" + sender + "] ";
-        prefix += (player != null) && (debugMode == DebugMode.PLAYER) ? "" : "[" + player.getName() + "] "; // removing this line gets rid of the dead code warning
+        prefix += (player != null) && (debugMode == DebugMode.PLAYER) ? "[" + player.getName() + "] " : ""; // removing this line gets rid of the dead code warning
         
-        if (!Utils.arrayContains(sender, enableDebugFor)) {
+        if (enableDebugFor.length > 0 && !Utils.arrayContains(sender, enableDebugFor)) {
             return;
         }
 

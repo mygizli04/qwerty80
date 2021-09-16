@@ -87,6 +87,10 @@ public class Game {
     int chestCount = 10000; // how many chests will be generated
     
     public void delete() {
+        if (main.noWorldGen) {
+            main.debug("Can't delete game because no world gen mode is activated!", null, "Game");
+            return;
+        }
         kickAllPlayers();
         worldManager.deleteWorld(world.getName());
     }
@@ -97,6 +101,11 @@ public class Game {
 
         // Initilize multiverse
         world = Bukkit.getServer().getWorld(id + "_GAME_island_water");
+
+        if (main.noWorldGen) {
+            main.debug("No world gen mode activated! Expect the plugin to be broken in this state!", null, "Game");
+            return;
+        }
         
         if (world == null) {
             if (!worldManager.cloneWorld("island_water", id + "_GAME_island_water")) {
