@@ -12,6 +12,10 @@ public class EscapeCommand {
         this.main = main;
     }
 
+    public Qwerty80 getMain() {
+        return main;
+    }
+
     public final String usage = "/escape";
 
     private final String[] supportedCommands = new String[0];

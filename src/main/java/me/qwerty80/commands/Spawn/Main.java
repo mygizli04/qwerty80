@@ -27,21 +27,21 @@ public class Main extends EscapeCommand {
     }
 
     public void execute(String command, String[] args, Player player) {
-        if (player.getWorld().getName() == "empty") {
+        if (player.getWorld().getName().equals("empty")) {
             player.sendMessage("§cYou are already in the lobby!");
             return;
         }
 
-        try {
-            Utils.getPlayersGame(player, main.games).playerLeave(player);
-            player.sendMessage("§aReturning to lobby...");
-        }
-        catch (NotFoundException err) {
+        if (!Utils.playerIsInAGame(player, getMain().games)) {
             player.sendMessage("§cYou are not in a game!");
             return;
         }
 
-        Location world = main.getServer().getWorld("empty").getSpawnLocation();
+
+        //Utils.getPlayersGame(player, getMain().games).playerLeave(player);
+        player.sendMessage("§aReturning to lobby...");
+
+        Location world = getMain().getServer().getWorld("empty").getSpawnLocation();
         player.teleport(world);
     }
 }
