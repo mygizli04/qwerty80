@@ -321,6 +321,16 @@ public interface Utils {
         return result;
     }
 
+    static boolean objectArrayContains(Object compare, Object[] to) {
+        boolean result = false;
+        for (Object comparing : to) {
+            if (compare.equals(comparing)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
     static boolean arrayContains(int compare, int[] to) {
         boolean result = false;
         for (int comparing : to) {

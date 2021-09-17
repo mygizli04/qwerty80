@@ -16,7 +16,11 @@ public class Main extends EscapeCommand {
 
     public final String usage = "/spawn";
 
-    public final String[] supportedCommands = new String[]{"spawn"};
+    private final String[] supportedCommands = new String[]{"spawn"};
+
+    public String[] getSupportedCommands() {
+        return this.supportedCommands;
+    }
 
     public boolean checkArguments(String command, String[] args) {
         return true;

@@ -29,7 +29,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
         }
 
         for (EscapeCommand command : commands) {
-            if (Utils.arrayContains(cmd, command.supportedCommands)) {
+            if (Utils.objectArrayContains(cmd.getName(), command.getSupportedCommands())) {
 
                 if (player == null) {
                     sender.sendMessage("This command cannot be executed by the console.");
@@ -47,7 +47,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
         }
 
         for (EscapeCommandWithConsoleSupport command : commandsWithConsole) {
-            if (Utils.arrayContains(cmd, command.supportedCommands)) {
+            if (Utils.arrayContains(cmd.getName(), command.supportedCommands)) {
                 boolean isPlayer = player != null;
                 if (command.checkArguments(cmd.getName(), args, isPlayer)) {
                     if (isPlayer) {
