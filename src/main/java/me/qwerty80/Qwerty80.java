@@ -33,7 +33,7 @@ public class Qwerty80 extends JavaPlugin {
         String prefix = "[DEBUG] [" + sender + "] ";
         prefix += (player != null) && (debugMode == DebugMode.PLAYER) ? "[" + player.getName() + "] " : ""; // removing this line gets rid of the dead code warning
         
-        if (!Utils.arrayContains(sender, enableDebugFor)) {
+        if (enableDebugFor.length > 0 && !Utils.arrayContains(sender, enableDebugFor)) {
             return;
         }
 
