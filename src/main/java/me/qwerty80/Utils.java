@@ -311,20 +311,20 @@ public interface Utils {
         return result;
     }
 
-    static boolean objectArrayContains(Object compare, Object[] to) {
+    static boolean arrayContains(int compare, int[] to) {
         boolean result = false;
-        for (Object comparing : to) {
-            if (compare.equals(comparing)) {
+        for (int comparing : to) {
+            if (compare == comparing) {
                 result = true;
             }
         }
         return result;
     }
 
-    static boolean arrayContains(int compare, int[] to) {
+    static boolean objectArrayContains(Object compare, Object[] to) {
         boolean result = false;
-        for (int comparing : to) {
-            if (compare == comparing) {
+        for (Object comparing : to) {
+            if (compare.equals(comparing)) {
                 result = true;
             }
         }
