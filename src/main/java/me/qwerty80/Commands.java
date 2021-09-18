@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.MapMeta;
 
-import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
 
 // Handle everything command related.
@@ -89,13 +88,9 @@ public class Commands implements CommandExecutor {
                             }
 
                             if (sender instanceof Player) {
-                                try {
-                                    Utils.getPlayersGame((Player) sender, main.games);
+                                if (Utils.playerIsInAGame((Player) sender, main.games)) {
                                     sender.sendMessage("§cYou're already in-game!");
                                     return true;
-                                }
-                                catch (NotFoundException err) {
-                                    // Nothing.
                                 }
                             }
                             else {
@@ -141,14 +136,13 @@ public class Commands implements CommandExecutor {
                                     return true;
                                 }
 
-                                try {
-                                    Utils.getPlayersGame(player, main.games).playerLeave(player);
-                                    sender.sendMessage("§aReturning to lobby...");
-                                }
-                                catch (NotFoundException err) {
-                                    sender.sendMessage("§cYou are not in a game!");
+                                if (!Utils.playerIsInAGame(player, main.games)) {
+                                    sender.sendMessage("§cYou are not in  a game!");
                                     return true;
                                 }
+
+                                Utils.getPlayersGame(player, main.games).playerLeave(player);
+                                sender.sendMessage("§aReturning to lobby...");
                                 
                                 Location world = main.getServer().getWorld("empty").getSpawnLocation();
                                 player.teleport(world);
@@ -313,14 +307,13 @@ public class Commands implements CommandExecutor {
                         return true;
                     }
 
-                    try {
-                        Utils.getPlayersGame(player, main.games).playerLeave(player);
-                        sender.sendMessage("§aReturning to lobby...");
-                    }
-                    catch (NotFoundException err) {
-                        sender.sendMessage("§cYou are not in a game!");
+                    if (!Utils.playerIsInAGame(player, main.games)) {
+                        sender.sendMessage("§cYou are not in  a game!");
                         return true;
                     }
+
+                    Utils.getPlayersGame(player, main.games).playerLeave(player);
+                    sender.sendMessage("§aReturning to lobby...");
 
                     Location world = main.getServer().getWorld("empty").getSpawnLocation();
                     player.teleport(world);

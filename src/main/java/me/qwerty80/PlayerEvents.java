@@ -14,7 +14,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
@@ -50,13 +49,15 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerLeave(PlayerQuitEvent event) {
-        try {
-            Utils.getPlayersGame(event.getPlayer(), main.games).playerLeave(event.getPlayer());
-        } catch (NotFoundException err) {
-            // Do nothing.
-        }
 
         event.getPlayer().teleport(Bukkit.getWorld("empty").getSpawnLocation());
+
+        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+            return;
+        }
+
+        Utils.getPlayersGame(event.getPlayer(), main.games).playerLeave(event.getPlayer());
+
     }
 
     @EventHandler
@@ -88,12 +89,13 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        try {
-            Game game = Utils.getPlayersGame(event.getEntity(), main.games);
-            game.playerLeave(event.getEntity());
-        } catch (NotFoundException err) {
-            // Do nothing, they're not in a game.
+
+        if (!Utils.playerIsInAGame(event.getEntity(), main.games)) {
+            return;
         }
+
+        Game game = Utils.getPlayersGame(event.getEntity(), main.games);
+        game.playerLeave(event.getEntity());
     }
 
     @EventHandler

@@ -21,7 +21,6 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.RegisteredServiceProvider;
 
-import me.qwerty80.Exceptions.NotFoundException;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -155,7 +154,7 @@ public interface Utils {
     @SuppressWarnings("unchecked")
     ViaAPI<Player> viaApi = Via.getAPI();
 
-    static Game getPlayersGame(Player player, Stack<Game> games) throws Exceptions.NotFoundException {
+    static Game getPlayersGame(Player player, Stack<Game> games) {
         Game[] ret = new Game[1]; // I hate java SO SO much....
         games.forEach(game -> {
             game.players.forEach(searchPlayer -> {
@@ -164,9 +163,6 @@ public interface Utils {
                 }
             });
         });
-        if (ret[0] == null) {
-            throw new Exceptions.NotFoundException();
-        }
         return ret[0];
     }
 
@@ -203,13 +199,7 @@ public interface Utils {
     }
 
     static boolean playerIsInAGame(Player player, Stack<Game> games) {
-        try {
-            getPlayersGame(player, games);
-            return true;
-        }
-        catch (NotFoundException err) {
-            return false;
-        }
+        return getPlayersGame(player, games) != null;
     }
 
     static void renameHeldItem(String name, Player player) {
