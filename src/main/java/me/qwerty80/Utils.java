@@ -26,24 +26,24 @@ import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.model.user.User;
-public interface Utils {
-    static int random(double min, double max) {
+public class Utils {
+    static public int random(double min, double max) {
         return (int) Math.round(Math.random() * (max - min) + min);
     }
 
-    static boolean percentage(double percent) {
+    static public boolean percentage(double percent) {
         return Math.random() < (percent / 100);
     }
 
-    static boolean range(double num, double min, double max) {
+    static public boolean range(double num, double min, double max) {
         return (min <= num) && (num <= max);
     }
 
-    static <T> T choose(T[] array) {
+    static public <T> T choose(T[] array) {
         return array[random(0, array.length - 1)];
     }
 
-    static <From, To> To[] convertArray(From[] from, Class<To> to) {
+    static public <From, To> To[] convertArray(From[] from, Class<To> to) {
         ArrayList<To> ret = new ArrayList<To>();
         for (int i = 0; i < from.length; i++) {
             try {
@@ -58,7 +58,7 @@ public interface Utils {
         return finalArray;
     }
 
-    static <T> boolean arrayIncludes(T[] array, T includes) {
+    static public <T> boolean arrayIncludes(T[] array, T includes) {
         for (T item : array) {
             if (item == includes) {
                 return true;
@@ -67,7 +67,7 @@ public interface Utils {
         return false;
     }
 
-    static <T> T choosePercentage(T[] array, int[] percentages) { // choosepercentage([1,2,7,3]) then it'll return int. || choosepercentage["6","9","6","9"] then it'll return string.
+    static public <T> T choosePercentage(T[] array, int[] percentages) { // choosepercentage([1,2,7,3]) then it'll return int. || choosepercentage["6","9","6","9"] then it'll return string.
         int chance = random(0, 100);
         int currentChance = 0;
 
@@ -79,19 +79,19 @@ public interface Utils {
 
         return null; // Should never happen (pls). :L
     }
-
-    static RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
-    static LuckPerms luckperms = lpProvider.getProvider();
-
-    static boolean checkPermission(User user, String permission) {
+    
+    static public RegisteredServiceProvider<LuckPerms> lpProvider = Bukkit.getServicesManager().getRegistration(LuckPerms.class);
+    static public LuckPerms luckperms = lpProvider.getProvider();
+    
+    static public boolean checkPermission(User user, String permission) {
         return user.getCachedData().getPermissionData().checkPermission(permission).asBoolean();
     }
 
-    static boolean checkPermission(Player player, String permission) {
+    static public boolean checkPermission(Player player, String permission) {
         return checkPermission(luckperms.getPlayerAdapter(Player.class).getUser(player), permission);
     }
 
-    static boolean checkPermission(CommandSender sender, String permission) {
+    static public boolean checkPermission(CommandSender sender, String permission) {
         if (sender instanceof Player) {
             return checkPermission((Player) sender, permission);
         }
@@ -100,7 +100,7 @@ public interface Utils {
         }
     }
 
-    static boolean stringIsTruthy(String string) {
+    static public boolean stringIsTruthy(String string) {
         if (string == null) {
             return false;
         }
@@ -112,12 +112,12 @@ public interface Utils {
         return true;
     }
 
-    static void teleportPlayerToWorld(Player player, String world) {
+    static public void teleportPlayerToWorld(Player player, String world) {
         Location destination = Bukkit.getServer().getWorld(world).getSpawnLocation();
         player.teleport(destination);
     }
 
-    static void teleportPlayerToWorld(CommandSender sender, String world) {
+    static public void teleportPlayerToWorld(CommandSender sender, String world) {
         if (sender instanceof Player) {
             teleportPlayerToWorld((Player) sender, world);
         }
@@ -126,7 +126,7 @@ public interface Utils {
         }
     }
 
-    static double chooseHighest(double[] array) {
+    static public double chooseHighest(double[] array) {
         // I sure do hope no one passes a negative number here :)
         double ret = 0;
         for (double num : array) {
@@ -137,7 +137,7 @@ public interface Utils {
         return ret;
     }
 
-    static void deleteRecursively(File toDelete) {
+    static public void deleteRecursively(File toDelete) {
         File[] contents = toDelete.listFiles();
         if (contents != null) {
             for (File file : contents) {
@@ -147,14 +147,14 @@ public interface Utils {
         toDelete.delete();
     }
 
-    static void deleteRecursively(String toDelete) {
+    static public void deleteRecursively(String toDelete) {
         deleteRecursively(new File(toDelete));
     }
 
     @SuppressWarnings("unchecked")
-    ViaAPI<Player> viaApi = Via.getAPI();
+    static public ViaAPI<Player> viaApi = Via.getAPI();
 
-    static Game getPlayersGame(Player player, Stack<Game> games) {
+    static public Game getPlayersGame(Player player, Stack<Game> games) {
         Game[] ret = new Game[1]; // I hate java SO SO much....
         games.forEach(game -> {
             game.players.forEach(searchPlayer -> {
@@ -166,14 +166,14 @@ public interface Utils {
         return ret[0];
     }
 
-    static ItemStack changeItemName(ItemStack item, TextComponent name) {
+    static public ItemStack changeItemName(ItemStack item, TextComponent name) {
         ItemMeta meta = item.getItemMeta();
         meta.displayName(name);
         item.setItemMeta(meta);
         return item;
     }
 
-    static ItemStack changeItemName(ItemStack item, String name) {
+    static public ItemStack changeItemName(ItemStack item, String name) {
         if (name == null) {
             ItemMeta meta = item.getItemMeta();
             meta.displayName(null);
@@ -185,11 +185,11 @@ public interface Utils {
         }
     }
 
-    static ItemStack createNamedItem(Material item, TextComponent name) {
+    static public ItemStack createNamedItem(Material item, TextComponent name) {
         return changeItemName(new ItemStack(item), name);
     }
 
-    static ItemStack createNamedItem(Material item, String name) {
+    static public ItemStack createNamedItem(Material item, String name) {
         if (item == Material.AIR) {
             return null;
         }
@@ -198,16 +198,16 @@ public interface Utils {
         }
     }
 
-    static boolean playerIsInAGame(Player player, Stack<Game> games) {
+    static public boolean playerIsInAGame(Player player, Stack<Game> games) {
         return getPlayersGame(player, games) != null;
     }
 
-    static void renameHeldItem(String name, Player player) {
+    static public void renameHeldItem(String name, Player player) {
         PlayerInventory inventory = player.getInventory();
         inventory.setItemInMainHand(changeItemName(inventory.getItem(inventory.getHeldItemSlot()), name));
     }
 
-    static int countOccurance(String string, String compare) {
+    static public int countOccurance(String string, String compare) {
         int ret = 0;
         while (string.contains(compare)) {
             string = string.replaceFirst(compare, "");
@@ -216,7 +216,7 @@ public interface Utils {
         return ret;
     }
 
-    static String replaceExcept(String replace, String thing, String with, String[] except) {
+    static public String replaceExcept(String replace, String thing, String with, String[] except) {
         int lastSeen = 0;
         for (int i = 0; i < countOccurance(replace, thing); i++) {
             if (except.length == 0) {
@@ -242,20 +242,20 @@ public interface Utils {
         return replace;
     }
 
-    static ItemStack addFlags(ItemStack item, ItemFlag[] flags) {
+    static public ItemStack addFlags(ItemStack item, ItemFlag[] flags) {
         ItemMeta meta = item.getItemMeta();
         meta.addItemFlags(flags);
         item.setItemMeta(meta);
         return item;
     }
 
-    static ItemStack addFlag(ItemStack item, ItemFlag flag) {
+    static public ItemStack addFlag(ItemStack item, ItemFlag flag) {
         return addFlags(item, new ItemFlag[]{
             flag
         });
     }
 
-    static Inventory createGui(int size, TextComponent name, ItemStack item1, ItemStack item2, InventoryOverride[] overrides) {
+    static public Inventory createGui(int size, TextComponent name, ItemStack item1, ItemStack item2, InventoryOverride[] overrides) {
         Inventory inventory = Bukkit.getServer().createInventory(null, size, name);
         
         for (int i = 0; i < size; i++) {
@@ -274,19 +274,19 @@ public interface Utils {
         return inventory;
     }
 
-    static Inventory createGui(int size, String name, Material item1, Material item2, InventoryOverride[] overrides) {
+    static public Inventory createGui(int size, String name, Material item1, Material item2, InventoryOverride[] overrides) {
         return createGui(size, Component.text(name), createNamedItem(item1, ""), createNamedItem(item2, ""), overrides);
     }
 
-    static Inventory createGui(int size, TextComponent name, Material item1, Material item2, InventoryOverride[] overrides) {
+    static public Inventory createGui(int size, TextComponent name, Material item1, Material item2, InventoryOverride[] overrides) {
         return createGui(size, name, new ItemStack(item1), new ItemStack(item2), overrides);
     }
 
-    static Inventory createGui(int size, String name, ItemStack item1, ItemStack item2, InventoryOverride[] overrides) {
+    static public Inventory createGui(int size, String name, ItemStack item1, ItemStack item2, InventoryOverride[] overrides) {
         return createGui(size, Component.text(name), item1, item2, overrides);
     }
 
-    static class InventoryOverride {
+    static public class InventoryOverride {
         int slot;
         ItemStack item;
 
@@ -301,7 +301,7 @@ public interface Utils {
         }
     }
 
-    static <T> boolean arrayContains(T compare, T[] to) {
+    static public <T> boolean arrayContains(T compare, T[] to) {
         boolean result = false;
         for (T comparing : to) {
             if (compare == comparing) {
@@ -311,7 +311,7 @@ public interface Utils {
         return result;
     }
 
-    static boolean arrayContains(int compare, int[] to) {
+    static public boolean arrayContains(int compare, int[] to) {
         boolean result = false;
         for (int comparing : to) {
             if (compare == comparing) {
@@ -321,11 +321,21 @@ public interface Utils {
         return result;
     }
 
-    static boolean inRangeExcept(int num, int min, int max, int[] exclude) {
+    static public boolean objectArrayContains(Object compare, Object[] to) {
+        boolean result = false;
+        for (Object comparing : to) {
+            if (compare.equals(comparing)) {
+                result = true;
+            }
+        }
+        return result;
+    }
+
+    static public boolean inRangeExcept(int num, int min, int max, int[] exclude) {
         return (min <= num) && (num <= max) && !arrayContains(num, exclude);
     }
 
-    static ItemStack createUnbreakableItem(Material material) {
+    static public ItemStack createUnbreakableItem(Material material) {
         ItemStack item = new ItemStack(material);
         ItemMeta itemMeta = item.getItemMeta();
         itemMeta.setUnbreakable(true);
@@ -334,7 +344,7 @@ public interface Utils {
         return item;
     }
 
-    static int[] getEmptySlotsInInventory(Inventory inv) {
+    static public int[] getEmptySlotsInInventory(Inventory inv) {
         ArrayList<Integer> slots = new ArrayList<>();
         ListIterator<ItemStack> iterator = inv.iterator();
 
@@ -357,7 +367,7 @@ public interface Utils {
         return intArray;
     }
 
-    static <T> T[] removeItemFromArray(T[] array, T element) {
+    static public <T> T[] removeItemFromArray(T[] array, T element) {
         ArrayList<T> list = new ArrayList<>(Arrays.asList(array));
 
         list.remove(element);
@@ -368,11 +378,13 @@ public interface Utils {
         return toReturn;
     }
 
-    static Integer[] intArrayToIntegerArray(int[] nums) {
+    static public Integer[] intArrayToIntegerArray(int[] nums) {
         Integer[] toRet = new Integer[nums.length];
         for (int i = 0; i < nums.length; i++) {
             toRet[i] = Integer.valueOf(nums[i]);
         }
         return toRet;
     }
+
+    static public Qwerty80 main;
 }
