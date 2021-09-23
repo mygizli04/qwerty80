@@ -11,7 +11,6 @@ import org.bukkit.command.Command;
 
 public class EscapeCommandExecutor implements CommandExecutor {
 
-    // TODO: Disable debug mdoe
     private final boolean debugMode = true; // Enables more aggresive debug features such as ignoring command requirements.
 
     Qwerty80 main;
@@ -21,7 +20,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
     }
 
     private final EscapeCommand[] commands = new EscapeCommand[]{
-        new me.qwerty80.commands.Spawn.Main(main)
+        new me.qwerty80.commands.Spawn.Main()
     };
     private final EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{};
 
