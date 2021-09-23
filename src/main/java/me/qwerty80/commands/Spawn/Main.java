@@ -1,7 +1,5 @@
 package me.qwerty80.commands.Spawn;
 
-import static org.junit.Assert.assertNotNull;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -10,15 +8,6 @@ import me.qwerty80.Utils;
 import me.qwerty80.commands.EscapeCommand;
 
 public class Main extends EscapeCommand {
-
-    public Main(Qwerty80 main) {
-        super(main);
-
-        assertNotNull(main);
-
-        this.main = main;
-    }
-
     public final String usage = "/spawn";
 
     private final String[] supportedCommands = new String[]{"spawn"};
@@ -37,15 +26,15 @@ public class Main extends EscapeCommand {
             return;
         }
 
-        if (!Utils.playerIsInAGame(player, getMain().games)) {
+        if (!Utils.playerIsInAGame(player, Utils.main.games)) {
             player.sendMessage("§cYou are not in a game!");
             return;
         }
 
-        Utils.getPlayersGame(player, getMain().games).playerLeave(player);
+        Utils.getPlayersGame(player, Utils.main.games).playerLeave(player);
         player.sendMessage("§aReturning to lobby...");
 
-        Location world = getMain().getServer().getWorld("empty").getSpawnLocation();
+        Location world = Utils.main.getServer().getWorld("empty").getSpawnLocation();
         player.teleport(world);
     }
 }

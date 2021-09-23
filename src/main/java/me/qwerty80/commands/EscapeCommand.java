@@ -1,21 +1,7 @@
 package me.qwerty80.commands;
 
 import org.bukkit.entity.Player;
-
-import me.qwerty80.Qwerty80;
-
 public class EscapeCommand {
-
-    public Qwerty80 main;
-
-    public EscapeCommand(Qwerty80 main) {
-        this.main = main;
-    }
-
-    public Qwerty80 getMain() {
-        return main;
-    }
-
     public final String usage = "/escape";
 
     private final String[] supportedCommands = new String[0];
