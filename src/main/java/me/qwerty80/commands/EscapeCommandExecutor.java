@@ -10,6 +10,10 @@ import me.qwerty80.Utils;
 import org.bukkit.command.Command;
 
 public class EscapeCommandExecutor implements CommandExecutor {
+
+    // TODO: Disable debug mdoe
+    private final boolean debugMode = true; // Enables more aggresive debug features such as ignoring command requirements.
+
     Qwerty80 main;
 
     public EscapeCommandExecutor(Qwerty80 main) {
@@ -31,6 +35,12 @@ public class EscapeCommandExecutor implements CommandExecutor {
         for (EscapeCommand command : commands) {
             if (Utils.objectArrayContains(cmd.getName(), command.getSupportedCommands())) {
 
+                if (debugMode) {
+                    main.debug("Ignoring command requirements for command " + cmd.getName(), player, "EscapeCommandExecutor");
+                    command.execute(cmd.getName(), args, player);
+                    return true;
+                }
+
                 if (player == null) {
                     sender.sendMessage("This command cannot be executed by the console.");
                     return true;
@@ -48,6 +58,13 @@ public class EscapeCommandExecutor implements CommandExecutor {
 
         for (EscapeCommandWithConsoleSupport command : commandsWithConsole) {
             if (Utils.arrayContains(cmd.getName(), command.supportedCommands)) {
+
+                if (debugMode) {
+                    main.debug("Ignoring command requirements for command " + cmd.getName(), player, "EscapeCommandExecutor");
+                    command.execute(cmd.getName(), args, player);
+                    return true;
+                }
+
                 boolean isPlayer = player != null;
                 if (command.checkArguments(cmd.getName(), args, isPlayer)) {
                     if (isPlayer) {
