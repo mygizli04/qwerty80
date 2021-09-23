@@ -22,8 +22,11 @@ enum DebugMode { // Where to send debug messages to
 // Main class
 public class Qwerty80 extends JavaPlugin {
 
-    // TODO: Disable debug mode
-    private final DebugMode debugMode = DebugMode.PLAYER; // Change this to enable debug mode!
+    public Qwerty80() {
+        Utils.main = this;
+    }
+
+    private final DebugMode debugMode = DebugMode.DISABLED; // Change this to enable debug mode!
     private final String[] enableDebugFor = new String[]{}; // Add things to here to enable only certain debug mode from senders! For example to only get debug messages from DiamondPickaxe: new String[]{"DiamondPickaxe", "something else", "etc"}
     public final boolean debugModeEnabled = debugMode != DebugMode.DISABLED;
     public final boolean noWorldGen = true; // Set this to true for no world gen.
