@@ -3,7 +3,6 @@ package me.qwerty80.commands.Spawn;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import me.qwerty80.Qwerty80;
 import me.qwerty80.Utils;
 import me.qwerty80.commands.EscapeCommand;
 
