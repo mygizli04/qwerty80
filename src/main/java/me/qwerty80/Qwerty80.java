@@ -56,10 +56,6 @@ public class Qwerty80 extends JavaPlugin {
         }
     }
 
-    public Qwerty80() {
-        Utils.main = this;
-    }
-
     public Stack<Game> games = new Stack<Game>(); // This stack will have every game instance.
     public CustomTeams teams = new CustomTeams(this);
 
@@ -71,6 +67,8 @@ public class Qwerty80 extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Utils.main = this;
+        
         getCommand("escape").setExecutor(commandHandler);
         getCommand("escape").setTabCompleter(tabCompleter);
 
