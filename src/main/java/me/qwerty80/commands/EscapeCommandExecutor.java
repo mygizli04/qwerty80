@@ -19,12 +19,28 @@ public class EscapeCommandExecutor implements CommandExecutor {
         this.main = main;
     }
 
-    private final EscapeCommand[] commands = new EscapeCommand[]{
+    private final static EscapeCommand[] commands = new EscapeCommand[]{
         new me.qwerty80.commands.Spawn.SpawnMain(),
     };
-    private final EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{
-        new me.qwerty80.commands.Credits.CreditsMain()
+    private final static EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{
+        new me.qwerty80.commands.Credits.CreditsMain(),
+        new me.qwerty80.commands.Escape.EscapeMain()
     };
+
+    public static void executeCommand(String command, String[] args, CommandSender sender) {
+        for (EscapeCommand currentCommand : commands) {
+            if (Utils.objectArrayContains(command, currentCommand.supportedCommands)) {
+                currentCommand.execute(command, args, (Player) sender);
+            }
+        }
+
+        for (EscapeCommandWithConsoleSupport currentCommand : commandsWithConsole) {
+            if (Utils.objectArrayContains(command, currentCommand.supportedCommands)) {
+                currentCommand.execute(command, args, sender instanceof Player ? (Player) sender : sender);
+            }
+        }
+
+    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
