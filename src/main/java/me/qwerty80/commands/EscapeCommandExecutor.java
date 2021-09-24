@@ -11,7 +11,7 @@ import org.bukkit.command.Command;
 
 public class EscapeCommandExecutor implements CommandExecutor {
 
-    private final boolean debugMode = true; // Enables more aggresive debug features such as ignoring command requirements.
+    private final boolean debugMode = false; // Enables more aggresive debug features such as ignoring command requirements.
 
     Qwerty80 main;
 
@@ -20,9 +20,11 @@ public class EscapeCommandExecutor implements CommandExecutor {
     }
 
     private final EscapeCommand[] commands = new EscapeCommand[]{
-        new me.qwerty80.commands.Spawn.Main()
+        new me.qwerty80.commands.Spawn.SpawnMain(),
     };
-    private final EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{};
+    private final EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{
+        new me.qwerty80.commands.Credits.CreditsMain()
+    };
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -32,7 +34,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
         }
 
         for (EscapeCommand command : commands) {
-            if (Utils.objectArrayContains(cmd.getName(), command.getSupportedCommands())) {
+            if (Utils.objectArrayContains(cmd.getName(), command.supportedCommands)) {
 
                 if (debugMode) {
                     main.debug("Ignoring command requirements for command " + cmd.getName(), player, "EscapeCommandExecutor");
@@ -56,7 +58,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
         }
 
         for (EscapeCommandWithConsoleSupport command : commandsWithConsole) {
-            if (Utils.arrayContains(cmd.getName(), command.supportedCommands)) {
+            if (Utils.objectArrayContains(cmd.getName(), command.supportedCommands)) {
 
                 if (debugMode) {
                     main.debug("Ignoring command requirements for command " + cmd.getName(), player, "EscapeCommandExecutor");
@@ -66,7 +68,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
 
                 boolean isPlayer = player != null;
                 if (command.checkArguments(cmd.getName(), args, isPlayer)) {
-                    if (isPlayer) {
+                    if (isPlayer && !command.singleMethod) {
                         command.execute(cmd.getName(), args, player);
                     }
                     else {

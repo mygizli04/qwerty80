@@ -4,11 +4,7 @@ import org.bukkit.entity.Player;
 public class EscapeCommand {
     public final String usage = "/escape";
 
-    private final String[] supportedCommands = new String[0];
-
-    public String[] getSupportedCommands() {
-        return supportedCommands;
-    }
+    public String[] supportedCommands = new String[0];
 
     public boolean checkArguments(String command ,String[] args) {
         return true;

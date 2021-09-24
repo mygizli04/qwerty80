@@ -4,9 +4,13 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import me.qwerty80.Utils;
-import me.qwerty80.commands.EscapeCommand;
+import me.qwerty80.commands.EscapeCommandWithConsoleSupport;
 
-public class Main extends EscapeCommand {
+public class SpawnMain extends EscapeCommandWithConsoleSupport {
+
+    public SpawnMain() {
+        super.singleMethod = true;
+    }
 
     private final boolean debugMode = false; // Disables checks for returning to spawn and does not take you out of the game anymore.
 
@@ -22,7 +26,6 @@ public class Main extends EscapeCommand {
         return true;
     }
 
-    @SuppressWarnings("unused") // debug var causing dead code warnings
     public void execute(String command, String[] args, Player player) {
         if (!debugMode && player.getWorld().getName().equals("empty")) {
             player.sendMessage("§cYou are already in the lobby!");
