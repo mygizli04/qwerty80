@@ -4,6 +4,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import me.qwerty80.commands.EscapeCommand;
+import me.qwerty80.commands.EscapeCommandArgumentCheckResult;
 import me.qwerty80.commands.EscapeCommandExecutor;
 import me.qwerty80.commands.EscapeCommandWithConsoleSupport;
 
@@ -21,16 +22,19 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
 
     // TODO: Change from boolean to string/null so fail reasons can be sent to the player if necessary
     @Override
-    public boolean checkArguments(String command, String[] args, boolean isPlayer) {
+    public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, boolean isPlayer) {
+        EscapeCommandArgumentCheckResult check = new EscapeCommandArgumentCheckResult();
+
         if (args.length == 0) { // Only /escape (shows credits)
-            return true;
+            return check;
         }
 
         if (args[0] == "list") { // /escape list
-            return true;
+            return check;
         }
 
-        return false;
+        check.executable = false;
+        return check;
     }
 
     @Override
