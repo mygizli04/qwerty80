@@ -1,6 +1,6 @@
 package me.qwerty80.commands.Escape;
 
-import org.bukkit.entity.Player;
+import org.bukkit.command.CommandSender;
 
 import me.qwerty80.commands.EscapeCommandWithConsoleSupport;
 
@@ -8,14 +8,11 @@ public class EscapeList extends EscapeCommandWithConsoleSupport {
     public EscapeList() {
         super();
         super.usage = "/escape list";
-        super.supportedCommands = new String[]{
-            "list",
-            "li"
-        };
+        super.singleMethod = true;
     }
 
     @Override
-    public void execute(String command, String[] args, Player player) {
-        player.sendMessage("§aThere are currently §b" + main.games.size() + "§a games active.");
+    public void execute(String command, String[] args, CommandSender sender) {
+        sender.sendMessage("§aThere are currently §b" + main.games.size() + "§a games active.");
     }
 }

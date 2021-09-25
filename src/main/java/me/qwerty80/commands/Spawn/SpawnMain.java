@@ -22,10 +22,6 @@ public class SpawnMain extends EscapeCommandWithConsoleSupport {
         return this.supportedCommands;
     }
 
-    public boolean checkArguments(String command, String[] args) {
-        return true;
-    }
-
     public void execute(String command, String[] args, Player player) {
         if (!debugMode && player.getWorld().getName().equals("empty")) {
             player.sendMessage("§cYou are already in the lobby!");

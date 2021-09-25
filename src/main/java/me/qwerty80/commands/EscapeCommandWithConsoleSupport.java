@@ -19,8 +19,8 @@ public class EscapeCommandWithConsoleSupport extends EscapeCommand {
      * @param isPlayer Whether or not the executor is a player
      * @return Whether or not the command should be executed
      */
-    public boolean checkArguments(String command, String[] args, boolean isPlayer) {
-        return true;
+    public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, boolean isPlayer) {
+        return new EscapeCommandArgumentCheckResult();
     }
 
     /**

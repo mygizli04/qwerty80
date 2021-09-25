@@ -39,7 +39,40 @@ public class EscapeCommandExecutor implements CommandExecutor {
                 currentCommand.execute(command, args, sender instanceof Player ? (Player) sender : sender);
             }
         }
+    }
 
+    public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, Player player, EscapeCommand customCommand) {
+        EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args);
+
+        if (result.executable) {
+            customCommand.execute(command, args, player);
+            return null;
+        }
+        else {
+            return result;
+        }
+    }
+
+    public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, CommandSender sender, EscapeCommandWithConsoleSupport customCommand) {
+        EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args);
+
+        Player player = null;
+        if (sender instanceof Player) {
+            player = (Player) sender;
+        }
+
+        if (result.executable) {
+            if (!customCommand.singleMethod && player != null) {
+                customCommand.execute(command, args, player);
+            }
+            else {
+                customCommand.execute(command, args, sender);
+            }
+            return null;
+        }
+        else {
+            return result;
+        }
     }
 
     @Override
@@ -63,8 +96,13 @@ public class EscapeCommandExecutor implements CommandExecutor {
                     return true;
                 }
 
-                if (command.checkArguments(cmd.getName(), args)) {
+                EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args);
+
+                if (check.executable) {
                     command.execute(cmd.getName(), args, player);
+                }
+                else if (check.reason != null) {
+                    sender.sendMessage(check.reason);
                 }
                 else {
                     sender.sendMessage("Usage: " + command.usage);
@@ -83,13 +121,17 @@ public class EscapeCommandExecutor implements CommandExecutor {
                 }
 
                 boolean isPlayer = player != null;
-                if (command.checkArguments(cmd.getName(), args, isPlayer)) {
+                EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args, isPlayer);
+                if (check.executable) {
                     if (isPlayer && !command.singleMethod) {
                         command.execute(cmd.getName(), args, player);
                     }
                     else {
                         command.execute(cmd.getName(), args, sender);
                     }
+                }
+                else if (check.reason != null) {
+                    sender.sendMessage(check.reason);
                 }
                 else {
                     sender.sendMessage("Usage: " + command.usage);

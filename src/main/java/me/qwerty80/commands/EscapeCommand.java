@@ -12,8 +12,8 @@ public class EscapeCommand {
 
     public String[] supportedCommands = new String[0];
 
-    public boolean checkArguments(String command ,String[] args) {
-        return true;
+    public EscapeCommandArgumentCheckResult checkArguments(String command ,String[] args) {
+        return new EscapeCommandArgumentCheckResult();
     }
 
     public void execute(String command, String[] args, Player player) {

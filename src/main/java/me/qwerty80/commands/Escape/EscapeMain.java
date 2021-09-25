@@ -3,7 +3,6 @@ package me.qwerty80.commands.Escape;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import me.qwerty80.commands.EscapeCommand;
 import me.qwerty80.commands.EscapeCommandArgumentCheckResult;
 import me.qwerty80.commands.EscapeCommandExecutor;
 import me.qwerty80.commands.EscapeCommandWithConsoleSupport;
@@ -13,14 +12,9 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
     public EscapeMain() {
         super();
         super.supportedCommands = new String[]{"escape"};
+        super.usage = "/escape [list]";
     }
 
-    private final EscapeCommand[] subCommands = new EscapeCommand[]{};
-    private final EscapeCommandWithConsoleSupport[] subCommandsWithConsole = new EscapeCommandWithConsoleSupport[]{
-        new EscapeList()
-    };
-
-    // TODO: Change from boolean to string/null so fail reasons can be sent to the player if necessary
     @Override
     public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, boolean isPlayer) {
         EscapeCommandArgumentCheckResult check = new EscapeCommandArgumentCheckResult();
@@ -29,7 +23,7 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
             return check;
         }
 
-        if (args[0] == "list") { // /escape list
+        if (args[0].equals("list") || args[0].equals("li")) { // /escape list
             return check;
         }
 
@@ -44,8 +38,9 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
             return;
         }
 
-        if (args[0] == "list") {
-
+        if (args[0].equals("list") || args[0].equals("li")) {
+            EscapeCommandExecutor.executeCommand("list", new String[0], (CommandSender) player, new EscapeList());
+            return;
         }
     }
 
@@ -53,6 +48,12 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
     public void execute(String command, String[] args, CommandSender sender) {
         if (args.length == 0) {
             EscapeCommandExecutor.executeCommand("credits", new String[0], sender);
+            return;
+        }
+
+        if (args[0].equals("list") || args[0].equals("li")) {
+            EscapeCommandExecutor.executeCommand("list", new String[0], sender, new EscapeList());
+            return;
         }
     }
 }
