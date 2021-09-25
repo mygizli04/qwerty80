@@ -16,10 +16,10 @@ public class EscapeCommandWithConsoleSupport extends EscapeCommand {
      * 
      * @param command The command that's executed
      * @param args Arguments to the command
-     * @param isPlayer Whether or not the executor is a player
+     * @param sender The sender who initiated the command
      * @return Whether or not the command should be executed
      */
-    public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, boolean isPlayer) {
+    public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, CommandSender sender) {
         return new EscapeCommandArgumentCheckResult();
     }
 

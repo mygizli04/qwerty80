@@ -121,7 +121,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
                 }
 
                 boolean isPlayer = player != null;
-                EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args, isPlayer);
+                EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args, sender);
                 if (check.executable) {
                     if (isPlayer && !command.singleMethod) {
                         command.execute(cmd.getName(), args, player);
