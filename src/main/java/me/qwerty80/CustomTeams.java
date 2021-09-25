@@ -127,7 +127,7 @@ public class CustomTeams implements Listener {
         }
 
 
-        if (!Utils.playerIsInAGame(player, main.games)) {
+        if (!Utils.playerIsInAGame(player)) {
             return;
         }
 
@@ -157,7 +157,7 @@ public class CustomTeams implements Listener {
             return;
         }
 
-        if (!Utils.playerIsInAGame((Player) event.getEntity(), main.games)) {
+        if (!Utils.playerIsInAGame((Player) event.getEntity())) {
             return;
          }
 

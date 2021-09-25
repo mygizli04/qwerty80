@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
-import java.util.Stack;
 
 import com.viaversion.viaversion.api.Via;
 import com.viaversion.viaversion.api.ViaAPI;
@@ -154,9 +153,9 @@ public class Utils {
     @SuppressWarnings("unchecked")
     static public ViaAPI<Player> viaApi = Via.getAPI();
 
-    static public Game getPlayersGame(Player player, Stack<Game> games) {
+    static public Game getPlayersGame(Player player) {
         Game[] ret = new Game[1]; // I hate java SO SO much....
-        games.forEach(game -> {
+        main.games.forEach(game -> {
             game.players.forEach(searchPlayer -> {
                 if (searchPlayer == player) {
                     ret[0] = game;
@@ -198,8 +197,8 @@ public class Utils {
         }
     }
 
-    static public boolean playerIsInAGame(Player player, Stack<Game> games) {
-        return getPlayersGame(player, games) != null;
+    static public boolean playerIsInAGame(Player player) {
+        return getPlayersGame(player) != null;
     }
 
     static public void renameHeldItem(String name, Player player) {

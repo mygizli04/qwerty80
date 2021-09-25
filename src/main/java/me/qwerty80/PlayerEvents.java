@@ -52,18 +52,18 @@ public class PlayerEvents implements Listener {
 
         event.getPlayer().teleport(Bukkit.getWorld("empty").getSpawnLocation());
 
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
 
-        Utils.getPlayersGame(event.getPlayer(), main.games).playerLeave(event.getPlayer());
+        Utils.getPlayersGame(event.getPlayer()).playerLeave(event.getPlayer());
 
     }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
 
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
 
@@ -90,11 +90,11 @@ public class PlayerEvents implements Listener {
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
 
-        if (!Utils.playerIsInAGame(event.getEntity(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getEntity())) {
             return;
         }
 
-        Game game = Utils.getPlayersGame(event.getEntity(), main.games);
+        Game game = Utils.getPlayersGame(event.getEntity());
         game.playerLeave(event.getEntity());
     }
 
@@ -115,7 +115,7 @@ public class PlayerEvents implements Listener {
             return;
         }
 
-        if (!Utils.playerIsInAGame(player, main.games)) {
+        if (!Utils.playerIsInAGame(player)) {
             return;
         }
 
@@ -134,7 +134,7 @@ public class PlayerEvents implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
         switch (event.getPlayer().getInventory().getHeldItemSlot()) {
