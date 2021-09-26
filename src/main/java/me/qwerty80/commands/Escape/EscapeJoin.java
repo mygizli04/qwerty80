@@ -39,7 +39,7 @@ public class EscapeJoin extends EscapeCommandWithConsoleSupport {
             return check;
         }
 
-        check.executable = player != null || ((args.length == 3) && Utils.isNumber(args[1]));
+        check.executable = player != null || ((args.length == 3) && Utils.isNumber(args[1]) && Bukkit.getServer().getPlayer(args[2]) != null);
 
         if (!check.executable) {
             check.reason = "Usage: /escape join <number> <player>";
@@ -52,5 +52,13 @@ public class EscapeJoin extends EscapeCommandWithConsoleSupport {
     public void execute(String command, String[] args, Player player) { // /escape join [game]
         Utils.main.games.get(args.length > 1 ? Integer.parseInt(args[1]) : 0).playerJoin(player);
         Utils.teleportPlayerToWorld(player, args.length > 1 ? args[1] + "_GAME_island_water" : "0_GAME_island_water");
+    }
+
+    @Override
+    public void execute(String command, String[] args, CommandSender sender) { // /escape join <game> <player>
+        Player player = Bukkit.getServer().getPlayer(args[2]);
+        int targetGame = Integer.parseInt(args[1]);
+
+        Utils.main.games.get(targetGame).playerJoin(player);
     }
 }
