@@ -10,13 +10,12 @@ public class SpawnMain extends EscapeCommandWithConsoleSupport {
 
     public SpawnMain() {
         super.singleMethod = true;
+        super.supportedCommands = new String[]{"spawn"};
     }
 
     private final boolean debugMode = false; // Disables checks for returning to spawn and does not take you out of the game anymore.
 
     public final String usage = "/spawn";
-
-    private final String[] supportedCommands = new String[]{"spawn"};
 
     public String[] getSupportedCommands() {
         return this.supportedCommands;
