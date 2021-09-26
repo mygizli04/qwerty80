@@ -37,7 +37,7 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
                 return check;
             }
 
-            if (player != null && Utils.playerIsInAGame(player, Utils.main.games)) {
+            if (player != null && Utils.playerIsInAGame(player)) {
                 check.executable = false;
                 check.reason = "§cYou are already in a game!";
                 return check;

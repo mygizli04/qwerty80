@@ -28,13 +28,13 @@ public class SpawnMain extends EscapeCommandWithConsoleSupport {
             return;
         }
 
-        if (!debugMode && !Utils.playerIsInAGame(player, Utils.main.games)) {
+        if (!debugMode && !Utils.playerIsInAGame(player)) {
             player.sendMessage("§cYou are not in a game!");
             return;
         }
 
         if (!debugMode) {
-            Utils.getPlayersGame(player, Utils.main.games).playerLeave(player);
+            Utils.getPlayersGame(player).playerLeave(player);
         }
         player.sendMessage("§aReturning to lobby...");
 
