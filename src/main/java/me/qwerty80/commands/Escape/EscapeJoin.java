@@ -33,16 +33,22 @@ public class EscapeJoin extends EscapeCommandWithConsoleSupport {
             return check;
         }
 
-        if (args.length > 1 && Bukkit.getServer().getWorld(args[1]) != null) { // The world they specified must exist!
+        if (args.length > 1 && Bukkit.getServer().getWorld(args[1] + "_GAME_island_water") != null) { // The world they specified must exist!
             check.executable = false;
             check.reason = "§cThat is not a valid game!";
             return check;
         }
 
-        check.executable = player != null || ((args.length == 3) && Utils.isNumber(args[1]) && Bukkit.getServer().getPlayer(args[2]) != null);
-
-        if (!check.executable) {
+        if (player != null && args.length != 3) {
+            check.executable = false;
             check.reason = "Usage: /escape join <number> <player>";
+            return check;
+        }
+
+        if (Bukkit.getServer().getPlayer(args[2]) == null) {
+            check.executable = false;
+            check.reason = "That player is not online!";
+            return check;
         }
 
         return check;
