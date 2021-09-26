@@ -47,7 +47,7 @@ public class ItemGUI implements Listener {
     public void useAnvil(PlayerInteractEvent event) {
         Player player = event.getPlayer();
 
-        if (!Utils.playerIsInAGame(player, main.games)) {
+        if (!Utils.playerIsInAGame(player)) {
             return;
         }
 

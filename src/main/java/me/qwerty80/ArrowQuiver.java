@@ -30,7 +30,7 @@ public class ArrowQuiver implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!Utils.playerIsInAGame(player, main.games)) {
+        if (!Utils.playerIsInAGame(player)) {
             return;
         }
 
@@ -125,7 +125,7 @@ public class ArrowQuiver implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
 
@@ -155,7 +155,7 @@ public class ArrowQuiver implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
 
-            if (!Utils.playerIsInAGame(player, main.games)) {
+            if (!Utils.playerIsInAGame(player)) {
                 return;
             }
 
@@ -170,7 +170,7 @@ public class ArrowQuiver implements Listener {
     @EventHandler
     public void arrowPickup(PlayerPickupArrowEvent event) {
 
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
 
@@ -202,7 +202,7 @@ public class ArrowQuiver implements Listener {
         if (event.getEntity() instanceof Player && event.getItem().getItemStack().getType() == Material.SPECTRAL_ARROW ) {
             Player player = (Player) event.getEntity();
 
-            if (!Utils.playerIsInAGame(player, main.games)) {
+            if (!Utils.playerIsInAGame(player)) {
                 return;
             }
 

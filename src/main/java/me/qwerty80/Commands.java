@@ -88,7 +88,7 @@ public class Commands implements CommandExecutor {
                             }
 
                             if (sender instanceof Player) {
-                                if (Utils.playerIsInAGame((Player) sender, main.games)) {
+                                if (Utils.playerIsInAGame((Player) sender)) {
                                     sender.sendMessage("§cYou're already in-game!");
                                     return true;
                                 }
@@ -136,12 +136,12 @@ public class Commands implements CommandExecutor {
                                     return true;
                                 }
 
-                                if (!Utils.playerIsInAGame(player, main.games)) {
+                                if (!Utils.playerIsInAGame(player)) {
                                     sender.sendMessage("§cYou are not in  a game!");
                                     return true;
                                 }
 
-                                Utils.getPlayersGame(player, main.games).playerLeave(player);
+                                Utils.getPlayersGame(player).playerLeave(player);
                                 sender.sendMessage("§aReturning to lobby...");
                                 
                                 Location world = main.getServer().getWorld("empty").getSpawnLocation();
@@ -223,7 +223,7 @@ public class Commands implements CommandExecutor {
 
                             Player player = (Player) sender;
 
-                            if (!Utils.playerIsInAGame(player, main.games)) {
+                            if (!Utils.playerIsInAGame(player)) {
                                sender.sendMessage("§cYou are not in a game!");
                                return true;
                             }
@@ -307,12 +307,12 @@ public class Commands implements CommandExecutor {
                         return true;
                     }
 
-                    if (!Utils.playerIsInAGame(player, main.games)) {
+                    if (!Utils.playerIsInAGame(player)) {
                         sender.sendMessage("§cYou are not in  a game!");
                         return true;
                     }
 
-                    Utils.getPlayersGame(player, main.games).playerLeave(player);
+                    Utils.getPlayersGame(player).playerLeave(player);
                     sender.sendMessage("§aReturning to lobby...");
 
                     Location world = main.getServer().getWorld("empty").getSpawnLocation();

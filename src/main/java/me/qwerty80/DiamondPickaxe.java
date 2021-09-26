@@ -19,7 +19,7 @@ public class DiamondPickaxe implements Listener {
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 
-        if (!Utils.playerIsInAGame(player, main.games)) {
+        if (!Utils.playerIsInAGame(player)) {
             return;
         }
 
@@ -74,7 +74,7 @@ public class DiamondPickaxe implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent event) {
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
 

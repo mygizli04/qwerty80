@@ -30,7 +30,7 @@ public class ChestGUI implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
 
-        if (!Utils.playerIsInAGame(event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame(event.getPlayer())) {
             return;
         }
 
@@ -62,7 +62,7 @@ public class ChestGUI implements Listener {
 
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent event) {
-        if (!Utils.playerIsInAGame((Player) event.getPlayer(), main.games)) {
+        if (!Utils.playerIsInAGame((Player) event.getPlayer())) {
             return;
         }
         
