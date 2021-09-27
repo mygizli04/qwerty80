@@ -27,27 +27,27 @@ public class EscapeJoin extends EscapeCommandWithConsoleSupport {
             return check;
         }
 
-        if (args.length > 1 && Utils.isNumber(args[1])) { // The second argument must be a valid number
+        if (args.length > 1 && !Utils.isNumber(args[1])) { // The second argument must be a valid number
             check.executable = false;
             check.reason = "§cThat is not a valid game!";
             return check;
         }
 
-        if (args.length > 1 && Bukkit.getServer().getWorld(args[1] + "_GAME_island_water") != null) { // The world they specified must exist!
+        if (args.length > 1 && Bukkit.getServer().getWorld(args[1] + "_GAME_island_water") == null) { // The world they specified must exist!
             check.executable = false;
             check.reason = "§cThat is not a valid game!";
             return check;
         }
 
-        if (player != null && args.length != 3) {
+        if (player == null && args.length != 3) {
             check.executable = false;
             check.reason = "Usage: /escape join <number> <player>";
             return check;
         }
 
-        if (Bukkit.getServer().getPlayer(args[2]) == null) {
+        if (player == null && Bukkit.getServer().getPlayer(args[2]) == null) {
             check.executable = false;
-            check.reason = "That player is not online!";
+            check.reason = "§cThat player is not online!";
             return check;
         }
 
@@ -57,7 +57,7 @@ public class EscapeJoin extends EscapeCommandWithConsoleSupport {
     @Override
     public void execute(String command, String[] args, Player player) { // /escape join [game]
         Utils.main.games.get(args.length > 1 ? Integer.parseInt(args[1]) : 0).playerJoin(player);
-        Utils.teleportPlayerToWorld(player, args.length > 1 ? args[1] + "_GAME_island_water" : "0_GAME_island_water");
+        Utils.teleportPlayerToWorld(player, (args.length > 1 ? args[1] : "0") + "_GAME_island_water" );
     }
 
     @Override
@@ -65,6 +65,7 @@ public class EscapeJoin extends EscapeCommandWithConsoleSupport {
         Player player = Bukkit.getServer().getPlayer(args[2]);
         int targetGame = Integer.parseInt(args[1]);
 
-        Utils.main.games.get(targetGame).playerJoin(player);
+        main.games.get(targetGame).playerJoin(player);
+        Utils.teleportPlayerToWorld(player, args[1] + "_GAME_island_water");
     }
 }

@@ -56,12 +56,17 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
     @Override
     public void execute(String command, String[] args, CommandSender sender) {
         if (args.length == 0) {
-            EscapeCommandExecutor.executeCommand("credits", new String[0], sender);
+            EscapeCommandExecutor.executeCommand("credits", args, sender);
             return;
         }
 
         if (args[0].equals("list") || args[0].equals("li")) {
-            EscapeCommandExecutor.executeCommand("list", new String[0], sender, new EscapeList());
+            EscapeCommandExecutor.executeCommand("list", args, sender, new EscapeList());
+            return;
+        }
+
+        if (args[0].equals("join") || args[0].equals("j")) {
+            EscapeCommandExecutor.executeCommand("escape", args, sender, new EscapeJoin());
             return;
         }
     }

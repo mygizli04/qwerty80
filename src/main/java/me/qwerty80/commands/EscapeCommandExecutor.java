@@ -53,8 +53,8 @@ public class EscapeCommandExecutor implements CommandExecutor {
         }
     }
 
-    public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, CommandSender sender, EscapeCommandWithConsoleSupport customCommand) {
-        EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args);
+    public static void executeCommand(String command, String[] args, CommandSender sender, EscapeCommandWithConsoleSupport customCommand) {
+        EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args, sender);
 
         Player player = null;
         if (sender instanceof Player) {
@@ -68,10 +68,13 @@ public class EscapeCommandExecutor implements CommandExecutor {
             else {
                 customCommand.execute(command, args, sender);
             }
-            return null;
+            return;
+        }
+        else if (result.reason != null) {
+            sender.sendMessage(result.reason);
         }
         else {
-            return result;
+            sender.sendMessage("Usage: " + customCommand.usage);
         }
     }
 
