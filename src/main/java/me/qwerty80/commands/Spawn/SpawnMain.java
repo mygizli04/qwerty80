@@ -12,7 +12,6 @@ import me.qwerty80.commands.EscapeCommandWithConsoleSupport;
 public class SpawnMain extends EscapeCommandWithConsoleSupport {
 
     public SpawnMain() {
-        super.singleMethod = true;
         super.supportedCommands = new String[]{"spawn"};
     }
 
@@ -82,7 +81,7 @@ public class SpawnMain extends EscapeCommandWithConsoleSupport {
 
     @Override
     public void execute(String command, String[] args, CommandSender sender) {
-        Player player = Bukkit.getServer().getPlayer(args[0]);
+        Player player = sender instanceof Player ? (Player) sender : Bukkit.getServer().getPlayer(args[0]);
 
         if (!debugMode) {
             Utils.getPlayersGame(player).playerLeave(player);

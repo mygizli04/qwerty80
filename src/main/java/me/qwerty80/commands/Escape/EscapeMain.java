@@ -12,7 +12,7 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
     public EscapeMain() {
         super();
         super.supportedCommands = new String[]{"escape"};
-        super.usage = "/escape [list]";
+        super.usage = "/escape [list|join]";
     }
 
     @Override
@@ -29,6 +29,10 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
 
         if (args[0].equals("join") || args[0].equals("j")) { // /escape join [number] [player]
             return new EscapeJoin().checkArguments(command, args);
+        }
+
+        if (args[0].equals("leave") || args[0].equals("le")) { // escape leave [player]
+            return new EscapeLeave().checkArguments(command, args);
         }
 
         check.result = false;
@@ -48,7 +52,12 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
         }
 
         if (args[0].equals("join") || args[0].equals("j")) {
-            EscapeCommandExecutor.executeCommand("escape", new String[0], (CommandSender) player, new EscapeJoin());
+            EscapeCommandExecutor.executeCommand("escape", args, (CommandSender) player, new EscapeJoin());
+            return;
+        }
+
+        if (args[0].equals("leave") || args[0].equals("le")) {
+            EscapeCommandExecutor.executeCommand("escape", args, (CommandSender) player, new EscapeLeave());
             return;
         }
     }
@@ -67,6 +76,11 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
 
         if (args[0].equals("join") || args[0].equals("j")) {
             EscapeCommandExecutor.executeCommand("escape", args, sender, new EscapeJoin());
+            return;
+        }
+
+        if (args[0].equals("leave") || args[0].equals("le")) {
+            EscapeCommandExecutor.executeCommand("escape", args, sender, new EscapeLeave());
             return;
         }
     }

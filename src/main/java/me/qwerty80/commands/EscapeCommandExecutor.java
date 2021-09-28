@@ -30,27 +30,32 @@ public class EscapeCommandExecutor implements CommandExecutor {
     public static void executeCommand(String command, String[] args, CommandSender sender) {
         for (EscapeCommand currentCommand : commands) {
             if (Utils.objectArrayContains(command, currentCommand.supportedCommands)) {
-                currentCommand.execute(command, args, (Player) sender);
+                executeCommand(command, args, sender, currentCommand);
             }
         }
 
         for (EscapeCommandWithConsoleSupport currentCommand : commandsWithConsole) {
             if (Utils.objectArrayContains(command, currentCommand.supportedCommands)) {
-                currentCommand.execute(command, args, sender instanceof Player ? (Player) sender : sender);
+                executeCommand(command, args, sender instanceof Player ? (Player) sender : sender, currentCommand);
             }
         }
     }
 
-    public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, Player player, EscapeCommand customCommand) {
+    public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, CommandSender sender, EscapeCommand customCommand) {
         EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args);
 
-        if (result.result) {
-            customCommand.execute(command, args, player);
-            return null;
-        }
-        else {
+        if (!result.result) {
             return result;
         }
+
+        if (customCommand instanceof EscapeCommandWithConsoleSupport) {
+            ((EscapeCommandWithConsoleSupport) customCommand).execute(command, args, sender instanceof Player ? (Player) sender : sender);
+        }
+        else {
+            customCommand.execute(command, args, (Player) sender);
+        }
+
+        return null;
     }
 
     public static void executeCommand(String command, String[] args, CommandSender sender, EscapeCommandWithConsoleSupport customCommand) {
