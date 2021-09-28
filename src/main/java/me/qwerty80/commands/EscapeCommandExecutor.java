@@ -20,9 +20,9 @@ public class EscapeCommandExecutor implements CommandExecutor {
     }
 
     private final static EscapeCommand[] commands = new EscapeCommand[]{
-        new me.qwerty80.commands.Spawn.SpawnMain(),
     };
     private final static EscapeCommandWithConsoleSupport[] commandsWithConsole = new EscapeCommandWithConsoleSupport[]{
+        new me.qwerty80.commands.Spawn.SpawnMain(),
         new me.qwerty80.commands.Credits.CreditsMain(),
         new me.qwerty80.commands.Escape.EscapeMain()
     };
@@ -44,7 +44,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
     public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, Player player, EscapeCommand customCommand) {
         EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args);
 
-        if (result.executable) {
+        if (result.result) {
             customCommand.execute(command, args, player);
             return null;
         }
@@ -61,7 +61,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
             player = (Player) sender;
         }
 
-        if (result.executable) {
+        if (result.result) {
             if (!customCommand.singleMethod && player != null) {
                 customCommand.execute(command, args, player);
             }
@@ -101,7 +101,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
 
                 EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args);
 
-                if (check.executable) {
+                if (check.result) {
                     command.execute(cmd.getName(), args, player);
                 }
                 else if (check.reason != null) {
@@ -125,7 +125,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
 
                 boolean isPlayer = player != null;
                 EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args, sender);
-                if (check.executable) {
+                if (check.result) {
                     if (isPlayer && !command.singleMethod) {
                         command.execute(cmd.getName(), args, player);
                     }

@@ -31,7 +31,7 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
             return new EscapeJoin().checkArguments(command, args);
         }
 
-        check.executable = false;
+        check.result = false;
         return check;
     }
 
