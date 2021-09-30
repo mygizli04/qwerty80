@@ -12,7 +12,7 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
     public EscapeMain() {
         super();
         super.supportedCommands = new String[]{"escape"};
-        super.usage = "/escape [list|join]";
+        super.usage = "/escape [list|join|leave]";
     }
 
     @Override
