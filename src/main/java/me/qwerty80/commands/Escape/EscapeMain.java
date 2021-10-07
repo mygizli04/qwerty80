@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import me.qwerty80.commands.EscapeCommandArgumentCheckResult;
 import me.qwerty80.commands.EscapeCommandExecutor;
 import me.qwerty80.commands.EscapeCommandWithConsoleSupport;
+import me.qwerty80.commands.Escape.Admin.EscapeAdminMain;
 
 public class EscapeMain extends EscapeCommandWithConsoleSupport {
 
@@ -35,6 +36,10 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
             return new EscapeLeave().checkArguments(command, args);
         }
 
+        if (args[0].equals("admin")) { // escape admin [startgame|stopgame|getmap]
+            return new EscapeAdminMain().checkArguments(command, args);
+        }
+
         check.result = false;
         return check;
     }
@@ -58,6 +63,11 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
 
         if (args[0].equals("leave") || args[0].equals("le")) {
             EscapeCommandExecutor.executeCommand("escape", args, (CommandSender) player, new EscapeLeave());
+            return;
+        }
+
+        if (args[0].equals("admin")) {
+            EscapeCommandExecutor.executeCommand("escape", args, (CommandSender) player, new EscapeAdminMain());
             return;
         }
     }
