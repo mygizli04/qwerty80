@@ -96,7 +96,24 @@ public class EscapeAdminMain extends EscapeCommandWithConsoleSupport {
             }
         }
 
-        if (args[1].equals("getmap") && getMapPermission) { // /escape admin getmap
+        if (args[1].equals("getmap") && getMapPermission) { // /escape admin getmap [player]
+            if (!(sender instanceof Player)) {
+                if (!(args.length > 2)) {
+                    if (Bukkit.getServer().getPlayer(args[2]) != null) {
+                        return check;
+                    }
+                    else {
+                        check.result = false;
+                        check.reason = "§cThat player is not online!";
+                        return check;
+                    }
+                }
+                else {
+                    check.result = false;
+                    check.reason = "Usage: /escape admin getmap <player>";
+                    return check;
+                }
+            }
             return check;
         }
 
@@ -104,27 +121,52 @@ public class EscapeAdminMain extends EscapeCommandWithConsoleSupport {
         return check;
     }
 
+    void startGame() {
+        Bukkit.broadcast(Component.text("§eWarning: A new game is being generated. Please ignore the lag. We're sorry for the inconvenience"));
+        main.games.add(new Game(main.games.size(), main));
+        return;
+    }
+
+    void stopGame(int game) {
+        Bukkit.broadcast(Component.text("§eWarning: A game instance is being removed. Please ignore the lag. We're sorry for the inconvenience"));
+        main.games.get(game != -1 ? game - 1 : 0).delete();
+        main.games.remove(game != -1 ? game - 1 : 0);
+    }
+
     @Override
     public void execute(String command, String[] args, Player player) {
         if (args[1].equals("startgame")) {
-            Bukkit.broadcast(Component.text("§eWarning: A new game is being generated. Please ignore the lag. We're sorry for the inconvenience"));
-            main.games.add(new Game(main.games.size(), main));
-            return;
+            startGame();
         }
 
         if (args[1].equals("stopgame")) {
-            if (args.length < 3) {
-                Bukkit.broadcast(Component.text("§eWarning: A game instance is being removed. Please ignore the lag. We're sorry for the inconvenience"));
-                main.games.get(0).delete();
-                main.games.remove(0);
-            } else {
-                main.games.get(Integer.parseInt(args[2]) - 1).delete();
-                main.games.remove(Integer.parseInt(args[2]) - 1);
-            }
+            stopGame(args.length < 3 ? -1 : Integer.parseInt(args[2]));
         }
 
         if (args[1].equals("getmap")) {
             player.sendMessage("§aHere's the map of the island for island_water");
+            ItemStack item = new ItemStack(Material.FILLED_MAP);
+            MapMeta meta = (MapMeta) item.getItemMeta();
+            meta.setMapView(Bukkit.getServer().getMap(103)); // Deprecated, but it appears I cannot find an alternative that is not deprecated.
+            item.setItemMeta(meta);
+            player.getInventory().addItem(item);
+        }
+    }
+
+    @Override
+    public void execute(String command, String[] args, CommandSender sender) {
+        if (args[1].equals("startgame")) { // /escape admin startgame
+            startGame();
+        }
+
+        if (args[1].equals("stopgame")) { // /escape admin stopgame
+            stopGame(args.length < 3 ? -1 : Integer.parseInt(args[2]));
+        }
+
+        if (args[1].equals("getmap")) { // /escape admin getmap [player]
+            Player player = Bukkit.getServer().getPlayer(args[2]);
+            sender.sendMessage("§aSending the map of island_water to " + args[2]);
+            sender.sendMessage("§aYou have been given a map of island_water by CONSOLE");
             ItemStack item = new ItemStack(Material.FILLED_MAP);
             MapMeta meta = (MapMeta) item.getItemMeta();
             meta.setMapView(Bukkit.getServer().getMap(103)); // Deprecated, but it appears I cannot find an alternative that is not deprecated.

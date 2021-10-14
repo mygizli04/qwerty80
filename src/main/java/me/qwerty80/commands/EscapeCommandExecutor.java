@@ -42,7 +42,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
     }
 
     public static EscapeCommandArgumentCheckResult executeCommand(String command, String[] args, CommandSender sender, EscapeCommand customCommand) {
-        EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args);
+        EscapeCommandArgumentCheckResult result = customCommand.checkArguments(command, args, (Player) sender);
 
         if (!result.result) {
             return result;
@@ -104,7 +104,7 @@ public class EscapeCommandExecutor implements CommandExecutor {
                     return true;
                 }
 
-                EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args);
+                EscapeCommandArgumentCheckResult check = command.checkArguments(cmd.getName(), args, (Player) sender);
 
                 if (check.result) {
                     command.execute(cmd.getName(), args, player);

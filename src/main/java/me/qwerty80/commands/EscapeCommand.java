@@ -12,7 +12,7 @@ public class EscapeCommand {
 
     public String[] supportedCommands = new String[0];
 
-    public EscapeCommandArgumentCheckResult checkArguments(String command ,String[] args) {
+    public EscapeCommandArgumentCheckResult checkArguments(String command ,String[] args, Player player){
         return new EscapeCommandArgumentCheckResult();
     }
 

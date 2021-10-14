@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 
 public class EscapeCommandWithConsoleSupport extends EscapeCommand {
     /**
-     * If {@link #execute(String, String[], boolean)} will be called regardless of if the caller is a player
+     * If {@link #execute(String, String[], Player)} will be called regardless of if the caller is a player
      */
     public boolean singleMethod = false;
 
@@ -21,6 +21,11 @@ public class EscapeCommandWithConsoleSupport extends EscapeCommand {
      */
     public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, CommandSender sender) {
         return new EscapeCommandArgumentCheckResult();
+    }
+
+    @Override
+    public EscapeCommandArgumentCheckResult checkArguments(String command, String[] args, Player player) {
+        return checkArguments(command, args, (CommandSender) player);
     }
 
     /**

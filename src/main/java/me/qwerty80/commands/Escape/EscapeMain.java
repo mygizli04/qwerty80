@@ -29,15 +29,15 @@ public class EscapeMain extends EscapeCommandWithConsoleSupport {
         }
 
         if (args[0].equals("join") || args[0].equals("j")) { // /escape join [number] [player]
-            return new EscapeJoin().checkArguments(command, args);
+            return new EscapeJoin().checkArguments(command, args, sender);
         }
 
         if (args[0].equals("leave") || args[0].equals("le")) { // escape leave [player]
-            return new EscapeLeave().checkArguments(command, args);
+            return new EscapeLeave().checkArguments(command, args, sender);
         }
 
         if (args[0].equals("admin")) { // escape admin [startgame|stopgame|getmap]
-            return new EscapeAdminMain().checkArguments(command, args);
+            return new EscapeAdminMain().checkArguments(command, args, sender);
         }
 
         check.result = false;

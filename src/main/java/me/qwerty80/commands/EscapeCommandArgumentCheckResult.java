@@ -1,5 +1,8 @@
 package me.qwerty80.commands;
 
+/**
+ * The result of an argument check for an {@link EscapeCommand}
+ */
 public class EscapeCommandArgumentCheckResult {
     /**
      * Whether or not the command can be executed correctly
