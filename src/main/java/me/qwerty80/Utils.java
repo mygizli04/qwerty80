@@ -386,4 +386,30 @@ public class Utils {
     }
 
     static public Qwerty80 main;
+
+    static public boolean isNumber(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        }
+        catch (NumberFormatException err) {
+            return false;
+        }
+    }
+
+    static public boolean teleportPlayerToGame(Player player, int game) {
+        Game destination = main.games.get(game);
+        
+        if (destination == null && Bukkit.getServer().getWorld(game + "_GAME_island_water") == null) {
+            return false;
+        }
+
+        teleportPlayerToWorld(player, destination == null ? game + "_GAME_island_water" : destination.world.getName());
+        return true;
+
+    }
+
+    static public boolean canTeleportToGame(int game) {
+        return !(main.games.get(game) == null && Bukkit.getServer().getWorld(game + "_GAME_island_water") == null);
+    }
 }

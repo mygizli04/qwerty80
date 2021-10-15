@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import me.qwerty80.commands.EscapeCommandExecutor;
 import net.kyori.adventure.text.Component;
 
 enum DebugMode { // Where to send debug messages to
@@ -20,12 +21,12 @@ enum DebugMode { // Where to send debug messages to
 
 // Main class
 public class Qwerty80 extends JavaPlugin {
-    private final DebugMode debugMode = DebugMode.DISABLED; // Change this to enable debug mode!
+    private final DebugMode debugMode = DebugMode.PLAYER; // Change this to enable debug mode!
     private final String[] enableDebugFor = new String[]{}; // Add things to here to enable only certain debug mode from senders! For example to only get debug messages from DiamondPickaxe: new String[]{"DiamondPickaxe", "something else", "etc"}
     public final boolean debugModeEnabled = debugMode != DebugMode.DISABLED;
-
     public final boolean noWorldGen = false; // Set this to true for no world gen.
 
+    //@SuppressWarnings("unused") // no idea why it think that some code is unreachable, will find out in the future i guess!
     public void debug(String message, Player player, String sender) {
 
         String prefix = "[DEBUG] [" + sender + "] ";
@@ -59,7 +60,7 @@ public class Qwerty80 extends JavaPlugin {
     public Stack<Game> games = new Stack<Game>(); // This stack will have every game instance.
     public CustomTeams teams = new CustomTeams(this);
 
-    Commands commandHandler = new Commands(this);
+    EscapeCommandExecutor commandHandler;
     TabComplete tabCompleter = new TabComplete(this);
 
     MultiverseCore multiverse;
@@ -67,6 +68,7 @@ public class Qwerty80 extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        commandHandler = new EscapeCommandExecutor(this);
         Utils.main = this;
         
         getCommand("escape").setExecutor(commandHandler);
