@@ -51,11 +51,21 @@ public class EscapeTeamMain extends EscapeCommand {
         }
 
         if (args[1].equals("leave")) {
-
+            return new EscapeTeamLeave().checkArguments(command, args, player);
         }
 
         check.result = false;
         check.reason = "§cThe subcommand provided could not be found.";
         return check;
+    }
+
+    @Override
+    public void execute(String command, String[] args, Player player) {
+        if (args[1].equals("join")) {
+            new EscapeTeamJoin().execute(command, args, player);
+        }
+        else {
+            new EscapeTeamLeave().execute(command, args, player);
+        }
     }
 }
